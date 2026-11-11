@@ -1,12 +1,15 @@
 name: CI
 
-# Verdict in five minutes at most, from the first job started to the last
-# finished (hard project rule). One job: types, lint, tests, build, project
-# guards, then the self-tests of the CI guards themselves.
+# Verdict in five minutes at most, per job, from the first step started to the
+# last finished (hard project rule, guarded by ci-budget).
 #
-# The check published by this workflow is named `ci` (a job names its check):
-# it is required by the `main` ruleset and by the Mergify queue, together with
-# `ci-budget` and `couche0`.
+# Two jobs run in PARALLEL on the self-hosted fleet, because the five-minute
+# budget is per job and a single job was at the mercy of a busy machine: the
+# code verdict (types, tests, build) and the rule verdict (lint, project guards,
+# guard self-tests) each get their own budget and their own runner.
+#
+# Both checks are required by the `main` ruleset and by the Mergify queue,
+# together with `ci-budget` and `couche0`.
 on:
   pull_request:
   merge_group:
@@ -51,12 +54,6 @@ jobs:
           source .github/ci/toolchain.sh
           pnpm typecheck
 
-      - name: Lint
-        shell: bash
-        run: |
-          source .github/ci/toolchain.sh
-          pnpm lint
-
       - name: Tests
         shell: bash
         run: |
@@ -69,6 +66,40 @@ jobs:
           source .github/ci/toolchain.sh
           pnpm build
 
+  ci-quality:
+    name: ci-quality
+    runs-on: [self-hosted, linux, x64, packet-voyage-worker]
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+          clean: false
+
+      - name: Clean workspace
+        shell: bash
+        run: git clean -ffdx
+
+      - name: Toolchain
+        shell: bash
+        run: source .github/ci/toolchain.sh
+
+      - name: Install
+        shell: bash
+        run: |
+          source .github/ci/toolchain.sh
+          pnpm install --frozen-lockfile --prefer-offline --store-dir "$HOME/tools/pnpm-store"
+
+      - name: Lint
+        shell: bash
+        run: |
+          source .github/ci/toolchain.sh
+          pnpm lint
+
+      # Contest compliance and the project's own rules: vocabulary, data
+      # licences, fixture privacy, size limits, no-network, .kiro tracked,
+      # roadmap parity, bundle size.
       - name: Project guards
         shell: bash
         run: |

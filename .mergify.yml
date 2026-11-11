@@ -11,6 +11,7 @@ queue_rules:
   - name: default
     queue_conditions:
       - check-success = ci
+      - check-success = ci-quality
       - check-success = ci-budget
       - check-success = couche0
       - -conflict
