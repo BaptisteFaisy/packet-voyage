@@ -22,6 +22,9 @@ import { validateHost } from './validate-host.ts';
 import { runConsentCommand } from './commands/consent.ts';
 import { runDataCommand } from './commands/data.ts';
 import { runEnrichCommand } from './commands/enrich.ts';
+import { runCompareCommand } from './commands/compare.ts';
+import { runExplainCommand } from './commands/explain.ts';
+import { runExportCommand } from './commands/export.ts';
 import { runMcpCommand } from './commands/mcp.ts';
 import { runReadCommand } from './commands/read.ts';
 import { DEFAULT_SHARE_BASE_URL, runShareCommand } from './commands/share.ts';
@@ -34,6 +37,9 @@ Usage:
   voyage read <file|-> [options]         Compute a journey from a recorded trace (offline)
   voyage enrich <journey.json> [options] Complete an offline journey (consent required)
   voyage share <journey.json> [options]  Preview, redact, and encode a share link
+  voyage explain <journey.json> [opts]   Bounds, delay breakdown, media, and --year <y>
+  voyage export <journey.json> [options] Write the journey as GeoJSON or as a ticket report
+  voyage compare <a.json> <b.json>       Two journeys side by side (IPv4/IPv6, two moments)
   voyage data status|update [options]    Dataset provenance, staleness and cache state
   voyage consent [status|grant|revoke]   Third-party lookup consent (remembered)
   voyage mcp                             Start the stdio MCP server
@@ -52,6 +58,10 @@ Read options:   --from <city>  --out <file>  --json
 Enrich options: --offline (refuses)  --out <file>  --json
 Share options:  --level country|city (default country)  --base-url <url>
                 --yes (skip the confirmation prompt)  --out <file>  --json
+Explain options: --year <1950..2100>  --json
+Export options:  --format geojson|markdown (default geojson)  --language en|fr
+                 --out <file>  --json
+Compare options: --language en|fr  --json
 Data options:   --offline (refuses update)  --json
 Consent:        --json
 
@@ -66,7 +76,7 @@ interface ParsedArgs {
   flags: Record<string, string | boolean>;
 }
 
-const VALUE_FLAGS = new Set(['proto', 'cycles', 'from', 'out', 'level', 'base-url']);
+const VALUE_FLAGS = new Set(['proto', 'cycles', 'from', 'out', 'level', 'base-url', 'year', 'format', 'language']);
 const BOOLEAN_FLAGS = new Set(['help', 'ipv6', 'offline', 'open', 'json', 'yes']);
 
 function takeOption(argv: string[], idx: number, flags: Record<string, string | boolean>): number {
@@ -204,7 +214,8 @@ async function dispatch(parsed: ParsedArgs, opts: RunCliOptions): Promise<number
     io.stdout(`${HELP_TEXT}\n`);
     return EXIT_OK;
   }
-  const [op] = operands(parsed, 1);
+  const ops = operands(parsed, command === 'compare' ? 2 : 1);
+  const op = ops[0];
   const json = bool(flags, 'json');
 
   if (command === 'trace') {
@@ -218,6 +229,15 @@ async function dispatch(parsed: ParsedArgs, opts: RunCliOptions): Promise<number
       return dispatchTrace(op, flags, ctx, opts);
     case 'read':
       return runReadCommand({ file: op, from: str(flags, 'from'), out: str(flags, 'out'), json }, ctx);
+    case 'explain':
+      return runExplainCommand({ file: op, year: str(flags, 'year'), json }, ctx);
+    case 'export':
+      return runExportCommand(
+        { file: op, format: str(flags, 'format') ?? 'geojson', language: str(flags, 'language') ?? 'en', out: str(flags, 'out'), json },
+        ctx,
+      );
+    case 'compare':
+      return runCompareCommand({ files: ops, language: str(flags, 'language') ?? 'en', json }, ctx);
     case 'enrich':
       return runEnrichCommand(
         { file: op, offline: bool(flags, 'offline'), out: str(flags, 'out'), json, ...(opts.fetcher ? { fetcher: opts.fetcher } : {}) },

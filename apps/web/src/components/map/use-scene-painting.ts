@@ -15,11 +15,13 @@ export interface ScenePaintingInput {
   animate: boolean;
   selectedHop: number | null;
   hoveredHop: number | null;
+  lightCones?: boolean;
 }
 
 /** Repaints the canvas whenever any input of the scene changes. */
 export function useScenePainting(input: ScenePaintingInput): void {
   const { canvasRef, projection, scene, plan, elapsed, animate, selectedHop, hoveredHop } = input;
+  const lightCones = input.lightCones ?? false;
   useEffect(() => {
     const ctx = canvasRef.current?.getContext('2d');
     if (!ctx) return;
@@ -33,6 +35,7 @@ export function useScenePainting(input: ScenePaintingInput): void {
       animate,
       selectedHop,
       hoveredHop,
+      lightCones,
     });
-  }, [canvasRef, projection, scene, plan, elapsed, animate, selectedHop, hoveredHop]);
+  }, [canvasRef, projection, scene, plan, elapsed, animate, selectedHop, hoveredHop, lightCones]);
 }

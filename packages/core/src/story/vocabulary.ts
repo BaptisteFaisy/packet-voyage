@@ -28,8 +28,11 @@ export const FORBIDDEN_PATTERNS: readonly RegExp[] = [
 const LEVEL_WORDS =
   /\b(likely|probable|probably|solid|uncertain|inferred|assumed|measured|not located|sources? agree|estimated)\b/i;
 
-/** A distance that is a straight line, not a travelled path, is exact. */
-const CROW_FLIES = /\b(as the crow flies|à vol d'oiseau|great[- ]circle|geodesic)\b/i;
+/**
+ * A distance that is a straight line, not a travelled path, is exact. Both
+ * apostrophes are accepted: the French strings use the typographic one.
+ */
+const CROW_FLIES = /(\bas the crow flies\b|à vol d['\u2019]oiseau|\bgreat[- ]circle\b|\bgeodesic\b|\bstraight line\b|\ben ligne droite\b)/i;
 
 /** A distance is honest when it says which way it is bounded. */
 /**

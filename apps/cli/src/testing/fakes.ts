@@ -3,7 +3,8 @@
  * schema-valid journey fixture built from RFC 5737 documentation addresses.
  * Used by the colocated `*.test.ts` suites; never touches the network.
  */
-import type { HintCity, Hop, Journey, Provenance } from '@packet-voyage/schema';
+import * as realCore from '@packet-voyage/core';
+import type { Cable, HintCity, Hop, Journey, Provenance } from '@packet-voyage/schema';
 import type {
   CacheLike,
   ComputeJourneyInputLike,
@@ -206,6 +207,17 @@ function makeFakeCore(options: FakeDepsOptions): CoreDeps {
     encodeShareLink: (journey, baseUrl) =>
       `${baseUrl.replace(/\/$/, '')}/#j=${Buffer.from(journey.target.host).toString('base64url')}`,
     MAX_FRAGMENT_BYTES: 60_000,
+    // The analytics are pure: the fakes delegate to the real implementations so
+    // the CLI tests exercise the numbers a user would see.
+    distanceBounds: (journey: Journey) => realCore.distanceBounds(journey),
+    delayBreakdown: (journey: Journey) => realCore.delayBreakdown(journey),
+    mediaForJourney: (journey: Journey) => realCore.mediaForJourney(journey),
+    compareWithEra: (input: { journey: Journey; cables: Cable[]; year: number }) =>
+      realCore.compareWithEra(input),
+    journeyToGeoJSON: (journey: Journey) => realCore.journeyToGeoJSON(journey),
+    incidentReport: (journey: Journey, language?: 'en' | 'fr') =>
+      realCore.incidentReport(journey, language ?? 'en'),
+    diffJourneys: (a: Journey, b: Journey) => realCore.diffJourneys(a, b),
   };
 }
 

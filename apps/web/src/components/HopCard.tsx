@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { Hop, Rejection } from '@packet-voyage/schema';
 import { useI18n } from '../i18n/context.tsx';
 import { formatInteger, formatMs, formatNumber } from '../lib/format.ts';
+import { RejectedExplainer } from './RejectedExplainer.tsx';
 
 interface SectionProps {
   title: string;
@@ -38,6 +39,7 @@ function RejectionLine({ rejection, envelopeMs }: { rejection: Rejection; envelo
     <li className="rejection" data-testid={`rejection-${rejection.city}`}>
       <s>{allowedText}</s>
       <span className="rejection-reason">{rejection.reason}</span>
+      <RejectedExplainer rejection={rejection} envelopeMs={envelopeMs} />
     </li>
   );
 }

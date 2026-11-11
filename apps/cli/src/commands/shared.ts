@@ -108,15 +108,20 @@ export async function readJourneyFile(
   }
 }
 
+/** Write any text artefact next to the current directory; returns its path. */
+export async function writeTextFile(outPath: string, text: string, io: CliIo): Promise<string> {
+  const abs = resolve(io.cwd, outPath);
+  await mkdir(dirname(abs), { recursive: true });
+  await writeFile(abs, text, 'utf8');
+  return abs;
+}
+
 export async function writeJourneyFile(
   outPath: string,
   journey: Journey,
   io: CliIo,
 ): Promise<string> {
-  const abs = resolve(io.cwd, outPath);
-  await mkdir(dirname(abs), { recursive: true });
-  await writeFile(abs, `${JSON.stringify(journey, null, 2)}\n`, 'utf8');
-  return abs;
+  return writeTextFile(outPath, `${JSON.stringify(journey, null, 2)}\n`, io);
 }
 
 const CONSENT_SERVICES = ['dns', 'ripestat', 'ipmap', 'peeringdb'];

@@ -172,4 +172,12 @@ export const FR_KEYS: Record<I18nKey, string> = {
   'export.legend': 'Trait plein : mesuré et localisé · Tirets : déduit · Pointillé : tracé supposé et câbles compatibles',
   'export.footerCredits': 'Données : {credits}',
   'export.footerGenerated': 'Généré par Packet Voyage le {date}. Rien ici ne dit quel câble a porté le paquet.',
+  'map.lightCone': 'Afficher le cône de lumière',
+  'map.lightConeHint': 'Dessine, pour chaque étape, le disque des positions que le délai mesuré autorise encore. C\u2019est une borne, pas la route.',
+  'reject.stepMeasured': 'Cette étape a répondu en {delay} (enveloppe des délais).',
+  'reject.stepBound': 'En {delay}, la lumière dans le vide parcourt au plus {roundTrip} aller-retour — au plus {oneWay} dans un sens.',
+  'reject.stepVerdict': 'Il faudrait au moins {distance} : {times} fois trop loin pour {reason}.',
+  'certainty.measured': 'mesuré',
+  'certainty.inferred': 'déduit',
+  'certainty.assumed': 'supposé',
 };
