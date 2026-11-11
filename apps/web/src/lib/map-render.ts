@@ -168,3 +168,31 @@ export function drawRejectedNode(
   ctx.lineWidth = 2;
   ctx.stroke();
 }
+
+export const LIGHT_DISC_COLOR = '#93c5fd';
+export const LIGHT_DISC_FILL = 'rgba(147, 197, 253, 0.06)';
+
+function polygonOf(ring: Position[]): GeoJSON.Polygon {
+  return { type: 'Polygon', coordinates: [ring.map((p) => [p.lon, p.lat])] };
+}
+
+/**
+ * The light cone of §7.6: the disc of positions each measured delay still
+ * allows. Drawn under the route, faint, because it is a bound — not the path.
+ */
+export function drawLightDiscs(ctx: CanvasRenderingContext2D, path: GeoPath, rings: Position[][]): void {
+  if (rings.length === 0) return;
+  ctx.save();
+  ctx.setLineDash([3, 4]);
+  ctx.lineWidth = 0.8;
+  ctx.strokeStyle = LIGHT_DISC_COLOR;
+  ctx.fillStyle = LIGHT_DISC_FILL;
+  for (const ring of rings) {
+    ctx.beginPath();
+    path(polygonOf(ring));
+    ctx.fill();
+    ctx.stroke();
+  }
+  ctx.restore();
+  ctx.setLineDash([]);
+}

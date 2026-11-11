@@ -17,4 +17,6 @@ export * from './metrics/index.ts';
 export * from './story/index.ts';
 export * from './redact/index.ts';
 export * from './share/index.ts';
+export * from './analytics/index.ts';
+export * from './report/index.ts';
 export * from './pipeline.ts';

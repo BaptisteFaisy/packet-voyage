@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import type { Cable, Journey, Landmass } from '@packet-voyage/schema';
 import { useI18n } from '../i18n/context.tsx';
 import { usePreferences } from '../state/preferences.tsx';
@@ -7,6 +7,7 @@ import type { ProjectionKind } from '../lib/map-geometry.ts';
 import { useMapDrag } from './map/use-map-drag.ts';
 import { usePaintedMap } from './map/use-painted-map.ts';
 import { MapOverlay } from './map/MapOverlay.tsx';
+import { LightConeToggle } from './LightConeToggle.tsx';
 
 const WIDTH = 960;
 const HEIGHT = 520;
@@ -25,12 +26,29 @@ export interface WorldMapProps {
  * interaction layer above it, drag-to-rotate globe, and a stitching
  * animation disabled when `prefers-reduced-motion` is set (VOY-F-34).
  */
+/** The map's replacement text carries the bounded distance (§12.4). */
+function mapAltText(journey: Journey, t: (key: 'map.altText', params: Record<string, string | number>) => string): string {
+  const { distance_km_min: distance, countries } = journey.summary;
+  return t('map.altText', { distance, countries: countries.join(', ') });
+}
+
+/** Pointer handlers grouped so the JSX stays short and readable. */
+function dragHandlers(drag: ReturnType<typeof useMapDrag>) {
+  return {
+    onPointerDown: drag.onPointerDown,
+    onPointerMove: drag.onPointerMove,
+    onPointerUp: drag.onPointerUp,
+    onPointerLeave: drag.onPointerUp,
+  };
+}
+
 export function WorldMap(props: WorldMapProps) {
   const { journey, secondary = null, masses = [], cables = [], projection: forced } = props;
   const { t } = useI18n();
   const { prefs, animationsEnabled } = usePreferences();
   const { selectedHop, hoveredHop, selectedSegment } = useJourneyState();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [lightCones, setLightCones] = useState(false);
   const kind: ProjectionKind = forced ?? prefs.projection;
   const drag = useMapDrag(kind);
   const painted = usePaintedMap({
@@ -47,22 +65,19 @@ export function WorldMap(props: WorldMapProps) {
     width: WIDTH,
     height: HEIGHT,
     canvasRef,
+    lightCones,
   });
-  const { distance_km_min: distance, countries } = journey.summary;
-
   return (
     <div className="world-map">
+      <LightConeToggle enabled={lightCones} onToggle={setLightCones} />
       <canvas
         ref={canvasRef}
         width={WIDTH}
         height={HEIGHT}
         role="img"
-        aria-label={t('map.altText', { distance, countries: countries.join(', ') })}
+        aria-label={mapAltText(journey, t)}
         data-testid="world-map-canvas"
-        onPointerDown={drag.onPointerDown}
-        onPointerMove={drag.onPointerMove}
-        onPointerUp={drag.onPointerUp}
-        onPointerLeave={drag.onPointerUp}
+        {...dragHandlers(drag)}
       />
       <MapOverlay
         projection={painted.projection}

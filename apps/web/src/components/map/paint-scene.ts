@@ -8,11 +8,13 @@ import {
   drawCableWatermark,
   drawLand,
   drawLeg,
+  drawLightDiscs,
   drawLitCables,
   drawNode,
   drawRejectedNode,
   drawSea,
 } from '../../lib/map-render.ts';
+import { discRings, lightDiscs } from '../../lib/light-cone.ts';
 import { getNetworkStyle } from '../../lib/styling.ts';
 
 export interface RejectedMark {
@@ -42,6 +44,8 @@ export interface PaintInput {
   animate: boolean;
   selectedHop: number | null;
   hoveredHop: number | null;
+  /** Draw the disc of positions each delay allows (§7.6). Off by default. */
+  lightCones?: boolean;
 }
 
 function legStyle(journey: Journey, leg: RouteLeg): { certainty: 'measured' | 'inferred' | 'assumed'; network: string | null } {
@@ -68,6 +72,9 @@ export function paintScene(input: PaintInput): void {
   drawLand(ctx, path, scene.masses);
   drawCableWatermark(ctx, path, scene.cables);
   drawLitCables(ctx, path, scene.cables, scene.litCableIds);
+  if (input.lightCones === true) {
+    drawLightDiscs(ctx, path, discRings(lightDiscs(scene.journey)));
+  }
   const state = animationStateAt(plan, animate ? elapsed : plan.totalMs);
   for (const leg of scene.legs) {
     const progress = legProgress(plan, elapsed, animate, leg.key);

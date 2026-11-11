@@ -51,6 +51,76 @@ export interface ComputeJourneyInputLike {
   credits?: string[];
 }
 
+/* ------------------------------------------------------- analytics (VOY extras) */
+
+export interface DistanceBoundsLike {
+  min_km: number;
+  max_km: number | null;
+  min_basis: string;
+  max_basis: string | null;
+  note: { en: string; fr: string };
+}
+
+export interface DelayBreakdownLike {
+  rtt_ms: number | null;
+  propagation_floor_ms: number | null;
+  residual_ms: number | null;
+  residual_share: number | null;
+  clamped: boolean;
+  reading: 'measured' | 'inferred';
+  note: { en: string; fr: string };
+}
+
+export interface MediumCheckLike {
+  medium: string;
+  km_per_ms: number | null;
+  min_rtt_ms: number;
+  compatible: boolean;
+  note: string;
+}
+
+export interface EraCableLike {
+  id: string;
+  name: string;
+  rfs_year: number | null;
+  length_km: number | null;
+  compatibility: number;
+  band: string;
+}
+
+export interface EraComparisonLike {
+  year: number;
+  available_then: number;
+  compatible_then: EraCableLike[];
+  compatible_now: EraCableLike[];
+  crossings: number;
+  verdict: { en: string; fr: string };
+}
+
+export interface JourneyDiffLike {
+  same_target: boolean;
+  distance_km: { a: number; b: number; delta: number };
+  rtt_ms: { a: number | null; b: number | null; delta: number | null };
+  inflation: { a: number | null; b: number | null; delta: number | null };
+  countries_added: string[];
+  countries_removed: string[];
+  networks_added: number[];
+  networks_removed: number[];
+  hops: { a: number; b: number };
+  located_hops: { a: number; b: number };
+  rejected_by_light: { a: number; b: number };
+  detours: { a: number; b: number };
+  path_changed: boolean;
+  city_path: { a: string[]; b: string[] };
+  sentence: { en: string; fr: string };
+}
+
+export interface GeoFeatureCollectionLike {
+  type: 'FeatureCollection';
+  features: unknown[];
+  properties: Record<string, unknown>;
+}
+
 export interface CoreDeps {
   parseTrace(text: string, options?: { format?: string }): ParsedTraceLike;
   computeJourney(input: ComputeJourneyInputLike): Journey;
@@ -58,6 +128,13 @@ export interface CoreDeps {
   redactionPreview(journey: Journey, level: RedactionLevel): string[];
   encodeShareLink(journey: Journey, baseUrl: string): string;
   MAX_FRAGMENT_BYTES: number;
+  distanceBounds(journey: Journey): DistanceBoundsLike;
+  delayBreakdown(journey: Journey): DelayBreakdownLike;
+  mediaForJourney(journey: Journey): MediumCheckLike[];
+  compareWithEra(input: { journey: Journey; cables: Cable[]; year: number }): EraComparisonLike;
+  journeyToGeoJSON(journey: Journey): GeoFeatureCollectionLike;
+  incidentReport(journey: Journey, language?: 'en' | 'fr'): string;
+  diffJourneys(a: Journey, b: Journey): JourneyDiffLike;
 }
 
 /* ----------------------------------------------------------- enrich (§5.6) */

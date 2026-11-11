@@ -20,6 +20,8 @@ export interface PaintedMapInput {
   selectedHop: number | null;
   hoveredHop: number | null;
   selectedSegment: { from: number; to: number } | null;
+  /** Draw the light cone discs (§7.6). */
+  lightCones?: boolean;
   width: number;
   height: number;
   canvasRef: RefObject<HTMLCanvasElement | null>;
@@ -66,6 +68,7 @@ export function usePaintedMap(input: PaintedMapInput): PaintedMap {
     animate: animationsEnabled,
     selectedHop: input.selectedHop,
     hoveredHop: input.hoveredHop,
+    lightCones: input.lightCones ?? false,
   });
 
   return { projection, scene };

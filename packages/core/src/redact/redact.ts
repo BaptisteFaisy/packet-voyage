@@ -67,12 +67,24 @@ function refreshSummary(journey: Journey): Journey['summary'] {
   };
 }
 
+/**
+ * A segment whose start hop disappears with the redaction now starts at the
+ * departure, written `from_ttl: 0`. The distance it covers stays in the total:
+ * hiding where you are does not shorten the route the packet took.
+ */
+function relinkSegments(journey: Journey, keptTtls: Set<number>): Journey['segments'] {
+  return journey.segments.map((segment) =>
+    keptTtls.has(segment.from_ttl) || segment.from_ttl === 0 ? segment : { ...segment, from_ttl: 0 },
+  );
+}
+
 /** Remove everything that could point at the user, at the requested level. */
 export function redactJourney(journey: Journey, level: RedactionLevel): Journey {
   const hops = journey.hops.filter((hop) => keepsHop(hop.class));
   const redacted: Journey = {
     ...journey,
     hops,
+    segments: relinkSegments(journey, new Set(hops.map((hop) => hop.ttl))),
     source: coarsenSource(journey.source ?? null, level),
     summary: journey.summary,
     redaction: { level, applied: true },

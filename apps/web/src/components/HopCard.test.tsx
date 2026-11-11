@@ -26,7 +26,10 @@ describe('HopCard', () => {
 
   it('VOY-F-32 separates what is measured from what is inferred', () => {
     renderWithProviders(<HopCard hop={hopAt(3)} />);
-    expect(screen.getByText('measured')).toBeTruthy();
+    // The hop card now carries a second "measured" label: the certainty badge of
+    // the rejection explainer (§7.6). The intent is unchanged — measured and
+    // inferred are told apart, visibly, in the same card.
+    expect(screen.getAllByText('measured').length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText('inferred').length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText('198.51.100.9')).toBeTruthy();
     expect(screen.getByText('AS64500 — Transit Example')).toBeTruthy();
