@@ -1,0 +1,157 @@
+# Kiro Journal — Packet Voyage
+
+Every line of this journal records **a spec (or lot), a task, a duration and
+what was learned** — that is the deal of §14.3/§14.6: the story of the build
+must be provable with numbers, not adjectives. Two kinds of entries live
+here:
+
+1. **Narrative entries** (below) — written by hand or by an agent at the end
+   of a work session. Anything not actually measured in a real Kiro session
+   yet is marked `TODO(measure)` and stays that way until measured: no
+   invented credits, no invented durations.
+2. **Automated rows** (the table at the very bottom) — appended by the
+   `journal-reminder` hook (`scripts/hooks/journal-reminder.mjs`) after each
+   spec task: `| timestamp | spec | task | duration |`. Durations the hook
+   cannot know stay `-` until filled.
+
+---
+
+## 2026-11-11 — project skeleton and lot split
+
+- **Surface**: IDE (spec/steering authoring) + CLI (workspace scaffolding).
+- **What was done**: pnpm monorepo laid out per CONTRACTS §1: `packages/{schema,core,enrich,data}`,
+  `apps/{cli,web,mcp}`, `scripts/{guards,hooks,data}`, `gallery/`, `.kiro/`,
+  `docs/`. `packages/core/src/settings.ts`, `index.ts` and `pipeline.ts`
+  written first (L0) so every lot codes against a fixed seam.
+- **Learned**: writing `settings.ts` and the pipeline stub *before* splitting
+  the lots removes nearly all cross-lot negotiation — the §7.13 defaults
+  (299.79 / 204 / 50 km slack / 100 km fusion radius / bands 0.6/0.3) are the
+  only physics knobs and they now have one owner.
+- **Duration / credits**: `TODO(measure)`.
+
+## 2026-11-11 — CONTRACTS.md frozen
+
+- **Surface**: IDE.
+- **What was done**: `docs/CONTRACTS.md` written as the single source of
+  truth: ground rules (§0), workspace map and lot ownership (§1), data model
+  (§2), closed lists — candidate sources with starting weights, certainty
+  levels, imposed vocabulary (§3), settings (§4), binding module APIs
+  §5.1–§5.13, the pipeline order (§6), definition of done (§7).
+- **Learned**: naming the closed lists (12 candidate source ids, 4 rejection
+  reasons, 4 confidence levels) up front is what lets 13 lots run in parallel
+  without a single shared enum drifting. "The contract wins; if the contract
+  is wrong, report, do not silently change" (§0) has already avoided two
+  silent signature edits.
+- **Duration / credits**: `TODO(measure)`.
+
+## 2026-11-11 — parallel lots in flight
+
+- **Surface**: IDE + CLI, one agent per lot (L1 parse/addr, L7 data, L12
+  guards/hooks, L11 this workspace…).
+- **What was done**: lot ownership per CONTRACTS §1. Observed while writing
+  L11: `scripts/hooks/*.mjs` (probe-guard, claims-guard, data-licence-guard,
+  light-properties, fixture-privacy-guard, journal-reminder) and
+  `scripts/guards/*.guard.mjs` already exist (L12), and
+  `.kiro/probe-allowlist.txt` was placed by its owning lot — the hook JSONs
+  of L11 point at those real paths, nothing is dangling.
+- **Learned**: the guard/hook duplication (same logic as CI check and as Kiro
+  hook entry point, §14.3) is deliberate: file triggers only fire on
+  agent-made changes, so every hook must also exist in CI to cover human
+  edits. One implementation, two entry points (`scripts/hooks/<name>.mjs`
+  wraps `scripts/guards/<name>.guard.mjs`).
+- **Duration / credits**: `TODO(measure)`.
+
+## 2026-11-11 — CI shell
+
+- **Surface**: CLI.
+- **What was done**: `scripts/guards/run-all.mjs` discovers and runs every
+  `*.guard.mjs` (vocabulary, data-licence, fixture-privacy, limits,
+  no-network, kiro-tracked, roadmap-parity, bundle-size) with **no network
+  access needed**; `scripts/data` builders run `--from-cache` for the same
+  reason. Workspace checks: `pnpm typecheck`, `pnpm lint`, `pnpm test`
+  (vitest, colocated tests, fast-check properties with fixed seeds).
+- **Learned**: `kiro-tracked.guard.mjs` (`.kiro/` present, not git-ignored,
+  MIT licence detected) is acceptance item §18 — the workspace itself is
+  under CI, so the Kiro strategy cannot silently rot.
+- **Duration / credits**: `TODO(measure)`.
+
+## 2026-11-11 — L11: the `.kiro/` workspace written
+
+- **Surface**: IDE (this lot).
+- **What was done**: 11 steering files with their §14.2 inclusion rules;
+  12 specs × (requirements EARS + design + tasks) with the §14.1 method
+  declared in each header; 6 hook JSONs (v1 shape of §14.3, all `command`
+  actions — no credit cost) pointing at the existing `scripts/hooks/*.mjs`;
+  3 agents (`geo-reviewer`, `claims-reviewer` read-only; `data-curator`
+  write-scoped to `packages/data/**` + `scripts/data/**` only); 2 skills
+  (`latency-investigation`, `property-hunt`); `.kiro/settings/mcp.json` per
+  CONTRACTS §5.11 — exact field names to confirm against the Kiro docs at
+  use time (annexe D), noted in `.kiro/settings/README.md`.
+- **Learned**: `locator` is where requirements analysis must watch hardest —
+  the hop bound's `+ slackKm` and the triangle bound's "tolerance included"
+  are two different tolerances and the spec text (§7.6) does not name the
+  second one numerically; recorded as an open point for the locator session.
+- **Duration / credits**: `TODO(measure)` — and per §14.6, the real cost of a
+  full requirements-first spec is to be measured on `trace-parsers`.
+
+---
+
+## The three facts to prove (§14.6) — placeholders until measured
+
+1. **The project is built under its own rule.** The agent writing a probe tool
+   is not allowed to probe: `probe-guard` blocks it and this journal counts
+   the blocks.
+   - probe-guard blocks during the build: `TODO(measure)` (target: ≥ 1 real
+     block, acceptance §18; each block appends a row to the table below).
+2. **The properties carry the physics.** "No retained position violates the
+   speed of light" is a sentence of the cahier, an acceptance criterion and a
+   test (VOY-P-06). Every counter-example found is recorded here.
+   - counter-examples found, and what each one changed (all during the
+     assembly of the lots, on 2026-11-11):
+     1. `inflation = Infinity` when the light floor is zero: a journey could not
+        survive its own share link, because JSON has no infinity. VOY-P-17 caught
+        it; `summarize` now returns `null` for a meaningless ratio.
+     2. The light floor was computed from the first *located* hop instead of the
+        departure: 60.6 ms instead of 63.7 ms on the §7.14 example, i.e. an
+        inflation flattered from 1.51 to 1.44. VOY-P-14 caught it.
+     3. The leg from the departure to the first located hop was missing from the
+        distance: 6,264 km instead of 6,654 km. The acceptance test of §18 caught
+        it; `buildSegments` now takes the departure and emits `from_ttl: 0`.
+     4. The summary listed a country per hop instead of per country (FR, FR, GB,
+        GB, US, US). VOY-P-15 caught it.
+     5. A candidate rejected on an *unlocated* hop was not counted in
+        `rejected_by_light`: the product's headline number under-reported the
+        lies the light caught. The pipeline now counts the flat rejection list.
+   - property seeds: recorded in the header of each property test (42, 99, 777,
+     2026, 20260711, 20261111, 20261112, 20261113, 20261116, 20261117) so any
+     counter-example can be replayed; all twenty properties VOY-P-01 to VOY-P-20
+     are implemented and green.
+3. **The steering changes the words.** One label, before and after
+   `honesty.md`:
+   - before (the wording §5.4 forbids, quoted from the specification itself —
+     no unsteered session was run for this build): "Your packet crossed the
+     Atlantic via MAREA."
+   - after, real output of `buildStory` on the §7.14 trace, computed offline
+     from the router names alone: "Crossing — Sea crossing. At least 6,198 km as
+     the crow flies, 82.1 ms later. 5 compatible cable(s) for this crossing:
+     TAT13, Tata Atlantic South, Atlantic Crossing 1 (AC1)Seg.C, Tata Atlantic
+     North, Yellow (5 other compatible cables). Nothing in the measurement says
+     which one carried your packet."
+   - the rule is executable, not advisory: `checkVocabulary` in
+     `packages/core/src/story/vocabulary.ts` is imported by
+     `scripts/guards/vocabulary.guard.mjs`, which runs in CI over 82 files.
+- Credits for the whole build (indicative 800–1,000 if this replaces Suture,
+  §14.6): `TODO(measure)`.
+
+---
+
+## Automated entries — appended by the `journal-reminder` hook
+
+| Timestamp (UTC) | Event / Spec | Task / Detail | Duration |
+|---|---|---|---|
+| 2026-11-11T13:58Z | probe-guard | refused `traceroute -n example.org` — target absent from `.kiro/probe-allowlist.txt` (exit 2) | blocked |
+| 2026-11-11T13:58Z | probe-guard | refused `mtr -n 8.8.8.8` — public target, VOY-N-02 (exit 2) | blocked |
+| 2026-11-11T13:58Z | probe-guard | allowed `traceroute -n 203.0.113.80` and `mtr --json -n -c 3 198.51.100.9` (documentation ranges) | exit 0 |
+| 2026-11-11T14:00Z | assembly | 357 tests green over 52 files; typecheck and lint clean; the twenty properties VOY-P-01…20 all present | measured |
+| 2026-11-11T14:00Z | assembly | site bundle 191.5 kB gzip (budget 350 kB), vendored data 116 kB gzip (budget 1.5 MB), zero external reference in `dist/` | measured |
+| 2026-11-11T14:00Z | assembly | §7.14 reproduced offline from the router names alone: at least 6,654 km, 91.7 ms, floor 63.7 ms, inflation 1.44, 8 hops located out of 10 | measured |

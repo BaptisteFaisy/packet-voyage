@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "light-properties",
+      "description": "On every agent save under packages/core/src/envelope/** or packages/core/src/locate/**, re-runs the light-speed property tests VOY-P-05..VOY-P-11 (envelope monotonicity, hop bound, triangle bound, determinism, impossible-candidate inertness, confidence monotonicity, no invented position). The physics is the product: a save that breaks a bound is refused immediately, not at the next full CI run (§14.3, §14.6 fact 2).",
+      "trigger": "PostFileSave",
+      "matcher": "^packages/core/src/(envelope|locate)/.*\\.ts$",
+      "action": {
+        "type": "command",
+        "command": "node scripts/hooks/light-properties.mjs"
+      },
+      "timeout": 300,
+      "enabled": true
+    }
+  ]
+}

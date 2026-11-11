@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "fixture-privacy-guard",
+      "description": "On every agent save under gallery/** or in a test file/folder, refuses an unredacted trace: private (RFC 1918/4193), CGNAT (100.64.0.0/10), link-local or loopback addresses, access-network hops, or a source finer than country (privacy.md, VOY-N-13, VOY-P-04/P-16). Fixtures must use the documentation ranges (RFC 5737 / RFC 3849) or be fully redacted. Same logic as scripts/guards/fixture-privacy.guard.mjs in CI.",
+      "trigger": "PostFileSave",
+      "matcher": "^(gallery/.*|.*\\.test\\.ts$|.*/__fixtures__/.*|.*/__tests__/.*)$",
+      "action": {
+        "type": "command",
+        "command": "node scripts/hooks/fixture-privacy-guard.mjs"
+      },
+      "timeout": 120,
+      "enabled": true
+    }
+  ]
+}
