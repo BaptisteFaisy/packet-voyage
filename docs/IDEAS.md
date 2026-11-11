@@ -106,9 +106,9 @@ the specification.
 
 ## Quality and proof
 
-79. **[wip]** Parser hardening: BOM, CRLF and lone CR, tabs, UTF-8 accents, truncated last line.
-80. **[wip]** `tracert` in German, Spanish and Portuguese, parsed by structure not by words.
-81. **[wip]** Fuzz over arbitrary bytes: never throw, never loop, never invent a delay.
+79. **[done]** Parser hardening: BOM, CRLF and lone CR, tabs, UTF-8 accents, truncated last line.
+80. **[done]** `tracert` in German, Spanish and Portuguese, parsed by structure not by words.
+81. **[done]** Fuzz over arbitrary bytes: never throw, never loop, never invent a delay.
 82. **[done]** A performance guard: 30 hops in 30.6 ms against a 200 ms target.
 83. **[next]** Measured coverage, published with a threshold.
 84. **[later]** Visual non-regression of the map (capture and compare).
@@ -117,7 +117,7 @@ the specification.
 87. **[next]** A guard against new runtime dependencies without a size justification.
 88. **[done]** Property: a contradictory source never raises confidence.
 89. **[next]** Property: redaction is idempotent.
-90. **[wip]** Property: a GeoJSON export read back gives the same hops and segments.
+90. **[done]** Property: a GeoJSON export read back gives the same hops and segments.
 
 ## Infrastructure and misc
 
