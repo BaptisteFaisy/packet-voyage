@@ -7,3 +7,5 @@ export { parseMtrText } from './mtr-text.ts';
 export { parseMtrJson } from './mtr-json.ts';
 export { parseAtlasResult } from './atlas.ts';
 export { writeTrace } from './write.ts';
+export { MAX_INPUT_CHARS, normaliseTraceText } from './normalise.ts';
+export type { NormalisedTrace } from './normalise.ts';

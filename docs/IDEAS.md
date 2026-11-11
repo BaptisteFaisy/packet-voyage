@@ -10,8 +10,8 @@ the specification.
 
 ## Honesty and teaching
 
-1. **[wip]** Light cone on the map: the disc of positions each measured delay still allows.
-2. **[wip]** A step-by-step "rejected by light" card: measurement, bound, verdict, with the arithmetic shown.
+1. **[done]** Light cone on the map: the disc of positions each measured delay still allows.
+2. **[done]** A step-by-step "rejected by light" card: measurement, bound, verdict, with the arithmetic shown.
 3. **[next]** A serious game: given a delay, pick which city is possible.
 4. **[next]** Two columns, "what the database says" against "what the light says".
 5. **[later]** Interactive glossary on hover (TTL, RTT, anycast, MPLS, IXP).
@@ -20,23 +20,23 @@ the specification.
 8. **[next]** Scale of the journey: the distance in everyday units (laps of the Earth, Paris–Marseille).
 9. **[later]** A timeline of "what happened during these 91.7 ms" at human scale.
 10. **[done]** A permanent reminder of what a traceroute cannot see (the return path).
-11. **[wip]** Distance bounds: a lower *and* an upper bound, not only "at least".
-12. **[wip]** Delay breakdown: propagation floor against the residual (queues, routing, processing).
-13. **[wip]** Which physical medium can explain this delay: vacuum, fibre, copper, microwave, geostationary.
+11. **[done]** Distance bounds: a lower *and* an upper bound, not only "at least".
+12. **[done]** Delay breakdown: propagation floor against the residual (queues, routing, processing).
+13. **[done]** Which physical medium can explain this delay: vacuum, fibre, copper, microwave, geostationary.
 14. **[done]** Anycast explained: the possible instances and the one the delay keeps.
 
 ## Network analysis
 
 15. **[next]** Severity score for a trombone, with the milliseconds the detour costs.
 16. **[done]** Structured IPv4 against IPv6 comparison.
-17. **[wip]** Diff of two journeys (same target, two moments).
+17. **[done]** Diff of two journeys (same target, two moments).
 18. **[later]** Rate-limited hop detection (suspiciously round delays).
 19. **[next]** Hidden MPLS detection (a long segment with no delay step).
 20. **[later]** Probable asymmetry index (envelope non-monotonic before correction).
 21. **[next]** Milliseconds attributed to each AS.
 22. **[next]** "Where is the bottleneck": the segment adding the most ms per km.
 23. **[next]** CSV export of the roadmap for a ticket.
-24. **[wip]** A redaction-safe incident report, ready to paste to a hosting provider.
+24. **[done]** A redaction-safe incident report, ready to paste to a hosting provider.
 25. **[later]** Merge several traces of the same host (multi-probe).
 26. **[later]** A local list of known anycast prefixes, without IPmap.
 27. **[done]** Show the protocol used and its limits (ICMP, UDP, TCP).
@@ -57,7 +57,7 @@ the specification.
 39. **[next]** A data coherence guard: a cable without landings, an empty geometry.
 40. **[later]** A "how to refresh this dataset" button on the sources page.
 41. **[next]** Export the credits as plain text.
-42. **[wip]** The same journey in 1987: which cables were in service, and compatible, that year.
+42. **[done]** The same journey in 1987: which cables were in service, and compatible, that year.
 43. **[next]** The age of the compatible cables (RFS) as a hint about the route.
 44. **[later]** Great-circle distance against a commercial flight route, for scale.
 
@@ -80,7 +80,7 @@ the specification.
 
 ## Sharing and diffusion
 
-59. **[wip]** GeoJSON export of a journey: the GIS half of the chimera.
+59. **[done]** GeoJSON export of a journey: the GIS half of the chimera.
 60. **[later]** SVG export of the map.
 61. **[done]** PNG export in a fixed large size, credits included.
 62. **[later]** A locally generated QR code of the share link.
