@@ -1,0 +1,10 @@
+traceroute to www.example.org (203.0.113.80), 30 hops max, 60 byte packets
+ 1  gw.home.example (198.51.100.1)  0.800 ms  0.792 ms  0.808 ms
+ 2  lx.p1-127-117.example.pt (198.51.100.2)  0.800 ms  0.792 ms  0.808 ms
+ 3  * * *
+ 4  mad3.core1.example.de (198.51.100.4)  6.411 ms  6.347 ms  6.475 ms
+ 5  * * *
+ 6  par1.xe4.example.de (198.51.100.6)  18.523 ms  18.338 ms  18.708 ms
+ 7  mute.border.example.de (198.51.100.7)  18.523 ms  18.338 ms  18.708 ms
+ 8  www.example.org (198.51.100.8)  73.498 ms  72.763 ms  74.233 ms
+ 9  www.example.org (203.0.113.80)  74.968 ms  74.218 ms  75.717 ms

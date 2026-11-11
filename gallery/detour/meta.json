@@ -1,0 +1,43 @@
+{
+  "slug": "detour",
+  "title": {
+    "en": "Singapore to Frankfurt, via Tokyo",
+    "fr": "Singapour — Francfort, par Tokyo"
+  },
+  "blurb": {
+    "en": "The route climbs to Japan, comes back down to Hong Kong, then heads west: a zigzag the geometry exposes.",
+    "fr": "La route monte au Japon, redescend à Hong Kong, puis file vers l’ouest : un zigzag que la géométrie démasque."
+  },
+  "feature": "zigzag-detour-detected",
+  "family": 4,
+  "declared_departure": false,
+  "traced_at": "2026-11-12T11:20:45Z",
+  "summary": {
+    "distance_km_min": 18454.258825716774,
+    "rtt_ms": 147.694,
+    "light_floor_ms": 100.57241423295078,
+    "inflation": 1.4685339029239557,
+    "countries": [
+      "SG",
+      "JP",
+      "HK",
+      "GB",
+      "DE"
+    ],
+    "networks": 3,
+    "ixps": 1,
+    "detours": [
+      {
+        "kind": "zigzag",
+        "ttls": [
+          2,
+          3,
+          4
+        ],
+        "detail": "Hop 3 adds at least 5607 km to the straight path 2 → 4."
+      }
+    ],
+    "rejected_by_light": 0,
+    "gaps": 1
+  }
+}

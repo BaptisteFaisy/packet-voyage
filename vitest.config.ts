@@ -11,6 +11,7 @@ export default defineConfig({
       'apps/*/src/**/*.test.{ts,tsx}',
       'fixtures/*/**/*.test.ts',
       'scripts/**/__tests__/*.test.mjs',
+      'gallery/**/*.test.ts',
     ],
     environment: 'node',
     // Bound the fork pool: this machine is shared with other builds, and a

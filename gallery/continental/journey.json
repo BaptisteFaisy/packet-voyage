@@ -1,0 +1,339 @@
+{
+  "version": 1,
+  "traced_at": "2026-11-12T10:02:11Z",
+  "tool": "traceroute",
+  "protocol": "udp",
+  "family": 4,
+  "source": {
+    "label": "FR",
+    "lat": null,
+    "lon": null,
+    "precision": "country",
+    "declared": true
+  },
+  "target": {
+    "host": "api.example.eu",
+    "ip": "203.0.113.80"
+  },
+  "hops": [
+    {
+      "ttl": 1,
+      "replies": [
+        {
+          "ip": "198.51.100.1",
+          "name": "gw.home.example",
+          "rtt_ms": [
+            0.8,
+            0.792,
+            0.808
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64496,
+      "as_name": "Example Access",
+      "ixp": null,
+      "envelope_ms": 0.792,
+      "location": {
+        "lat": 48.86,
+        "lon": 2.35,
+        "city": "Paris",
+        "country": "FR",
+        "confidence": 1,
+        "level": "solid",
+        "sources": [
+          "declared"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 2,
+      "replies": [
+        {
+          "ip": "198.51.100.2",
+          "name": "th2-eqix-par1.example.de",
+          "rtt_ms": [
+            0.8,
+            0.792,
+            0.808
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64500,
+      "as_name": "Example ISP",
+      "ixp": "Example-IX Paris",
+      "envelope_ms": 0.792,
+      "location": {
+        "lat": 48.86,
+        "lon": 2.35,
+        "city": "Paris",
+        "country": "FR",
+        "confidence": 0.988,
+        "level": "solid",
+        "sources": [
+          "ipmap-latency",
+          "ixp-prefix",
+          "name-hint"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 3,
+      "replies": [
+        {
+          "ip": "198.51.100.3",
+          "name": "ams1-ix-dc4.example.de",
+          "rtt_ms": [
+            5.477,
+            5.422,
+            5.531
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64501,
+      "as_name": "Example Transit",
+      "ixp": "Example-IX Amsterdam",
+      "envelope_ms": 5.422,
+      "location": {
+        "lat": 52.37,
+        "lon": 4.9,
+        "city": "Amsterdam",
+        "country": "NL",
+        "confidence": 0.988,
+        "level": "solid",
+        "sources": [
+          "ipmap-latency",
+          "ixp-prefix",
+          "name-hint"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 4,
+      "replies": [
+        {
+          "ip": "198.51.100.4",
+          "name": "duss2-core-ix1.example.de",
+          "rtt_ms": [
+            6.089,
+            6.028,
+            6.15
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64501,
+      "as_name": "Example Transit",
+      "ixp": null,
+      "envelope_ms": 6.028,
+      "location": {
+        "lat": 50.11,
+        "lon": 8.68,
+        "city": "Frankfurt",
+        "country": "DE",
+        "confidence": 0.611,
+        "level": "probable",
+        "sources": [
+          "ipmap-latency",
+          "name-hint"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 5,
+      "replies": [
+        {
+          "ip": "198.51.100.5",
+          "name": "fra.host.example.eu",
+          "rtt_ms": [
+            6.089,
+            6.028,
+            6.15
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64512,
+      "as_name": "Example Host",
+      "ixp": null,
+      "envelope_ms": 6.028,
+      "location": {
+        "lat": 50.11,
+        "lon": 8.68,
+        "city": "Frankfurt",
+        "country": "DE",
+        "confidence": 0.94,
+        "level": "solid",
+        "sources": [
+          "ipmap-latency",
+          "name-hint"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 6,
+      "replies": [
+        {
+          "ip": "203.0.113.80",
+          "name": "api.example.eu",
+          "rtt_ms": [
+            6.211,
+            6.149,
+            6.273
+          ]
+        }
+      ],
+      "class": "documentation",
+      "envelope_ms": 6.149,
+      "location": null
+    }
+  ],
+  "segments": [
+    {
+      "from_ttl": 0,
+      "to_ttl": 1,
+      "kind": "local",
+      "geodesic_km": 0,
+      "delta_ms": 0.792,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 1,
+      "to_ttl": 2,
+      "kind": "local",
+      "geodesic_km": 0,
+      "delta_ms": 0,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 2,
+      "to_ttl": 3,
+      "kind": "undetermined",
+      "geodesic_km": 429.69974559559773,
+      "delta_ms": 4.63,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 3,
+      "to_ttl": 4,
+      "kind": "undetermined",
+      "geodesic_km": 363.77239917528,
+      "delta_ms": 0.6059999999999999,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 4,
+      "to_ttl": 5,
+      "kind": "local",
+      "geodesic_km": 0,
+      "delta_ms": 0,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    }
+  ],
+  "summary": {
+    "distance_km_min": 793.4721447708778,
+    "rtt_ms": 6.149,
+    "light_floor_ms": 4.683807514629532,
+    "inflation": 1.3128208152862915,
+    "countries": [
+      "FR",
+      "NL",
+      "DE"
+    ],
+    "networks": 4,
+    "ixps": 2,
+    "detours": [],
+    "rejected_by_light": 0,
+    "gaps": 1
+  },
+  "story": [
+    {
+      "kind": "stop",
+      "ttl": 1,
+      "certainty": "inferred",
+      "en": "Stop 1 — Paris, FR (solid). Network: AS64496 (Example Access). 0.8 ms after departure.",
+      "fr": "Étape 1 — Paris, FR (solide). Réseau : AS64496 (Example Access). 0,8 ms après le départ."
+    },
+    {
+      "kind": "stop",
+      "ttl": 2,
+      "certainty": "inferred",
+      "en": "Stop 2 — Paris, FR (solid). Network: AS64500 (Example ISP). 0.8 ms after departure.",
+      "fr": "Étape 2 — Paris, FR (solide). Réseau : AS64500 (Example ISP). 0,8 ms après le départ."
+    },
+    {
+      "kind": "crossing",
+      "ttl": null,
+      "certainty": "assumed",
+      "en": "Crossing — Overland or undersea: cannot tell. At least 430 km as the crow flies, 4.6 ms later. No cable in the dataset is compatible with this crossing; the crossing itself is certain, the medium is not.",
+      "fr": "Traversée — terrestre ou maritime, impossible de trancher. Au moins 430 km à vol d'oiseau, 4,6 ms plus tard. Aucun câble du jeu de données n’est compatible avec cette traversée ; la traversée est certaine, le support ne l’est pas."
+    },
+    {
+      "kind": "stop",
+      "ttl": 3,
+      "certainty": "inferred",
+      "en": "Stop 3 — Amsterdam, NL (solid). Network: AS64501 (Example Transit). 5.4 ms after departure.",
+      "fr": "Étape 3 — Amsterdam, NL (solide). Réseau : AS64501 (Example Transit). 5,4 ms après le départ."
+    },
+    {
+      "kind": "crossing",
+      "ttl": null,
+      "certainty": "assumed",
+      "en": "Crossing — Overland or undersea: cannot tell. At least 364 km as the crow flies, 0.6 ms later. No cable in the dataset is compatible with this crossing; the crossing itself is certain, the medium is not.",
+      "fr": "Traversée — terrestre ou maritime, impossible de trancher. Au moins 364 km à vol d'oiseau, 0,6 ms plus tard. Aucun câble du jeu de données n’est compatible avec cette traversée ; la traversée est certaine, le support ne l’est pas."
+    },
+    {
+      "kind": "stop",
+      "ttl": 4,
+      "certainty": "inferred",
+      "en": "Stop 4 — Frankfurt, DE (likely). Network: AS64501 (Example Transit). 6 ms after departure.",
+      "fr": "Étape 4 — Frankfurt, DE (probable). Réseau : AS64501 (Example Transit). 6 ms après le départ."
+    },
+    {
+      "kind": "stop",
+      "ttl": 5,
+      "certainty": "inferred",
+      "en": "Stop 5 — Frankfurt, DE (solid). Network: AS64512 (Example Host). 6 ms after departure.",
+      "fr": "Étape 5 — Frankfurt, DE (solide). Réseau : AS64512 (Example Host). 6 ms après le départ."
+    },
+    {
+      "kind": "arrival",
+      "ttl": null,
+      "certainty": "inferred",
+      "en": "Arrival — api.example.eu. At least 793 km · 6.1 ms measured · light alone: 4.7 ms · inflation 1.31.",
+      "fr": "Arrivée — api.example.eu. Au moins 793 km · 6.1 ms mesurées · la lumière seule : 4.7 ms · inflation 1.31."
+    }
+  ],
+  "credits": [
+    "© OpenStreetMap contributors",
+    "Fixed links: hand-curated by Packet Voyage contributors (CC0); facts not copyrightable, coordinates approximate",
+    "Hints table: hand-curated by Packet Voyage contributors (CC0); facts not copyrightable, coordinates rounded to 0.01°",
+    "Made with Natural Earth"
+  ],
+  "redaction": {
+    "level": "country",
+    "applied": true
+  }
+}

@@ -1,0 +1,7 @@
+traceroute to a.root-servers.example (203.0.113.80), 30 hops max, 60 byte packets
+ 1  gw.home.example (198.51.100.1)  0.800 ms  0.792 ms  0.808 ms
+ 2  th2-eqix-par1.example.de (198.51.100.2)  0.800 ms  0.792 ms  0.808 ms
+ 3  a.root-servers.example (198.51.100.3)  0.800 ms  0.792 ms  0.808 ms
+ 4  ix-london.transit.example.net (198.51.100.4)  4.378 ms  4.334 ms  4.421 ms
+ 5  nyc.host.example.com (198.51.100.5)  74.398 ms  73.654 ms  75.142 ms
+ 6  a.root-servers.example (203.0.113.80)  75.886 ms  75.127 ms  76.645 ms

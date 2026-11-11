@@ -1,0 +1,61 @@
+[
+  [],
+  [],
+  [],
+  [
+    {
+      "city": "Madrid",
+      "country": "ES",
+      "lat": 40.42,
+      "lon": -3.7,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "Madrid",
+      "country": "ES",
+      "lat": 40.42,
+      "lon": -3.7,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ],
+  [],
+  [
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ],
+  [],
+  [
+    {
+      "city": "Ashburn",
+      "country": "US",
+      "lat": 39.04,
+      "lon": -77.49,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "Ashburn",
+      "country": "US",
+      "lat": 39.04,
+      "lon": -77.49,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ]
+]

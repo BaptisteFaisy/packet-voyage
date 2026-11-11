@@ -1,0 +1,176 @@
+[
+  {
+    "slug": "ocean-crossing",
+    "title": "Lyon to Ashburn, across the Atlantic",
+    "en": "Lyon to Ashburn, across the Atlantic",
+    "fr": "Lyon — Ashburn, par l’Atlantique",
+    "blurb_en": "A request to a Virginian host leaves France, crosses the Channel, then the ocean.",
+    "blurb_fr": "Une requête vers un serveur de Virginie quitte la France, passe la Manche, puis l’océan.",
+    "family": 4,
+    "feature": "sea-crossing-with-compatible-cables",
+    "traced_at": "2026-11-12T09:14:03Z",
+    "summary": {
+      "distance_km_min": 6656.579041607801,
+      "rtt_ms": 83.615,
+      "light_floor_ms": 63.69489084244827,
+      "inflation": 1.3127426532031412,
+      "countries": [
+        "FR",
+        "GB",
+        "US"
+      ],
+      "networks": 4,
+      "ixps": 1,
+      "detours": [],
+      "rejected_by_light": 1,
+      "gaps": 2
+    }
+  },
+  {
+    "slug": "continental",
+    "title": "Paris to Frankfurt, overland",
+    "en": "Paris to Frankfurt, overland",
+    "fr": "Paris — Francfort, par la terre",
+    "blurb_en": "Four hops inside one continent: the tool cannot tell land from a channel cable, and says so.",
+    "blurb_fr": "Quatre étapes sur un même continent : l’outil ne peut pas trancher entre terre et câble, et le dit.",
+    "family": 4,
+    "feature": "undetermined-segments-no-cable-claim",
+    "traced_at": "2026-11-12T10:02:11Z",
+    "summary": {
+      "distance_km_min": 793.4721447708778,
+      "rtt_ms": 6.149,
+      "light_floor_ms": 4.683807514629532,
+      "inflation": 1.3128208152862915,
+      "countries": [
+        "FR",
+        "NL",
+        "DE"
+      ],
+      "networks": 4,
+      "ixps": 2,
+      "detours": [],
+      "rejected_by_light": 0,
+      "gaps": 1
+    }
+  },
+  {
+    "slug": "detour",
+    "title": "Singapore to Frankfurt, via Tokyo",
+    "en": "Singapore to Frankfurt, via Tokyo",
+    "fr": "Singapour — Francfort, par Tokyo",
+    "blurb_en": "The route climbs to Japan, comes back down to Hong Kong, then heads west: a zigzag the geometry exposes.",
+    "blurb_fr": "La route monte au Japon, redescend à Hong Kong, puis file vers l’ouest : un zigzag que la géométrie démasque.",
+    "family": 4,
+    "feature": "zigzag-detour-detected",
+    "traced_at": "2026-11-12T11:20:45Z",
+    "summary": {
+      "distance_km_min": 18454.258825716774,
+      "rtt_ms": 147.694,
+      "light_floor_ms": 100.57241423295078,
+      "inflation": 1.4685339029239557,
+      "countries": [
+        "SG",
+        "JP",
+        "HK",
+        "GB",
+        "DE"
+      ],
+      "networks": 3,
+      "ixps": 1,
+      "detours": [
+        {
+          "kind": "zigzag",
+          "ttls": [
+            2,
+            3,
+            4
+          ],
+          "detail": "Hop 3 adds at least 5607 km to the straight path 2 → 4."
+        }
+      ],
+      "rejected_by_light": 0,
+      "gaps": 1
+    }
+  },
+  {
+    "slug": "rejected-by-light",
+    "title": "The database says Ashburn, the light says no",
+    "en": "The database says Ashburn, the light says no",
+    "fr": "La base dit Ashburn, la lumière dit non",
+    "blurb_en": "A hop answering in 9 ms cannot be 6,400 km away: the impossible location is rejected, and shown.",
+    "blurb_fr": "Une étape qui répond en 9 ms ne peut pas être à 6 400 km : la localisation impossible est rejetée, et montrée.",
+    "family": 4,
+    "feature": "impossible-location-rejected-and-shown",
+    "traced_at": "2026-11-12T12:05:30Z",
+    "summary": {
+      "distance_km_min": 6924.6508598228165,
+      "rtt_ms": 85.653,
+      "light_floor_ms": 65.24777224209159,
+      "inflation": 1.3127344744001073,
+      "countries": [
+        "FR",
+        "GB",
+        "US"
+      ],
+      "networks": 4,
+      "ixps": 1,
+      "detours": [],
+      "rejected_by_light": 3,
+      "gaps": 1
+    }
+  },
+  {
+    "slug": "anycast",
+    "title": "One address, many places",
+    "en": "One address, many places",
+    "fr": "Une adresse, plusieurs lieux",
+    "blurb_en": "A root server answers from the nearest instance: the tool keeps the compatible one and marks the hop anycast.",
+    "blurb_fr": "Un serveur racine répond depuis l’instance la plus proche : l’outil garde celle compatible et marque l’étape anycast.",
+    "family": 4,
+    "feature": "anycast-hop-single-compatible-instance",
+    "traced_at": "2026-11-12T13:41:09Z",
+    "summary": {
+      "distance_km_min": 5913.918637447218,
+      "rtt_ms": 75.127,
+      "light_floor_ms": 57.22948179166977,
+      "inflation": 1.3127324876622481,
+      "countries": [
+        "FR",
+        "GB",
+        "US"
+      ],
+      "networks": 5,
+      "ixps": 1,
+      "detours": [],
+      "rejected_by_light": 2,
+      "gaps": 1
+    }
+  },
+  {
+    "slug": "with-gaps",
+    "title": "A route with holes",
+    "en": "A route with holes",
+    "fr": "Une route pleine de trous",
+    "blurb_en": "Silent routers and unlocated hops: the tool counts the holes instead of filling them.",
+    "blurb_fr": "Routeurs muets et étapes non localisées : l’outil compte les trous au lieu de les boucher.",
+    "family": 4,
+    "feature": "silent-and-unlocated-hops-counted",
+    "traced_at": "2026-11-12T14:12:55Z",
+    "summary": {
+      "distance_km_min": 7238.799223532263,
+      "rtt_ms": 74.218,
+      "light_floor_ms": 59.96654465255244,
+      "inflation": 1.2376567706213661,
+      "countries": [
+        "ES",
+        "FR",
+        "US"
+      ],
+      "networks": 4,
+      "ixps": 0,
+      "detours": [],
+      "rejected_by_light": 0,
+      "gaps": 4
+    }
+  }
+]

@@ -17,9 +17,14 @@ export interface ShareCodecs {
 }
 
 export class ShareTooLargeError extends Error {
-  constructor(readonly bytes: number, readonly limit: number = MAX_FRAGMENT_BYTES) {
+  readonly bytes: number;
+  readonly limit: number;
+
+  constructor(bytes: number, limit: number = MAX_FRAGMENT_BYTES) {
     super(`journey does not fit in a URL fragment: ${bytes} bytes for a ${limit} byte limit`);
     this.name = 'ShareTooLargeError';
+    this.bytes = bytes;
+    this.limit = limit;
   }
 }
 

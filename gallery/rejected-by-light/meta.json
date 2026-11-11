@@ -1,0 +1,31 @@
+{
+  "slug": "rejected-by-light",
+  "title": {
+    "en": "The database says Ashburn, the light says no",
+    "fr": "La base dit Ashburn, la lumière dit non"
+  },
+  "blurb": {
+    "en": "A hop answering in 9 ms cannot be 6,400 km away: the impossible location is rejected, and shown.",
+    "fr": "Une étape qui répond en 9 ms ne peut pas être à 6 400 km : la localisation impossible est rejetée, et montrée."
+  },
+  "feature": "impossible-location-rejected-and-shown",
+  "family": 4,
+  "declared_departure": true,
+  "traced_at": "2026-11-12T12:05:30Z",
+  "summary": {
+    "distance_km_min": 6924.6508598228165,
+    "rtt_ms": 85.653,
+    "light_floor_ms": 65.24777224209159,
+    "inflation": 1.3127344744001073,
+    "countries": [
+      "FR",
+      "GB",
+      "US"
+    ],
+    "networks": 4,
+    "ixps": 1,
+    "detours": [],
+    "rejected_by_light": 3,
+    "gaps": 1
+  }
+}

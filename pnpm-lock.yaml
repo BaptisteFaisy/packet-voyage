@@ -137,6 +137,18 @@ importers:
         specifier: ^5.4.11
         version: 5.4.21(@types/node@22.20.5)
 
+  gallery:
+    dependencies:
+      '@packet-voyage/core':
+        specifier: workspace:*
+        version: link:../packages/core
+      '@packet-voyage/data':
+        specifier: workspace:*
+        version: link:../packages/data
+      '@packet-voyage/schema':
+        specifier: workspace:*
+        version: link:../packages/schema
+
   packages/core:
     dependencies:
       '@packet-voyage/schema':

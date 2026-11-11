@@ -1,0 +1,110 @@
+[
+  [],
+  [
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "ixp-prefix",
+      "weight": 0.8
+    },
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ],
+  [
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    },
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "ipmap-anycast",
+      "weight": 0.5,
+      "anycast": true
+    },
+    {
+      "city": "Amsterdam",
+      "country": "NL",
+      "lat": 52.37,
+      "lon": 4.9,
+      "source": "ipmap-anycast",
+      "weight": 0.5,
+      "anycast": true
+    },
+    {
+      "city": "Sydney",
+      "country": "AU",
+      "lat": -33.87,
+      "lon": 151.21,
+      "source": "ipmap-anycast",
+      "weight": 0.5,
+      "anycast": true
+    }
+  ],
+  [
+    {
+      "city": "London",
+      "country": "GB",
+      "lat": 51.51,
+      "lon": -0.13,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "London",
+      "country": "GB",
+      "lat": 51.51,
+      "lon": -0.13,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ],
+  [
+    {
+      "city": "New York",
+      "country": "US",
+      "lat": 40.71,
+      "lon": -74.01,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "New York",
+      "country": "US",
+      "lat": 40.71,
+      "lon": -74.01,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ]
+]

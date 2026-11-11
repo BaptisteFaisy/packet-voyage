@@ -1,0 +1,8 @@
+traceroute to api.example.eu (203.0.113.80), 30 hops max, 60 byte packets
+ 1  sgt.core-ix1.example.asia (198.51.100.1)  0.800 ms  0.792 ms  0.808 ms
+ 2  sg1.dc2-ix7.example.asia (198.51.100.2)  0.800 ms  0.792 ms  0.808 ms
+ 3  nrt1.edge9-tyo.example.asia (198.51.100.3)  73.734 ms  72.996 ms  74.471 ms
+ 4  hkg3.dc4-hk.example.asia (198.51.100.4)  73.734 ms  72.996 ms  74.471 ms
+ 5  lon9.xe6-core11.example.de (198.51.100.5)  146.261 ms  144.798 ms  147.723 ms
+ 6  fra.host.example.eu (198.51.100.6)  146.261 ms  144.798 ms  147.723 ms
+ 7  api.example.eu (203.0.113.80)  149.186 ms  147.694 ms  150.678 ms

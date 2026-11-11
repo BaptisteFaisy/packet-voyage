@@ -1,0 +1,27 @@
+{
+  "slug": "rejected-by-light",
+  "feature": "impossible-location-rejected-and-shown",
+  "summary": {
+    "distance_km_min": 6924.7,
+    "rtt_ms": 85.7,
+    "light_floor_ms": 65.2,
+    "inflation": 1.31,
+    "countries": [
+      "FR",
+      "GB",
+      "US"
+    ],
+    "networks": 4,
+    "ixps": 1,
+    "detours": 0,
+    "rejected_by_light": 3,
+    "gaps": 1
+  },
+  "hops": 7,
+  "located_hops": 6,
+  "rejected_candidates": 3,
+  "anycast_hops": 0,
+  "compatible_cables": 8,
+  "sea_segments": 2,
+  "segments": 6
+}
