@@ -42,6 +42,19 @@ function dragHandlers(drag: ReturnType<typeof useMapDrag>) {
   };
 }
 
+/**
+ * The map controls, OUTSIDE `.world-map`: the SVG hit-target overlay covers that
+ * box absolutely (`inset: 0`), so a control placed inside it never receives a
+ * click. jsdom cannot see that; the live-site check can, and does.
+ */
+function MapToolbar({ enabled, onToggle }: { enabled: boolean; onToggle: (next: boolean) => void }) {
+  return (
+    <div className="world-map-toolbar">
+      <LightConeToggle enabled={enabled} onToggle={onToggle} />
+    </div>
+  );
+}
+
 export function WorldMap(props: WorldMapProps) {
   const { journey, secondary = null, masses = [], cables = [], projection: forced } = props;
   const { t } = useI18n();
@@ -68,24 +81,26 @@ export function WorldMap(props: WorldMapProps) {
     lightCones,
   });
   return (
-    <div className="world-map">
-      <LightConeToggle enabled={lightCones} onToggle={setLightCones} />
-      <canvas
-        ref={canvasRef}
-        width={WIDTH}
-        height={HEIGHT}
-        role="img"
-        aria-label={mapAltText(journey, t)}
-        data-testid="world-map-canvas"
-        {...dragHandlers(drag)}
-      />
-      <MapOverlay
-        projection={painted.projection}
-        journey={journey}
-        nodes={painted.scene.nodes}
-        width={WIDTH}
-        height={HEIGHT}
-      />
+    <div className="world-map-block">
+      <MapToolbar enabled={lightCones} onToggle={setLightCones} />
+      <div className="world-map">
+        <canvas
+          ref={canvasRef}
+          width={WIDTH}
+          height={HEIGHT}
+          role="img"
+          aria-label={mapAltText(journey, t)}
+          data-testid="world-map-canvas"
+          {...dragHandlers(drag)}
+        />
+        <MapOverlay
+          projection={painted.projection}
+          journey={journey}
+          nodes={painted.scene.nodes}
+          width={WIDTH}
+          height={HEIGHT}
+        />
+      </div>
     </div>
   );
 }

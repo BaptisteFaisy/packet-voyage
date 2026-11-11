@@ -37,6 +37,13 @@
 }
 
 /* Map (§12.3: night-blue sea, slate land, watermark cables). */
+.world-map-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
 .world-map {
   position: relative;
   background: var(--sea-deep);
