@@ -1,0 +1,146 @@
+[
+  [],
+  [],
+  [
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ],
+  [
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "ixp-prefix",
+      "weight": 0.8
+    },
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    },
+    {
+      "city": "Ashburn",
+      "country": "US",
+      "lat": 39.04,
+      "lon": -77.49,
+      "source": "geodb",
+      "weight": 0.3
+    }
+  ],
+  [
+    {
+      "city": "London",
+      "country": "GB",
+      "lat": 51.51,
+      "lon": -0.13,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "London",
+      "country": "GB",
+      "lat": 51.51,
+      "lon": -0.13,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ],
+  [
+    {
+      "city": "London",
+      "country": "GB",
+      "lat": 51.51,
+      "lon": -0.13,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "London",
+      "country": "GB",
+      "lat": 51.51,
+      "lon": -0.13,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ],
+  [
+    {
+      "city": "New York",
+      "country": "US",
+      "lat": 40.71,
+      "lon": -74.01,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "New York",
+      "country": "US",
+      "lat": 40.71,
+      "lon": -74.01,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ],
+  [
+    {
+      "city": "New York",
+      "country": "US",
+      "lat": 40.71,
+      "lon": -74.01,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "New York",
+      "country": "US",
+      "lat": 40.71,
+      "lon": -74.01,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ],
+  [
+    {
+      "city": "Ashburn",
+      "country": "US",
+      "lat": 39.04,
+      "lon": -77.49,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "Ashburn",
+      "country": "US",
+      "lat": 39.04,
+      "lon": -77.49,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ]
+]

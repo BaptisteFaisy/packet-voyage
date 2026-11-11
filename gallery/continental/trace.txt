@@ -1,0 +1,7 @@
+traceroute to api.example.eu (203.0.113.80), 30 hops max, 60 byte packets
+ 1  gw.home.example (198.51.100.1)  0.800 ms  0.792 ms  0.808 ms
+ 2  th2-eqix-par1.example.de (198.51.100.2)  0.800 ms  0.792 ms  0.808 ms
+ 3  ams1-ix-dc4.example.de (198.51.100.3)  5.477 ms  5.422 ms  5.531 ms
+ 4  duss2-core-ix1.example.de (198.51.100.4)  6.089 ms  6.028 ms  6.150 ms
+ 5  fra.host.example.eu (198.51.100.5)  6.089 ms  6.028 ms  6.150 ms
+ 6  api.example.eu (203.0.113.80)  6.211 ms  6.149 ms  6.273 ms

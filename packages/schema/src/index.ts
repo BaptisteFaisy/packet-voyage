@@ -262,9 +262,13 @@ export type HintCity = z.infer<typeof HintCitySchema>;
 /* ---------------------------------------------------------------- errors */
 
 export class JourneyParseError extends Error {
-  constructor(readonly issues: string[]) {
+  /** Structured Zod issues, so a caller can show what is wrong. */
+  readonly issues: string[];
+
+  constructor(issues: string[]) {
     super(`invalid journey: ${issues.join('; ')}`);
     this.name = 'JourneyParseError';
+    this.issues = issues;
   }
 }
 

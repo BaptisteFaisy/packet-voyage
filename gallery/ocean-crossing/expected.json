@@ -1,0 +1,27 @@
+{
+  "slug": "ocean-crossing",
+  "feature": "sea-crossing-with-compatible-cables",
+  "summary": {
+    "distance_km_min": 6656.6,
+    "rtt_ms": 83.6,
+    "light_floor_ms": 63.7,
+    "inflation": 1.31,
+    "countries": [
+      "FR",
+      "GB",
+      "US"
+    ],
+    "networks": 4,
+    "ixps": 1,
+    "detours": 0,
+    "rejected_by_light": 1,
+    "gaps": 2
+  },
+  "hops": 10,
+  "located_hops": 8,
+  "rejected_candidates": 1,
+  "anycast_hops": 0,
+  "compatible_cables": 8,
+  "sea_segments": 2,
+  "segments": 8
+}

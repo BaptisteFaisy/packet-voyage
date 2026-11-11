@@ -1,0 +1,27 @@
+{
+  "slug": "anycast",
+  "feature": "anycast-hop-single-compatible-instance",
+  "summary": {
+    "distance_km_min": 5913.9,
+    "rtt_ms": 75.1,
+    "light_floor_ms": 57.2,
+    "inflation": 1.31,
+    "countries": [
+      "FR",
+      "GB",
+      "US"
+    ],
+    "networks": 5,
+    "ixps": 1,
+    "detours": 0,
+    "rejected_by_light": 2,
+    "gaps": 1
+  },
+  "hops": 6,
+  "located_hops": 5,
+  "rejected_candidates": 2,
+  "anycast_hops": 1,
+  "compatible_cables": 7,
+  "sea_segments": 2,
+  "segments": 5
+}

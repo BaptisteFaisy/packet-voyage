@@ -1,0 +1,31 @@
+{
+  "slug": "anycast",
+  "title": {
+    "en": "One address, many places",
+    "fr": "Une adresse, plusieurs lieux"
+  },
+  "blurb": {
+    "en": "A root server answers from the nearest instance: the tool keeps the compatible one and marks the hop anycast.",
+    "fr": "Un serveur racine répond depuis l’instance la plus proche : l’outil garde celle compatible et marque l’étape anycast."
+  },
+  "feature": "anycast-hop-single-compatible-instance",
+  "family": 4,
+  "declared_departure": true,
+  "traced_at": "2026-11-12T13:41:09Z",
+  "summary": {
+    "distance_km_min": 5913.918637447218,
+    "rtt_ms": 75.127,
+    "light_floor_ms": 57.22948179166977,
+    "inflation": 1.3127324876622481,
+    "countries": [
+      "FR",
+      "GB",
+      "US"
+    ],
+    "networks": 5,
+    "ixps": 1,
+    "detours": [],
+    "rejected_by_light": 2,
+    "gaps": 1
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "slug": "ocean-crossing",
+  "title": {
+    "en": "Lyon to Ashburn, across the Atlantic",
+    "fr": "Lyon — Ashburn, par l’Atlantique"
+  },
+  "blurb": {
+    "en": "A request to a Virginian host leaves France, crosses the Channel, then the ocean.",
+    "fr": "Une requête vers un serveur de Virginie quitte la France, passe la Manche, puis l’océan."
+  },
+  "feature": "sea-crossing-with-compatible-cables",
+  "family": 4,
+  "declared_departure": true,
+  "traced_at": "2026-11-12T09:14:03Z",
+  "summary": {
+    "distance_km_min": 6656.579041607801,
+    "rtt_ms": 83.615,
+    "light_floor_ms": 63.69489084244827,
+    "inflation": 1.3127426532031412,
+    "countries": [
+      "FR",
+      "GB",
+      "US"
+    ],
+    "networks": 4,
+    "ixps": 1,
+    "detours": [],
+    "rejected_by_light": 1,
+    "gaps": 2
+  }
+}
