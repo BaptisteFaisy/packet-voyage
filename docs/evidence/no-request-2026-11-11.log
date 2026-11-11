@@ -19,17 +19,17 @@ External requests: 0
 - clicked classroom
 
 ## Every request issued
-- GET http://127.0.0.1:40039/index.html
-- GET http://127.0.0.1:40039/assets/index-DUwXUQ9L.js
-- GET http://127.0.0.1:40039/assets/index-CBiixOEM.css
-- GET http://127.0.0.1:40039/assets/src-B--G5Moy.js
-- GET http://127.0.0.1:40039/assets/fixed-links-32wCgc4I.js
-- GET http://127.0.0.1:40039/assets/hints-Y62wMazt.js
-- GET http://127.0.0.1:40039/assets/landmasses-hK_6HLaW.js
-- GET http://127.0.0.1:40039/assets/submarine-cables-BX07K3Oo.js
-- GET http://127.0.0.1:40039/assets/fixed-links-CgJrbsj1.js
-- GET http://127.0.0.1:40039/assets/hints-fxbtIwg6.js
-- GET http://127.0.0.1:40039/assets/landmasses-DJgZaW3-.js
-- GET http://127.0.0.1:40039/assets/submarine-cables-B3XWLE7Y.js
+- GET http://127.0.0.1:46401/index.html
+- GET http://127.0.0.1:46401/assets/index-MpNZ9X6F.js
+- GET http://127.0.0.1:46401/assets/index-KYeYaFb8.css
+- GET http://127.0.0.1:46401/assets/src-w8PspIHm.js
+- GET http://127.0.0.1:46401/assets/fixed-links-32wCgc4I.js
+- GET http://127.0.0.1:46401/assets/hints-Y62wMazt.js
+- GET http://127.0.0.1:46401/assets/landmasses-hK_6HLaW.js
+- GET http://127.0.0.1:46401/assets/submarine-cables-BX07K3Oo.js
+- GET http://127.0.0.1:46401/assets/fixed-links-CgJrbsj1.js
+- GET http://127.0.0.1:46401/assets/hints-fxbtIwg6.js
+- GET http://127.0.0.1:46401/assets/landmasses-DJgZaW3-.js
+- GET http://127.0.0.1:46401/assets/submarine-cables-B3XWLE7Y.js
 
 VERDICT: 0 external request(s) after load — 12 loopback asset(s)

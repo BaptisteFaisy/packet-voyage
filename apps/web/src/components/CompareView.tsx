@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useI18n } from '../i18n/context.tsx';
 import type { GalleryItem } from '../lib/gallery.ts';
+import { DiffPanel } from './DiffPanel.tsx';
 import { SummaryBanner } from './SummaryBanner.tsx';
 import { WorldMap } from './WorldMap.tsx';
 
@@ -95,6 +96,7 @@ export function CompareView({ items }: CompareViewProps) {
           <SummaryBanner journey={itemB.journey} />
         </div>
       </div>
+      <DiffPanel a={itemA.journey} b={itemB.journey} />
     </section>
   );
 }
