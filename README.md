@@ -81,6 +81,20 @@ measurement, no return path (a traceroute only sees the way there). Through the
 MCP server: one trace at a time, at least five seconds between two traces, at
 most twenty per session, and your approval on every call.
 
+## Measured, not claimed
+
+| | |
+|---|---|
+| The §7.14 worked example | at least 6,654 km · 91.7 ms · light floor 63.7 ms · inflation 1.44 · 1 location rejected by the light |
+| The same trace, offline, from the router names alone | 8 hops located out of 10, no request sent |
+| Parse + compute a 30-hop journey | 30.6 ms (target: under 200 ms) |
+| Site code, compressed | 191.5 kB of JS + CSS (budget 350 kB) |
+| Vendored data, compressed | 116 kB: 169 cables, 36 landmasses, 212 name hints, 9 fixed links (budget 1.5 MB) |
+| Tests | 357 over 52 files, including the twenty properties `VOY-P-01` … `VOY-P-20` |
+
+`docs/VALIDATION.md` maps every acceptance point of the specification to the
+command that proves it.
+
 ## Development
 
 ```bash

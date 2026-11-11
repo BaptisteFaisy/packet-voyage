@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "claims-guard",
+      "description": "On every agent save under apps/web/src/** or packages/core/src/story/**, runs the §5.4 vocabulary control (honesty.md, VOY-N-04): refuses forbidden phrasing ('travelled through', 'took the cable', 'your packet crossed', 'located in {city}' without a level, a bare '{n} km' travelled distance, 'countries your data crossed') in labels and story templates. Same logic as scripts/guards/vocabulary.guard.mjs in CI (§14.3: every file hook is also a CI guard).",
+      "trigger": "PostFileSave",
+      "matcher": "^(apps/web/src|packages/core/src/story)/.*\\.(ts|tsx|json)$",
+      "action": {
+        "type": "command",
+        "command": "node scripts/hooks/claims-guard.mjs"
+      },
+      "timeout": 120,
+      "enabled": true
+    }
+  ]
+}

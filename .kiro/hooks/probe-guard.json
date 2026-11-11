@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Probe guard: the agent never probes the Internet",
+      "description": "Refuses any agent shell command that probes the network (traceroute, tracert, mtr, ping, nmap, tracepath) toward a host absent from .kiro/probe-allowlist.txt (loopback and RFC 5737/3849 documentation ranges only). The script reads the Kiro payload on stdin (hook_event_name, cwd, session_id, tool_name, tool_input), finds the probe command and its target, and exits non-zero with a message on stderr so Kiro blocks the tool and relays the message. Every block is journaled: the count is submission fact 1 of §14.6. Annexe D: the exact field carrying the command inside tool_input is to be confirmed on the first real trigger.",
+      "trigger": "PreToolUse",
+      "matcher": "shell",
+      "action": {
+        "type": "command",
+        "command": "node scripts/hooks/probe-guard.mjs"
+      },
+      "timeout": 60,
+      "enabled": true
+    }
+  ]
+}

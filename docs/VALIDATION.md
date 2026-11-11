@@ -36,11 +36,14 @@ CI runs exactly this on the self-hosted runners, inside a five-minute budget
 
 ## Numbers to record before the freeze
 
-| Measure | Target | Measured |
-|---|---|---|
-| Parse + compute a 30-hop journey | < 200 ms | `TODO(measure)` |
-| Enrichment with a warm cache | < 3 s | `TODO(measure)` |
-| Site application code, compressed | < 350 kB | `TODO(measure)` |
-| Vendored data, compressed | < 1.5 MB | 116 kB (measured by the data lot) |
-| Public hops located at `solid` or `probable` level on the gallery | ≥ 70 % | `TODO(measure)` |
-| False locations rejected by the light | counted per journey | shown in each journey summary |
+| Measure | Target | Measured | How it is measured |
+|---|---|---|---|
+| Parse + compute a 30-hop journey | < 200 ms | **30.6 ms** | `npx vitest run packages/core/src/pipeline.perf.test.ts` (asserts the bound, prints the number) |
+| Site application code, compressed | < 350 kB | **191.5 kB** (JS + CSS, gzip) | `node scripts/guards/bundle-size.guard.mjs` after `pnpm build` |
+| Vendored data, compressed | < 1.5 MB | **116 kB** (736 kB raw) | same guard; `packages/data` provenance sheets |
+| The §7.14 worked example | at least 6,655 km · 91.7 ms · 63.6 ms · 1.44 · 1 rejection | **6,654 km · 91.7 ms · 63.7 ms · 1.44 · 1 rejection** | `npx vitest run packages/core/src/pipeline.test.ts` |
+| The same trace, offline, from the router names alone | most hops located | **8 hops located out of 10, 1 gap** | `voyage read docs/examples/lyon-ashburn.txt --from Lyon --offline` |
+| The twenty properties | all green, seeds recorded | **VOY-P-01 … VOY-P-20 green** | `npx vitest run packages apps` |
+| Enrichment with a warm cache | < 3 s | `TODO(measure)` — needs a live consent and the RIPE services; the offline equality is proven instead by VOY-P-19 | `npx vitest run packages/enrich` |
+| Public hops located at `solid` or `probable` level on the gallery | ≥ 70 % | `TODO(measure)` — to be calibrated on real traces before the freeze (§15.3, 25-26 November) | `node scripts/build-gallery.mjs --check` |
+| False locations rejected by the light | counted per journey | shown in every journey summary and on each hop card | gallery journeys |
