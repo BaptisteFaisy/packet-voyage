@@ -20,8 +20,14 @@ Live site (no install, no account, no request): <https://baptistefaisy.github.io
    stitched hop by hop, the Atlantic crossing lights up its compatible cables, and
    hop 4 shows a geolocation database contradicted by the speed of light.
 2. Or paste a `traceroute` you already have: the site computes the journey locally,
-   from the hints in the router names, without sending anything anywhere.
-3. Or trace your own route with the command line:
+   from the hints in the router names, without sending anything anywhere. If the
+   paste needed cleaning (a byte-order mark, tabs), the site says so.
+3. Under the delay timeline, the **insights panel** answers the questions the map
+   cannot: the distance bounds, where the delay goes, which physical media can
+   explain it, and what the same journey looked like in 1987. Next to it, the
+   **export panel** hands over the journey as GeoJSON or as a redaction-gated
+   incident report; the compare view states the **diff** between two routes.
+4. Or trace your own route with the command line:
 
 ```bash
 git clone https://github.com/BaptisteFaisy/packet-voyage && cd packet-voyage

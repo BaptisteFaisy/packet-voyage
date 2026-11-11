@@ -11,7 +11,7 @@
   "packageManager": "pnpm@9.15.4",
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "lint": "eslint . --max-warnings 0",
+    "lint": "eslint . --max-warnings 0 --cache --cache-location ${HOME}/.cache/packet-voyage/eslint/",
     "test": "vitest run --passWithNoTests",
     "build": "node scripts/build.mjs",
     "dev": "pnpm --filter @packet-voyage/web dev",
