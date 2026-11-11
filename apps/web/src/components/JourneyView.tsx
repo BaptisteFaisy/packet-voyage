@@ -6,6 +6,7 @@ import { useJourneyKeyboard } from '../hooks/use-journey-keyboard.ts';
 import { loadDatasets } from '../lib/datasets.ts';
 import { SummaryBanner } from './SummaryBanner.tsx';
 import { WorldMap } from './WorldMap.tsx';
+import { ExportImageButton } from './ExportImageButton.tsx';
 import { MapLegend } from './MapLegend.tsx';
 import { DelayTimeline } from './DelayTimeline.tsx';
 import { HopList } from './HopList.tsx';
@@ -49,6 +50,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
           <WorldMap journey={journey} masses={masses} cables={cables} />
           {masses.length === 0 ? <p className="map-notice">{t('map.notBuilt')}</p> : null}
           <MapLegend journey={journey} />
+          <ExportImageButton journey={journey} masses={masses} cables={cables} />
         </div>
         <DetailPanel journey={journey} />
       </div>

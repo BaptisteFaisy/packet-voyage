@@ -9,13 +9,30 @@ the output of a `traceroute`, puts every hop on a world map, lists the submarine
 cables **compatible** with each crossing, and says honestly what is measured,
 what is inferred and what is assumed.
 
+[![CI](https://github.com/BaptisteFaisy/packet-voyage/actions/workflows/ci.yml/badge.svg)](https://github.com/BaptisteFaisy/packet-voyage/actions/workflows/ci.yml)
+[![Licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](./LICENSE)
+
 Live site (no install, no account, no request): <https://baptistefaisy.github.io/packet-voyage/>
 
+### Try it in thirty seconds
+
+1. Open the site, click **Lyon to Ashburn, across the Atlantic**: the route is
+   stitched hop by hop, the Atlantic crossing lights up its compatible cables, and
+   hop 4 shows a geolocation database contradicted by the speed of light.
+2. Or paste a `traceroute` you already have: the site computes the journey locally,
+   from the hints in the router names, without sending anything anywhere.
+3. Or trace your own route with the command line:
+
 ```bash
-npx packet-voyage trace example.org     # trace your own route
-npx packet-voyage read trace.txt        # read a trace you already have
-npx packet-voyage share journey.json    # redact, then produce a shareable link
+git clone https://github.com/BaptisteFaisy/packet-voyage && cd packet-voyage
+pnpm install && pnpm build
+node apps/cli/bin/voyage.mjs trace example.org      # one host, never a range
+node apps/cli/bin/voyage.mjs read trace.txt          # a trace you already have
+node apps/cli/bin/voyage.mjs share journey.json      # redact, then share a link
 ```
+
+> The npm package `packet-voyage` is not published yet, so `npx packet-voyage`
+> does not work at the time of writing: build from the clone as above.
 
 ## Three decisions that shape everything
 
@@ -91,6 +108,39 @@ most twenty per session, and your approval on every call.
 | Site code, compressed | 191.5 kB of JS + CSS (budget 350 kB) |
 | Vendored data, compressed | 116 kB: 169 cables, 36 landmasses, 212 name hints, 9 fixed links (budget 1.5 MB) |
 | Tests | 357 over 52 files, including the twenty properties `VOY-P-01` … `VOY-P-20` |
+
+`docs/VALIDATION.md` maps every acceptance point of the specification to the
+command that proves it.
+
+## What this tool refuses to do
+
+- **No range, no list, no scan.** One host per command; a CIDR prefix, a span or
+  a comma-separated list is refused with exit code 2.
+- **No probe from the hosted site.** The browser cannot trace a route, and the
+  site does not try: `connect-src 'none'` in its CSP, and a Playwright log in
+  `docs/evidence/` proves zero external request during a full visit.
+- **No continuous measurement.** One trace, on demand, by a human.
+- **No return path.** A traceroute only sees the way there; the tool never
+  pretends otherwise.
+- **No locating people.** Cities at best, never an address; the departure is
+  coarse-grained to the country in everything that is shared.
+- **No agent probing while building.** `.kiro/hooks/probe-guard.json` refuses any
+  shell command in which an agent would probe the Internet; it blocked
+  `traceroute -n example.org` and `mtr -n 8.8.8.8` during this build (exit 2,
+  recorded in `KIRO_JOURNAL.md`).
+
+## Reproduce the numbers
+
+```bash
+pnpm test                                             # 364 tests, 20 properties
+npx vitest run packages/core/src/pipeline.test.ts      # the §7.14 acceptance
+npx vitest run packages/core/src/pipeline.perf.test.ts # 30 hops in 30.6 ms
+node scripts/guards/run-all.mjs                        # the eight project guards
+node scripts/guards/selftest.mjs                       # the guards test themselves
+node scripts/calibrate.mjs                             # located-hop ratio (76.7 %)
+node scripts/verify-no-request.mjs                     # the browser proof
+WRITE_GALLERY=1 npx vitest run gallery                 # regenerate the gallery
+```
 
 `docs/VALIDATION.md` maps every acceptance point of the specification to the
 command that proves it.

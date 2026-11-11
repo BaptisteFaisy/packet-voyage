@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import type { RefObject } from 'react';
 import type { Cable, Journey, Landmass } from '@packet-voyage/schema';
 import type { GeoProjection } from 'd3-geo';
-import { makeProjection } from '../../lib/map-geometry.ts';
+import { litCableIds, makeProjection } from '../../lib/map-geometry.ts';
 import type { ProjectionKind } from '../../lib/map-geometry.ts';
 import { useMapAnimation } from './use-map-animation.ts';
 import { useMapScene } from './use-map-scene.ts';
@@ -30,27 +30,13 @@ export interface PaintedMap {
   scene: MapSceneData;
 }
 
-function litCableIdsOf(journey: Journey, selectedSegment: { from: number; to: number } | null): Set<string> {
-  const ids = new Set<string>();
-  for (const segment of journey.segments) {
-    const selected =
-      selectedSegment !== null &&
-      segment.from_ttl === selectedSegment.from &&
-      segment.to_ttl === selectedSegment.to;
-    if (selected || (selectedSegment === null && segment.kind === 'sea')) {
-      for (const cable of segment.cables) ids.add(cable.id);
-    }
-  }
-  return ids;
-}
-
 /** Scene memoisation + projection + stitching clock + canvas painting. */
 export function usePaintedMap(input: PaintedMapInput): PaintedMap {
   const { journey, secondary, masses, cables, kind, rotation, animationsEnabled, canvasRef } = input;
   const scene = useMapScene(journey, secondary);
   const elapsed = useMapAnimation(scene.plan, animationsEnabled);
   const lit = useMemo(
-    () => litCableIdsOf(journey, input.selectedSegment),
+    () => litCableIds(journey, input.selectedSegment),
     [journey, input.selectedSegment],
   );
   const projection = useMemo(

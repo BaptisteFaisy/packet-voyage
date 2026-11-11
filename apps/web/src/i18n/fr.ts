@@ -164,4 +164,12 @@ export const FR_KEYS: Record<I18nKey, string> = {
   'common.km': 'km',
   'common.mi': 'mi',
   'common.ms': 'ms',
+  'export.button': 'Exporter l’image',
+  'export.busy': 'Préparation de l’image…',
+  'export.failed': 'L’image n’a pas pu être produite dans ce navigateur.',
+  'export.done': 'Image téléchargée (crédits inclus).',
+  'export.alt': 'Carte d’un trajet vers {host} : au moins {distance}, {rtt} mesurées, la lumière seule {floor}, inflation {inflation}, {countries} pays où une étape a été localisée, {rejected} localisation(s) rejetée(s) par la lumière.',
+  'export.legend': 'Trait plein : mesuré et localisé · Tirets : déduit · Pointillé : tracé supposé et câbles compatibles',
+  'export.footerCredits': 'Données : {credits}',
+  'export.footerGenerated': 'Généré par Packet Voyage le {date}. Rien ici ne dit quel câble a porté le paquet.',
 };

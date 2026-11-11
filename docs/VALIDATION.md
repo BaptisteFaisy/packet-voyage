@@ -9,7 +9,7 @@ proves it and to the artefact it leaves behind.
 | 1 | The six gallery journeys reproduce the summary locked in their reference files | `npx vitest run gallery` | test run log |
 | 2 | The worked example of §7.14 gives: at least 6,655 km, 91.7 ms, floor 63.6 ms, inflation 1.44, one light rejection | `npx vitest run packages/core/src/pipeline.test.ts` | test run log |
 | 3 | The twenty properties pass and their seeds are recorded | `npx vitest run packages/core packages/enrich` | seeds in the test file headers |
-| 4 | The site makes no request after load | `node scripts/guards/no-network.guard.mjs` + build log | guard log, `apps/web/dist` |
+| 4 | The site makes no request after load | `node scripts/verify-no-request.mjs` (real Chromium, full visit) and `node scripts/guards/no-network.guard.mjs` | `docs/evidence/no-request-2026-11-11.log`: "0 external request(s) after load — 12 loopback asset(s)", CSP recorded |
 | 5 | `--offline` opens no outbound connection | `node packages/enrich/src/offline.test.ts` via vitest | test asserting zero `fetch` calls |
 | 6 | No enrichment request carries a non-public address | `npx vitest run packages/enrich` (VOY-P-04) | test log |
 | 7 | `voyage trace` refuses a range, a list, an argument starting with a dash | `node apps/cli/bin/voyage.mjs trace 192.0.2.0/24; echo $?` | exit code 2 recorded in the test log |
@@ -45,5 +45,7 @@ CI runs exactly this on the self-hosted runners, inside a five-minute budget
 | The same trace, offline, from the router names alone | most hops located | **8 hops located out of 10, 1 gap** | `voyage read docs/examples/lyon-ashburn.txt --from Lyon --offline` |
 | The twenty properties | all green, seeds recorded | **VOY-P-01 … VOY-P-20 green** | `npx vitest run packages apps` |
 | Enrichment with a warm cache | < 3 s | `TODO(measure)` — needs a live consent and the RIPE services; the offline equality is proven instead by VOY-P-19 | `npx vitest run packages/enrich` |
-| Public hops located at `solid` or `probable` level on the gallery | ≥ 70 % | `TODO(measure)` — to be calibrated on real traces before the freeze (§15.3, 25-26 November) | `node scripts/build-gallery.mjs --check` |
+| Public hops located at `solid` or `probable` level on the gallery | ≥ 70 % | **76.7 %** (33 of 43; `with-gaps` deliberately drags it down at 42.9 %) | `node scripts/calibrate.mjs` |
+| The same ratio on thirty real traces | ≥ 70 % | `TODO(measure)` — needs traces run by a human: the build agent is forbidden to probe (§14.3) | `node scripts/calibrate.mjs ~/traces/*.json` |
+| The trace tool is detected and wrapped, never through a shell | `mtr --json`, else `traceroute`, else `tracert` | **`tool: mtr-json`** on a loopback trace; ranges refused with exit 2, missing tool with exit 3, unreadable input with exit 5 | `node apps/cli/bin/voyage.mjs trace 127.0.0.1 --out /tmp/j.json` and `npx vitest run apps/cli/src/probe.test.ts` |
 | False locations rejected by the light | counted per journey | shown in every journey summary and on each hop card | gallery journeys |

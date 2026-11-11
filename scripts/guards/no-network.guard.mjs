@@ -32,6 +32,10 @@ function isAllowedNetworkPath(relPath) {
   if (relPath.startsWith('apps/mcp/')) return true;
   if (relPath.startsWith('scripts/data/')) return true;
   if (relPath.startsWith('scripts/guards/')) return true;
+  // The browser proof of VOY-N-01 serves the built site on loopback only, to a
+  // headless Chromium on the same machine: it opens a server and never reaches
+  // the Internet. It is the single exception, and it is named, not a folder.
+  if (relPath === 'scripts/verify-no-request.mjs') return true;
   if (/\.test\.(?:ts|tsx|mjs)$/.test(relPath)) return true;
   return false;
 }
