@@ -25,7 +25,7 @@ function sha256(buf: Buffer): string {
 }
 
 describe('dataset integrity and checksums', () => {
-  it('every dataset has a matching provenance sheet with exact sha256 and feature count', () => {
+  it('VOY-N-05 every dataset has a matching provenance sheet with exact sha256 and feature count', () => {
     const sheets = loadProvenance();
     const sheetMap = new Map(sheets.map((s) => [s.id, s]));
 

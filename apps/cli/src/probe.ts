@@ -116,17 +116,59 @@ export function traceArgv(tool: TraceTool, host: string, opts: TraceOptions): st
   }
 }
 
-/** `mtr` exists AND its build really emits JSON (some lack Jansson). */
-async function detectMtr(runner: SpawnRunner): Promise<boolean> {
-  const version = await runner('mtr', ['--version'], { shell: false, timeoutMs: DETECT_TIMEOUT_MS });
-  if (version.error?.code === 'ENOENT' || version.code === null) return false;
-  const json = await runner('mtr', ['--json', '--version'], { shell: false, timeoutMs: DETECT_TIMEOUT_MS });
+/**
+ * `mtr --json --version` prints the version as plain text on every build, so it
+ * proves nothing about JSON support (mtr 0.95 with Jansson still answers
+ * "mtr 0.95"). The only honest probe is a real one-cycle report — on loopback,
+ * which is in `.kiro/probe-allowlist.txt` and never touches the Internet
+ * (VOY-N-02).
+ */
+const MTR_JSON_PROBE_ARGS = ['--json', '-c', '1', '-n', '127.0.0.1'];
+const MTR_PROBE_TIMEOUT_MS = 20_000;
+
+/** True when the output contains a JSON document (mtr may print warnings first). */
+export function emitsJson(stdout: string): boolean {
+  const text = stdout.trim();
+  if (text === '') return false;
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}');
+  if (start === -1 || end <= start) return false;
   try {
-    JSON.parse(json.stdout.trim());
+    JSON.parse(text.slice(start, end + 1));
     return true;
   } catch {
     return false;
   }
+}
+
+async function mtrIsInstalled(runner: SpawnRunner): Promise<boolean> {
+  const version = await runner('mtr', ['--version'], { shell: false, timeoutMs: DETECT_TIMEOUT_MS });
+  return version.error?.code !== 'ENOENT' && version.code !== null;
+}
+
+/** `mtr` exists AND its build really emits JSON (some lack Jansson). */
+async function detectMtr(runner: SpawnRunner): Promise<boolean> {
+  if (!(await mtrIsInstalled(runner))) return false;
+  const probe = await runner('mtr', MTR_JSON_PROBE_ARGS, {
+    shell: false,
+    timeoutMs: MTR_PROBE_TIMEOUT_MS,
+  });
+  return emitsJson(probe.stdout);
+}
+
+/**
+ * When nothing usable was found, say why: an `mtr` without JSON support is a
+ * different problem from no trace tool at all, and the fix is not the same.
+ */
+export async function noToolMessage(runner: SpawnRunner, platform: NodeJS.Platform): Promise<string> {
+  if (platform !== 'win32' && (await mtrIsInstalled(runner))) {
+    return (
+      'mtr is installed but this build does not emit JSON (it needs the Jansson ' +
+      'library) — install a JSON-enabled mtr, or traceroute ' +
+      `(e.g. apt install traceroute). ${installHint(platform)}`
+    );
+  }
+  return installHint(platform);
 }
 
 async function detectBinary(runner: SpawnRunner, command: string): Promise<boolean> {

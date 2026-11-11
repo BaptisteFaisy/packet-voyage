@@ -29,7 +29,7 @@ describe('serverless share links (VOY-F-39, VOY-P-17, VOY-P-18)', () => {
     );
   });
 
-  it('VOY-P-18 every decoded journey validates against the schema', () => {
+  it('VOY-P-18 / VOY-F-37 every decoded journey validates against the schema', () => {
     fc.assert(
       fc.property(arbFullJourney, (journey) => {
         const decoded = decodeShareLink(encodeShareLink(journey, BASE));

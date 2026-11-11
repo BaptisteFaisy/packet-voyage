@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import type { Journey } from '@packet-voyage/schema';
 import {
   detectTraceTool,
-  installHint,
+  noToolMessage,
   isPrivilegeError,
   nodeSpawnRunner,
   normalizeCycles,
@@ -69,7 +69,9 @@ async function probeAndParse(
   if (warning) ctx.io.stderr(`voyage: ${warning}\n`);
   const runner = opts.runner ?? nodeSpawnRunner;
   const tool = await detectTraceTool(runner, ctx.io.platform);
-  if (!tool) throw new CliError(EXIT_NO_TOOL, `no trace tool found — ${installHint(ctx.io.platform)}`);
+  if (!tool) {
+    throw new CliError(EXIT_NO_TOOL, `no trace tool found — ${await noToolMessage(runner, ctx.io.platform)}`);
+  }
 
   const result = await runTrace(runner, tool, host, { cycles, ipv6: opts.ipv6 || family === 6, protocol });
   if (result.timedOut) throw new CliError(EXIT_UNREADABLE, `${tool} timed out while tracing ${host}`);

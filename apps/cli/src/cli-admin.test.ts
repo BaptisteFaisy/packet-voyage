@@ -174,7 +174,7 @@ describe('VOY-F-41 voyage trace with mtr', () => {
     const deps = createFakeDeps();
     const { runner, calls } = fakeToolEnv('mtr');
     expect(await runCli(['trace', '192.0.2.1', '--json'], { io, depsLoader: async () => deps, runner })).toBe(0);
-    const traceCall = calls.find((c) => !c.args.includes('--version'));
+    const traceCall = calls.find((c) => !c.args.includes('--version') && !c.args.includes('127.0.0.1'));
     expect(traceCall?.cmd).toBe('mtr');
     expect(traceCall?.args).toEqual(['--json', '-n', '-c', '3', '192.0.2.1']);
     for (const call of calls) expect(call.opts.shell).toBe(false);
@@ -190,7 +190,7 @@ describe('VOY-F-41 voyage trace with mtr', () => {
     const argv = ['trace', '2001:db8::1', '--ipv6', '--cycles', '500', '--json'];
     expect(await runCli(argv, { io, depsLoader: async () => deps, runner })).toBe(0);
     expect(io.err.join('')).toMatch(/clamped to 100/);
-    const traceCall = calls.find((c) => !c.args.includes('--version'));
+    const traceCall = calls.find((c) => !c.args.includes('--version') && !c.args.includes('127.0.0.1'));
     expect(traceCall?.args).toEqual(['--json', '-n', '-6', '-c', '100', '2001:db8::1']);
   });
 });
@@ -202,7 +202,7 @@ describe('VOY-F-41 voyage trace with traceroute fallback', () => {
     const deps = createFakeDeps();
     const { runner, calls } = fakeToolEnv('traceroute');
     expect(await runCli(['trace', 'example.test'], { io, depsLoader: async () => deps, runner })).toBe(0);
-    const traceCall = calls.find((c) => !c.args.includes('--version'));
+    const traceCall = calls.find((c) => !c.args.includes('--version') && !c.args.includes('127.0.0.1'));
     expect(traceCall?.args).toEqual(['-n', '-q', '3', 'example.test']);
     const written = await readFile(join(home, 'journey.json'), 'utf8');
     expect(() => parseJourney(written)).not.toThrow();

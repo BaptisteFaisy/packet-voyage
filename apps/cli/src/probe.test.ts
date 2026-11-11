@@ -13,6 +13,8 @@ import { describe, expect, it } from 'vitest';
 import { runCli } from './cli.ts';
 import {
   detectTraceTool,
+  emitsJson,
+  noToolMessage,
   installHint,
   isPrivilegeError,
   normalizeCycles,
@@ -112,7 +114,7 @@ describe('VOY-F-41 detectTraceTool fallback order', () => {
     expect(await detectTraceTool(runner, 'linux')).toBe('traceroute');
   });
 
-  it('falls through to tracert on Windows', async () => {
+  it('VOY-N-12 falls through to tracert on Windows, traceroute elsewhere', async () => {
     const { runner } = recordRunner((cmd) =>
       cmd === 'tracert' ? { code: 0, stdout: 'Usage: tracert [-d] target_name', stderr: '' } : ENOENT,
     );
@@ -188,5 +190,45 @@ describe('§5.8 trace failure exit codes', () => {
     });
     expect(code).toBe(3);
     expect(io.err.join('')).toMatch(/never uses sudo/i);
+  });
+});
+
+describe('VOY-F-41 mtr detection probes a real JSON report, not --version', () => {
+  it('accepts an mtr that only emits JSON on an actual run', async () => {
+    const { runner, calls } = recordRunner((cmd, args) => {
+      if (cmd === 'mtr' && args.includes('--version')) return { code: 0, stdout: 'mtr 0.95', stderr: '' };
+      if (cmd === 'mtr' && args.includes('--json')) {
+        return { code: 0, stdout: '{\n  "report": { "hubs": [] }\n}\n', stderr: '' };
+      }
+      return ENOENT;
+    });
+    expect(await detectTraceTool(runner, 'linux')).toBe('mtr');
+    const probe = calls.find((call) => call.args.includes('-c'));
+    expect(probe?.args).toEqual(['--json', '-c', '1', '-n', '127.0.0.1']);
+    expect(probe?.opts.shell).toBe(false);
+  });
+
+  it('refuses an mtr whose --json run is not JSON, and says why', async () => {
+    const { runner } = recordRunner((cmd, args) => {
+      if (cmd === 'mtr' && args.includes('--version')) return { code: 0, stdout: 'mtr 0.95', stderr: '' };
+      if (cmd === 'mtr') return { code: 1, stdout: '', stderr: 'unknown option --json' };
+      return ENOENT;
+    });
+    expect(await detectTraceTool(runner, 'linux')).toBeNull();
+    const message = await noToolMessage(runner, 'linux');
+    expect(message).toMatch(/does not emit JSON/i);
+    expect(message).toMatch(/traceroute/i);
+  });
+
+  it('keeps the plain install hint when no tool is present at all', async () => {
+    const { runner } = recordRunner(() => ENOENT);
+    expect(await noToolMessage(runner, 'linux')).toMatch(/install one of: mtr/i);
+  });
+
+  it('emitsJson tolerates warnings printed before the report', () => {
+    expect(emitsJson('mtr: warning\n{"report":{"hubs":[]}}\n')).toBe(true);
+    expect(emitsJson('mtr 0.95')).toBe(false);
+    expect(emitsJson('')).toBe(false);
+    expect(emitsJson('{ broken')).toBe(false);
   });
 });

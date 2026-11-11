@@ -95,3 +95,24 @@ export function rejectedPositions(journey: Journey): { ttl: number; position: Po
   }
   return out;
 }
+
+/**
+ * Ids of the cables to light up (§12.3): every cable of the selected crossing,
+ * or, when nothing is selected, the cables of every sea crossing.
+ */
+export function litCableIds(
+  journey: Journey,
+  selectedSegment: { from: number; to: number } | null,
+): Set<string> {
+  const ids = new Set<string>();
+  for (const segment of journey.segments) {
+    const selected =
+      selectedSegment !== null &&
+      segment.from_ttl === selectedSegment.from &&
+      segment.to_ttl === selectedSegment.to;
+    if (selected || (selectedSegment === null && segment.kind === 'sea')) {
+      for (const cable of segment.cables) ids.add(cable.id);
+    }
+  }
+  return ids;
+}
