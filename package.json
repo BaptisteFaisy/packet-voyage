@@ -18,7 +18,8 @@
     "guards": "node scripts/guards/run-all.mjs",
     "voyage": "node apps/cli/bin/voyage.mjs",
     "verify:no-request": "node scripts/verify-no-request.mjs",
-    "calibrate": "node scripts/calibrate.mjs"
+    "calibrate": "node scripts/calibrate.mjs",
+    "verify:live": "node scripts/verify-live-site.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",

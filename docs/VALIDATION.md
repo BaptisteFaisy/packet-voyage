@@ -9,6 +9,7 @@ proves it and to the artefact it leaves behind.
 | 1 | The six gallery journeys reproduce the summary locked in their reference files | `npx vitest run gallery` | test run log |
 | 2 | The worked example of §7.14 gives: at least 6,655 km, 91.7 ms, floor 63.6 ms, inflation 1.44, one light rejection | `npx vitest run packages/core/src/pipeline.test.ts` | test run log |
 | 3 | The twenty properties pass and their seeds are recorded | `npx vitest run packages/core packages/enrich` | seeds in the test file headers |
+| 4b | The **deployed** site is reachable by everyone and works end to end | `node scripts/verify-live-site.mjs` (anonymous headless Chromium against the public URL) | `docs/evidence/live-site-*.log`: 9 screens rendered, a journey opened, the light cone drawn, 0 request outside the origin |
 | 4 | The site makes no request after load | `node scripts/verify-no-request.mjs` (real Chromium, full visit) and `node scripts/guards/no-network.guard.mjs` | `docs/evidence/no-request-2026-11-11.log`: "0 external request(s) after load — 12 loopback asset(s)", CSP recorded |
 | 5 | `--offline` opens no outbound connection | `node packages/enrich/src/offline.test.ts` via vitest | test asserting zero `fetch` calls |
 | 6 | No enrichment request carries a non-public address | `npx vitest run packages/enrich` (VOY-P-04) | test log |
