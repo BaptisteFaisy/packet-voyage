@@ -1,0 +1,551 @@
+/* Components: banner, map, timeline, cards, table, gallery, settings. */
+
+/* Summary banner (§12.1 screen 2). */
+.summary-banner {
+  background: var(--panel);
+  border: 1px solid var(--slate-line);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.summary-banner dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.6rem;
+  margin: 0;
+}
+
+.banner-stat dt {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
+}
+
+.banner-stat dd {
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.banner-traced,
+.banner-detour,
+.banner-notice {
+  margin: 0.4rem 0 0;
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+/* Map (§12.3: night-blue sea, slate land, watermark cables). */
+.world-map {
+  position: relative;
+  background: var(--sea-deep);
+  border: 1px solid var(--slate-line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.world-map canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  cursor: grab;
+}
+
+.map-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.map-hit {
+  fill: transparent;
+  stroke: transparent;
+  cursor: pointer;
+}
+
+.map-hit:hover,
+.map-hit:focus-visible {
+  stroke: var(--focus);
+  stroke-width: 2;
+  outline: none;
+}
+
+.map-notice {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  margin: 0.3rem 0;
+}
+
+.map-legend {
+  background: var(--panel);
+  border: 1px solid var(--slate-line);
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  margin-top: 0.6rem;
+  font-size: 0.82rem;
+}
+
+.map-legend h3,
+.map-legend h4 {
+  margin: 0.3rem 0;
+  font-size: 0.85rem;
+}
+
+.legend-networks,
+.legend-certainty {
+  list-style: none;
+  margin: 0.2rem 0 0.6rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1.2rem;
+}
+
+.legend-networks li,
+.legend-certainty li {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.legend-pattern {
+  color: var(--ink-muted);
+  font-style: normal;
+  font-size: 0.75rem;
+}
+
+.legend-note {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+}
+
+/* Hop list (§12.1 left column). */
+.hop-list ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.hop-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.45rem 0.6rem;
+}
+
+.hop-item.is-selected {
+  border-color: var(--accent);
+  background: rgba(125, 211, 252, 0.12);
+}
+
+.hop-item.is-hovered {
+  border-color: var(--amber);
+}
+
+.hop-ttl {
+  min-width: 1.6rem;
+  color: var(--ink-muted);
+}
+
+.hop-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.hop-city {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+.hop-delay {
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+}
+
+/* Delay timeline (VOY-F-31). */
+.timeline {
+  margin: 1rem 0;
+  background: var(--panel);
+  border: 1px solid var(--slate-line);
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+}
+
+.timeline figcaption {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  margin-bottom: 0.3rem;
+}
+
+.timeline svg {
+  width: 100%;
+  height: auto;
+}
+
+.timeline-grid {
+  stroke: var(--slate-line);
+  stroke-width: 0.5;
+}
+
+.timeline-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.timeline-tick,
+.timeline-ttl {
+  fill: var(--ink-muted);
+  font-size: 10px;
+  font-family: ui-monospace, monospace;
+}
+
+.timeline-point {
+  cursor: pointer;
+}
+
+/* Cards (§12.1 screens 3 & 4). */
+.detail-panel {
+  background: var(--panel);
+  border: 1px solid var(--slate-line);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.78rem;
+  padding: 0.2rem 0.5rem;
+}
+
+.hop-card h2,
+.crossing-card h2 {
+  margin: 0.2rem 0 0.6rem;
+  font-size: 1.05rem;
+}
+
+.card-section {
+  border-top: 1px solid var(--slate-line);
+  padding: 0.4rem 0;
+}
+
+.card-section h3 {
+  margin: 0.2rem 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+
+.card-line {
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+}
+
+.reply-list {
+  list-style: none;
+  margin: 0.2rem 0;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+.reply-name,
+.reply-rtt {
+  color: var(--ink-muted);
+}
+
+.rejection-list {
+  margin: 0.3rem 0;
+  padding-left: 1.1rem;
+  font-size: 0.88rem;
+}
+
+.rejection s {
+  color: var(--rejected);
+}
+
+.rejection-reason {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+}
+
+.crossing-card dl {
+  margin: 0.4rem 0;
+}
+
+.crossing-card dl div {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0.15rem 0;
+  font-size: 0.9rem;
+}
+
+.crossing-card dt {
+  min-width: 12rem;
+  color: var(--ink-muted);
+}
+
+.crossing-card dd {
+  margin: 0;
+}
+
+.crossing-route {
+  color: var(--accent);
+  margin: 0.2rem 0;
+}
+
+.cable-list {
+  margin: 0.3rem 0;
+  padding-left: 1.3rem;
+  font-size: 0.88rem;
+}
+
+.cable-detail {
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+}
+
+.band {
+  display: inline-block;
+  min-width: 4.4rem;
+  text-align: center;
+  margin-right: 0.5rem;
+  padding: 0 0.4rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: var(--sea-deep);
+}
+
+.band-high {
+  background: #86efac;
+  border: 1px solid #166534;
+}
+
+.band-medium {
+  background: #fde68a;
+  border: 1px solid #92400e;
+}
+
+.band-low {
+  background: #fecaca;
+  border: 1px solid #991b1b;
+}
+
+.honesty-line {
+  font-style: italic;
+  color: var(--ink-muted);
+  border-left: 3px solid var(--accent);
+  padding-left: 0.6rem;
+  margin: 0.5rem 0 0.2rem;
+}
+
+/* Roadmap table (VOY-F-33). */
+.roadmap {
+  margin-top: 1.4rem;
+}
+
+.roadmap-subtitle {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.85rem;
+}
+
+caption {
+  text-align: left;
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  padding-bottom: 0.4rem;
+}
+
+th,
+td {
+  border: 1px solid var(--slate-line);
+  padding: 0.35rem 0.55rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+thead th {
+  background: var(--slate);
+  color: var(--ink);
+}
+
+.roadmap-segment td,
+.roadmap-segment th {
+  background: rgba(125, 211, 252, 0.06);
+  font-style: italic;
+}
+
+.cell-sub {
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+}
+
+/* Gallery, paste, classroom, sources, settings. */
+.gallery-card {
+  background: var(--panel);
+  border: 1px solid var(--slate-line);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+}
+
+.gallery-card h3 {
+  margin: 0.1rem 0 0.3rem;
+  font-size: 1rem;
+}
+
+.gallery-meta {
+  margin: 0.15rem 0;
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+}
+
+.paste-trace {
+  margin-top: 2rem;
+  max-width: 46rem;
+}
+
+.paste-description {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.paste-input {
+  width: 100%;
+  resize: vertical;
+  background: var(--sea-deep);
+}
+
+.paste-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin: 0.6rem 0;
+}
+
+.paste-error {
+  border: 1px solid var(--rejected);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  margin: 0.6rem 0;
+  background: rgba(248, 113, 113, 0.08);
+}
+
+.paste-example {
+  white-space: pre-wrap;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+}
+
+.paste-hint,
+.cli-hint {
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+}
+
+.classroom-view {
+  max-width: 46rem;
+}
+
+.classroom-exercise {
+  border: 1px solid var(--slate-line);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  margin: 0.8rem 0;
+}
+
+.classroom-choice {
+  display: block;
+  margin: 0.35rem 0;
+}
+
+.classroom-hint {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+
+.classroom-result.correct {
+  color: #86efac;
+}
+
+.classroom-result.wrong {
+  color: var(--rejected);
+}
+
+.story-list {
+  padding-left: 1.2rem;
+}
+
+.story-entry {
+  margin: 0.5rem 0;
+}
+
+.stamp-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 0.4rem 0 1rem;
+  padding: 0;
+}
+
+.stamp {
+  border: 2px dashed var(--slate-line);
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--panel);
+}
+
+.stamp-count {
+  color: var(--ink-muted);
+}
+
+.setting-row {
+  margin: 0.8rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.setting-row label {
+  min-width: 13rem;
+}
+
+.stale-flag {
+  color: var(--amber);
+  font-size: 0.78rem;
+}
+
+.journey-credits ul {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}

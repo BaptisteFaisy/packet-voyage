@@ -1,0 +1,12 @@
+{
+  "id": "hints",
+  "title": "Airport codes and network-relevant cities",
+  "origin": "Packet Voyage contributors — hand-curated table",
+  "url": "https://github.com/BaptisteFaisy/packet-voyage/blob/main/docs/fr/CAHIER-DES-CHARGES.md",
+  "licence": "CC0-1.0",
+  "retrieved_at": "2026-11-11",
+  "transform": "scripts/data/build-hints.mjs",
+  "attribution": "Hints table: hand-curated by Packet Voyage contributors (CC0); facts not copyrightable, coordinates rounded to 0.01°",
+  "features": 212,
+  "sha256": "3342bf226e8192aa6b830ec0a8054001d5d449ffde781b5fd9e8333aa1b54566"
+}

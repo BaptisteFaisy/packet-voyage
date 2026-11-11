@@ -1,0 +1,13 @@
+{
+  "id": "submarine-cables",
+  "title": "Submarine telecommunication cables",
+  "origin": "OpenStreetMap contributors",
+  "url": "https://www.openstreetmap.org/copyright",
+  "licence": "ODbL-1.0",
+  "retrieved_at": "2026-11-11",
+  "query": "scripts/data/cables.overpassql",
+  "transform": "scripts/data/build-cables.mjs",
+  "attribution": "© OpenStreetMap contributors",
+  "features": 169,
+  "sha256": "4832fdc65af3422b573c9aa0d29dfa3349e521cdf0007ae572c4be659a839098"
+}

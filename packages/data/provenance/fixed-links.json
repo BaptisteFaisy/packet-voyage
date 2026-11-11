@@ -1,0 +1,12 @@
+{
+  "id": "fixed-links",
+  "title": "Fibre-carrying fixed links (tunnels and bridges)",
+  "origin": "Packet Voyage contributors — hand-curated table of well-known links",
+  "url": "https://github.com/BaptisteFaisy/packet-voyage/blob/main/docs/fr/CAHIER-DES-CHARGES.md",
+  "licence": "CC0-1.0",
+  "retrieved_at": "2026-11-11",
+  "transform": "scripts/data/build-fixed-links.mjs",
+  "attribution": "Fixed links: hand-curated by Packet Voyage contributors (CC0); facts not copyrightable, coordinates approximate",
+  "features": 9,
+  "sha256": "f4991a4d8b237560e6aaa8c20d46d7c7b337fadfd06c6ff52492f5895aceab8f"
+}

@@ -78,6 +78,8 @@ jobs:
       - name: Guard self-tests
         shell: bash
         run: |
+          source .github/ci/toolchain.sh
+          node scripts/guards/selftest.mjs
           python3 .github/couche0/test_check_couche0.py
           python3 .github/fireworks/test_conflict_agent.py
           python3 .github/fireworks/test_test_agent.py
