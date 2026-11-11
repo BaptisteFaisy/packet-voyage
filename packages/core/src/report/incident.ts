@@ -46,6 +46,11 @@ function bounded(km: number, lang: Lang, settings: Settings): string {
   return `${lang === 'fr' ? 'au moins' : 'at least'} ${distance(km, lang, settings)}`;
 }
 
+/** French puts a narrow space before the colon; English does not. */
+function colon(lang: Lang): string {
+  return lang === 'fr' ? ' : ' : ': ';
+}
+
 function summaryBlock(journey: Journey, lang: Lang, settings: Settings): string[] {
   const s = journey.summary;
   const rtt = s.rtt_ms ?? null;
@@ -55,12 +60,12 @@ function summaryBlock(journey: Journey, lang: Lang, settings: Settings): string[
   const lines = [
     label,
     '',
-    `- ${lang === 'fr' ? 'Distance' : 'Distance'} : ${bounded(s.distance_km_min, lang, settings)}`,
-    `- ${lang === 'fr' ? 'Délai aller-retour' : 'Round-trip delay'} : ${rtt === null ? '—' : delay(rtt, lang)} (${lang === 'fr' ? 'mesuré' : 'measured'})`,
-    `- ${lang === 'fr' ? 'Plancher de la lumière' : 'Light floor'} : ${floor === null ? '—' : delay(floor, lang)}`,
-    `- ${lang === 'fr' ? 'Inflation' : 'Inflation'} : ${inflation === null ? '—' : num(inflation, lang, 2)}`,
-    `- ${lang === 'fr' ? 'Pays où une étape a été localisée' : 'Countries where a hop was located'} : ${s.countries.join(', ') || '—'}`,
-    `- ${lang === 'fr' ? 'Rejets par la lumière' : 'Rejected by light'} : ${s.rejected_by_light} · ${lang === 'fr' ? 'trous' : 'gaps'} : ${s.gaps}`,
+    `- ${lang === 'fr' ? 'Distance' : 'Distance'}${colon(lang)}${bounded(s.distance_km_min, lang, settings)}`,
+    `- ${lang === 'fr' ? 'Délai aller-retour' : 'Round-trip delay'}${colon(lang)}${rtt === null ? '—' : delay(rtt, lang)} (${lang === 'fr' ? 'mesuré' : 'measured'})`,
+    `- ${lang === 'fr' ? 'Plancher de la lumière' : 'Light floor'}${colon(lang)}${floor === null ? '—' : delay(floor, lang)}`,
+    `- ${lang === 'fr' ? 'Inflation' : 'Inflation'}${colon(lang)}${inflation === null ? '—' : num(inflation, lang, 2)}`,
+    `- ${lang === 'fr' ? 'Pays où une étape a été localisée' : 'Countries where a hop was located'}${colon(lang)}${s.countries.join(', ') || '—'}`,
+    `- ${lang === 'fr' ? 'Rejets par la lumière' : 'Rejected by light'}${colon(lang)}${s.rejected_by_light} · ${lang === 'fr' ? 'trous' : 'gaps'}${colon(lang)}${s.gaps}`,
     '',
   ];
   return lines;
@@ -115,7 +120,7 @@ function crossingBlock(journey: Journey, lang: Lang, settings: Settings): string
       `- ttl ${segment.from_ttl} → ${segment.to_ttl} (${segment.kind}) : ` +
         `${distance(segment.geodesic_km, lang, settings)} ${lang === 'fr' ? 'à vol d\u2019oiseau' : 'as the crow flies'}` +
         `${deltaText(segment.delta_ms ?? null, lang)}. ` +
-        `${lang === 'fr' ? 'Câbles compatibles' : 'Compatible cables'} : ${names}` +
+        `${lang === 'fr' ? 'Câbles compatibles' : 'Compatible cables'}${colon(lang)}${names}` +
         `${segment.other_cables > 0 ? ` (+${segment.other_cables})` : ''}.`,
     );
   }

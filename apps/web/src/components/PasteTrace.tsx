@@ -34,6 +34,17 @@ function PasteError({ line }: { line: string | null }) {
   );
 }
 
+/** What the reader had to clean before understanding the paste — never silent. */
+function CleaningNotice({ warnings }: { warnings: string[] }) {
+  const { t } = useI18n();
+  if (warnings.length === 0) return null;
+  return (
+    <p className="paste-warnings" role="status" data-testid="paste-warnings">
+      {t('paste.warnings', { list: warnings.join(', ') })}
+    </p>
+  );
+}
+
 /**
  * Paste-a-trace (VOY-F-01, VOY-F-02, §12.2): a textarea; on submit the
  * journey is computed locally with name hints only — no request at all.
@@ -44,12 +55,16 @@ export function PasteTrace({ onComputed }: { onComputed?: (journey: Journey) => 
   const { t } = useI18n();
   const [text, setText] = useState('');
   const [error, setError] = useState<{ line: string | null } | null>(null);
+  const [warnings, setWarnings] = useState<string[]>([]);
 
   const submit = () => {
     setError(null);
     const result = buildLocalJourney(text, {
       tracedAt: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'),
     });
+    // What the reader had to clean before understanding the paste (BOM, CRLF,
+    // tabs…): told to the user, never fixed silently.
+    setWarnings(result.warnings ?? []);
     if (!result.ok || !result.journey) {
       setError({ line: result.unknownLine });
       return;
@@ -60,6 +75,7 @@ export function PasteTrace({ onComputed }: { onComputed?: (journey: Journey) => 
   return (
     <section className="paste-trace" data-testid="paste-trace">
       <h2>{t('paste.title')}</h2>
+      <CleaningNotice warnings={warnings} />
       <p className="paste-description">{t('paste.description')}</p>
       <label htmlFor="trace-input" className="sr-only">
         {t('paste.title')}

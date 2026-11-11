@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it, vi } from 'vitest';
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import type { Journey } from '@packet-voyage/schema';
 import { renderWithProviders } from '../test-utils.tsx';
 import { PasteTrace } from './PasteTrace.tsx';
@@ -50,5 +50,20 @@ describe('PasteTrace', () => {
     for (const hop of located) {
       expect(hop.location?.sources).toContain('name-hint');
     }
+  });
+});
+
+describe('VOY-F-02 the reader says what it cleaned', () => {
+  it('reports a BOM and tabs instead of fixing them silently', async () => {
+    renderWithProviders(<PasteTrace onComputed={() => {}} />);
+    // A <textarea> sanitises CRLF to LF (HTML spec), so the noise that survives
+    // a real paste is the BOM and the tab separators.
+    const noisy = `\uFEFF${VALID_TRACE.replace(/ {2}/g, '\t')}`;
+    fireEvent.change(screen.getByTestId('paste-input'), { target: { value: noisy } });
+    fireEvent.click(screen.getByTestId('paste-submit'));
+    await waitFor(() => expect(screen.getByTestId('paste-warnings')).toBeTruthy());
+    const notice = screen.getByTestId('paste-warnings').textContent ?? '';
+    expect(notice).toMatch(/byte-order mark/i);
+    expect(notice).toMatch(/tabs/i);
   });
 });
