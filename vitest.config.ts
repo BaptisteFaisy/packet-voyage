@@ -10,8 +10,13 @@ export default defineConfig({
       'packages/*/src/**/*.test.ts',
       'apps/*/src/**/*.test.{ts,tsx}',
       'fixtures/*/**/*.test.ts',
+      'scripts/**/__tests__/*.test.mjs',
     ],
     environment: 'node',
+    // Bound the fork pool: this machine is shared with other builds, and a
+    // pool sized to the CPU count starves them (and tinypool rejects
+    // `maxWorkers` below the inherited minimum unless `minForks` is set).
+    poolOptions: { forks: { minForks: 1, maxForks: 4 } },
     reporters: ['default'],
     testTimeout: 20_000,
   },

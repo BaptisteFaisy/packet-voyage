@@ -235,10 +235,10 @@ export interface Cable {
   owners?: string[]; landings: Landing[]; geometry: Position[][]; // polylines, WGS84
   status: 'in-service' | 'retired' | 'planned'; source: string;
 }
-export interface Landing { name: string; country?: string | null; position: Position }
+export interface Landing extends Position { name: string; country?: string | null }
 export interface Landmass { id: string; name: string; polygons: Position[][] } // rings, first = outer
 export interface FixedLink { id: string; name: string; a: Position; b: Position; countries: string[] }
-export interface HintCity { code: string; city: string; country: string; position: Position; kind: 'airport' | 'city' | 'clli-free' }
+export interface HintCity extends Position { code: string; city: string; country: string; kind: 'airport' | 'city' }
 ```
 
 ## 3. Closed lists (do not invent new ids)

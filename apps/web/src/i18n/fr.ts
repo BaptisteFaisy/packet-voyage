@@ -1,0 +1,167 @@
+import type { I18nKey } from './en.ts';
+
+export const FR_KEYS: Record<I18nKey, string> = {
+  // Navigation & brand
+  'brand.name': 'Packet Voyage',
+  'brand.tagline': 'Un diagnostic réseau de 1987 cousu à la géographie, borné par la lumière',
+  'nav.gallery': 'Galerie',
+  'nav.paste': 'Coller une trace',
+  'nav.compare': 'Comparer',
+  'nav.story': 'Carnet & Passeport',
+  'nav.classroom': 'Mode classe',
+  'nav.sources': 'Sources & Licences',
+  'nav.settings': 'Réglages',
+
+  // Summary Banner
+  'summary.distance': 'Distance totale :',
+  'summary.delay': 'Délai aller-retour mesuré :',
+  'summary.lightFloor': 'Plancher de la lumière en fibre :',
+  'summary.inflation': 'Inflation du trajet :',
+  'summary.countries': 'Pays où une étape a été localisée :',
+  'summary.networks': 'Réseaux distincts :',
+  'summary.ixps': "Points d'échange Internet :",
+  'summary.rejections': 'Localisations rejetées par la lumière :',
+  'summary.gaps': 'Étapes muettes ou non localisées :',
+  'summary.tracedAt': 'Trace du {value} (UTC)',
+
+  // Hop & card
+  'hop.title': 'Étape {ttl}',
+  'hop.address': 'Adresse IP (mesurée)',
+  'hop.hostname': "Nom d'hôte",
+  'hop.rtt': 'Délai aller-retour (mesuré)',
+  'hop.envelope': 'Enveloppe des délais',
+  'hop.loss': 'Perte de paquets',
+  'hop.network': 'Réseau (déduit)',
+  'hop.ixp': "Point d'échange Internet (déduit)",
+  'hop.location': 'Localisation (déduite)',
+  'hop.certainty': 'Niveau de certitude',
+  'hop.sources': 'Sources fondatrices',
+  'hop.notLocated': 'Non localisée',
+  'hop.rejectedCandidate': 'Candidat rejeté',
+  'hop.rejectedPrefix': 'Rejeté par la lumière :',
+  'hop.rejectedDetail': '{city}, {country} — rejeté par la lumière : {allowed} permet {allowedKm} au plus ; {neededKm} requis',
+  'hop.flags': 'Drapeaux',
+  'hop.listLabel': 'Étapes',
+  'hop.closeCard': 'Fermer la fiche',
+
+  // Crossing card
+  'crossing.title': "Traversée entre l'étape {from} et l'étape {to}",
+  'crossing.nature': 'Nature du segment (déduite)',
+  'crossing.distance': 'Distance géodésique (au moins)',
+  'crossing.delay': "Saut d'enveloppe",
+  'crossing.cableLength': 'Longueur',
+  'crossing.skippedHops': 'Étapes enjambées ou non localisées',
+  'crossing.cablesTitle': 'Câbles compatibles pour cette traversée',
+  'crossing.fixedLink': 'Ouvrage fixe connu',
+  'crossing.compatibility': 'Score de compatibilité',
+  'crossing.band': 'Bande de compatibilité',
+  'crossing.landings': 'Atterrissements',
+  'crossing.honestyDisclaimer': "Rien dans la mesure ne dit lequel a transporté le paquet.",
+  'crossing.noCables': 'Aucun câble sous-marin spécifique pour cette traversée terrestre.',
+  'crossing.otherCables': '+{count} autres câbles compatibles non affichés.',
+
+  // Roadmap table
+  'map.altText': 'Carte du monde du voyage : au moins {distance} km, pays où une étape a été localisée : {countries}.',
+  'map.overlayLabel': 'Points et segments interactifs de la carte',
+  'map.legendTitle': 'Légende : réseaux et certitude',
+  'map.legendCertainty': 'Le style du trait porte la certitude : plein = mesuré et bien localisé, tirets = déduit, pointillé = supposé.',
+  'map.rejectedLegend': 'Les localisations rejetées apparaissent, puis sont barrées.',
+  'map.notBuilt': 'Fonds de carte non générés : le trajet est dessiné sur un globe vide.',
+
+  'roadmap.title': 'Feuille de route complète du voyage',
+  'roadmap.subtitle': 'Tableau accessible reprenant chaque étape et chaque segment affichés sur la carte.',
+  'roadmap.th.order': '#',
+  'roadmap.th.type': 'Type',
+  'roadmap.th.details': 'Détails',
+  'roadmap.th.certainty': 'Certitude',
+  'roadmap.th.delay': 'Délai / Saut',
+  'roadmap.th.distance': 'Distance (au moins)',
+  'roadmap.th.sources': 'Sources & état',
+
+  // Paste view
+  'paste.title': 'Coller un traceroute',
+  'paste.description': "Collez la sortie de traceroute, tracert, mtr (rapport texte ou JSON) ou RIPE Atlas JSON. Traitement 100% local dans votre navigateur sans aucune requête réseau.",
+  'paste.placeholder': 'Collez le texte de votre trace ici...',
+  'paste.exampleButton': 'Remplir avec un exemple',
+  'paste.button': 'Calculer le voyage',
+  'paste.errorTitle': 'Trace non reconnue',
+  'paste.firstUnknown': 'Première ligne non comprise :',
+  'paste.acceptedFormats': 'Formats acceptés : traceroute, tracert, rapport texte mtr, mtr JSON, RIPE Atlas JSON.',
+  'paste.cliHint': 'Ou exécutez localement dans votre terminal : npx packet-voyage trace example.org',
+  'paste.noSourceNotice': "Aucun point de départ déclaré : seules les bornes relatives s'appliquent. Déclarez votre ville pour resserrer la borne de la lumière.",
+  'paste.pastedJourney': 'Trace collée',
+
+  // Gallery view
+  'gallery.title': 'Galerie de voyages',
+  'gallery.description': "Six voyages vérifiés explorant traversées océaniques, trajets continentaux, rejets par la vitesse de la lumière et détours.",
+  'gallery.noticeFallback': 'Jeux de données de galerie en cours de génération ; affichage du voyage de référence certifié.',
+  'gallery.loadButton': 'Inspecter le voyage',
+
+  // Classroom
+  'classroom.title': 'Fiche pédagogique : Réseau borné par la lumière',
+  'classroom.subtitle': 'Calculez à la main la distance physique permise par un délai réseau, déduisez quelle ville est physiquement possible, puis vérifiez.',
+  'classroom.step1': 'Étape 1 : La vitesse de la lumière',
+  'classroom.step1Text': 'Dans le vide, la lumière parcourt c = 299,79 km/ms. Dans la fibre optique, le verre la ralentit à ~204 km/ms. Un délai aller-retour RTT doit couvrir les deux trajets (aller et retour).',
+  'classroom.exerciseDelay': 'Pour un délai mesuré de 9,6 ms aller-retour depuis Lyon :',
+  'classroom.q1': 'Quelle est la distance maximale absolue dans le vide (aller simple) ?',
+  'classroom.q1Hint': 'Formule : permis = (9,6 ms / 2) × 299,79 km/ms',
+  'classroom.q2': 'Quelle ville candidate est physiquement possible ?',
+  'classroom.choiceParis': 'Paris, France (~391 km de Lyon)',
+  'classroom.choiceAshburn': 'Ashburn, États-Unis (~6 496 km de Lyon)',
+  'classroom.checkButton': 'Vérifier ma réponse',
+  'classroom.success': 'Exact ! En 9,6 ms, la lumière dans le vide parcourt au plus 1 439 km. Ashburn (à 6 496 km) viole la physique et se trouve rejetée par la lumière.',
+  'classroom.failure': 'Pas tout à fait. Vérifiez la borne du vide : 9,6 / 2 * 299,79 = 1 439 km. Une localisation à 6 496 km est physiquement impossible.',
+
+  // Sources & Licences
+  'sources.title': 'Sources, Provenance & Licences',
+  'sources.description': 'Chaque jeu de données et source utilisé par Packet Voyage est documenté ci-dessous avec sa provenance, sa licence et sa fraîcheur.',
+  'sources.staleWarning': 'Attention : Ce jeu de données date de plus de 90 jours et doit être rafraîchi.',
+  'sources.zeroNetwork': 'Garantie zéro requête réseau : le site statique embarque tous les jeux de données sous forme de fichiers JSON locaux sans aucune requête HTTP sortante.',
+
+  // Settings
+  'settings.title': 'Réglages & Préférences',
+  'settings.language': "Langue de l'interface",
+  'settings.units': 'Unités de distance',
+  'settings.projection': 'Projection cartographique',
+  'settings.globe': 'Orthographique (Globe)',
+  'settings.flat': 'Equal Earth (Carte plate)',
+  'settings.animations': 'Animations',
+  'settings.reducedMotionNotice': 'prefers-reduced-motion est détecté dans votre système. Les animations automatiques de couture sont désactivées.',
+  'settings.consentStatus': "Accord d'envoi des données (lecture seule)",
+  'settings.consentText': "Le site hébergé n'envoie jamais aucune donnée à des services tiers. Tout le traitement reste 100% local.",
+
+  // Compare
+  'compare.title': 'Comparer deux voyages',
+  'compare.description': "Comparaison côte à côte de deux voyages (ex. IPv4 contre IPv6 ou options de câbles transatlantiques).",
+  'compare.notEnough': 'La galerie doit contenir au moins deux voyages à comparer.',
+  'compare.journeyA': 'Voyage A : Principal',
+  'compare.journeyB': 'Voyage B : Comparaison',
+
+  // Story & Passport
+  'story.title': 'Carnet de voyage & Tampons de passeport',
+  'story.logTitle': 'Récit du voyage',
+  'story.passportTitle': 'Tampons du passeport',
+  'story.stampCountries': 'Pays visités par les étapes localisées',
+  'story.stampNetworks': 'Systèmes autonomes (AS) traversés',
+  'story.stampIxps': "Points d'échange traversés",
+
+  // Common
+  'classroom.empty': 'Répondez à la distance et choisissez une ville, puis vérifiez.',
+  'story.empty': 'Aucun récit construit pour ce voyage pour l\'instant.',
+  'sources.th.dataset': 'Jeu de données',
+  'sources.th.origin': 'Origine',
+  'sources.th.licence': 'Licence',
+  'sources.th.retrieved': 'Récupéré le',
+  'sources.th.features': 'Éléments',
+  'sources.th.attribution': 'Attribution',
+  'sources.noSheets': 'Aucune fiche de provenance embarquée : les jeux de données sont en cours de construction.',
+  'sources.journeyCredits': 'Crédits de ce voyage',
+
+  'journey.notFound': 'Voyage introuvable dans la galerie. Choisissez-en un ou collez une trace.',
+
+  'common.loading': 'Chargement...',
+  'common.atLeast': 'au moins',
+  'common.km': 'km',
+  'common.mi': 'mi',
+  'common.ms': 'ms',
+};

@@ -1,0 +1,167 @@
+export const EN_KEYS = {
+  // Navigation & brand
+  'brand.name': 'Packet Voyage',
+  'brand.tagline': 'A 1987 network diagnostic stitched to geography, bounded by light',
+  'nav.gallery': 'Gallery',
+  'nav.paste': 'Paste Trace',
+  'nav.compare': 'Compare',
+  'nav.story': 'Log & Passport',
+  'nav.classroom': 'Classroom',
+  'nav.sources': 'Sources & Licences',
+  'nav.settings': 'Settings',
+
+  // Summary Banner
+  'summary.distance': 'Total distance:',
+  'summary.delay': 'Measured round-trip delay:',
+  'summary.lightFloor': 'Fibre light floor:',
+  'summary.inflation': 'Route inflation:',
+  'summary.countries': 'Countries where a hop was located:',
+  'summary.networks': 'Distinct networks:',
+  'summary.ixps': 'Internet exchange points:',
+  'summary.rejections': 'Locations rejected by light:',
+  'summary.gaps': 'Unlocated or silent hops:',
+  'summary.tracedAt': 'Traced at {value} (UTC)',
+
+  // Hop & card
+  'hop.title': 'Hop {ttl}',
+  'hop.address': 'IP address (measured)',
+  'hop.hostname': 'Hostname',
+  'hop.rtt': 'Round-trip delay (measured)',
+  'hop.envelope': 'Delay envelope',
+  'hop.loss': 'Packet loss',
+  'hop.network': 'Network (inferred)',
+  'hop.ixp': 'Internet Exchange Point (inferred)',
+  'hop.location': 'Location (inferred)',
+  'hop.certainty': 'Certainty level',
+  'hop.sources': 'Founding sources',
+  'hop.notLocated': 'Not located',
+  'hop.rejectedCandidate': 'Rejected candidate',
+  'hop.rejectedPrefix': 'Rejected by light:',
+  'hop.rejectedDetail': '{city}, {country} — rejected by light: {allowed} allows {allowedKm} at most; {neededKm} needed',
+  'hop.flags': 'Flags',
+  'hop.listLabel': 'Hops',
+  'hop.closeCard': 'Close details',
+
+  // Crossing card
+  'crossing.title': 'Crossing between hop {from} and hop {to}',
+  'crossing.nature': 'Segment nature (inferred)',
+  'crossing.distance': 'Geodesic distance (at least)',
+  'crossing.delay': 'Envelope step',
+  'crossing.cableLength': 'Length',
+  'crossing.skippedHops': 'Skipped or unlocated hops',
+  'crossing.cablesTitle': 'Compatible cables for this crossing',
+  'crossing.fixedLink': 'Known fixed crossing',
+  'crossing.compatibility': 'Compatibility score',
+  'crossing.band': 'Compatibility band',
+  'crossing.landings': 'Landings',
+  'crossing.honestyDisclaimer': 'Nothing in the measurement says which one carried the packet.',
+  'crossing.noCables': 'No specific undersea cable listed for this overland crossing.',
+  'crossing.otherCables': '+{count} other compatible cables not listed.',
+
+  // Roadmap table
+  'map.altText': 'World map of the journey: at least {distance} km, countries where a hop was located: {countries}.',
+  'map.overlayLabel': 'Interactive map points and segments',
+  'map.legendTitle': 'Legend: networks and certainty',
+  'map.legendCertainty': 'Stroke style carries certainty: solid = measured and well located, dashed = inferred, dotted = assumed.',
+  'map.rejectedLegend': 'Rejected locations appear, then are struck through.',
+  'map.notBuilt': 'Map background datasets not built yet: the route is drawn on an empty globe.',
+
+  'roadmap.title': 'Complete Journey Roadmap',
+  'roadmap.subtitle': 'Accessible table carrying every hop and every segment shown on the map.',
+  'roadmap.th.order': '#',
+  'roadmap.th.type': 'Type',
+  'roadmap.th.details': 'Details',
+  'roadmap.th.certainty': 'Certainty',
+  'roadmap.th.delay': 'Delay / Step',
+  'roadmap.th.distance': 'Distance (at least)',
+  'roadmap.th.sources': 'Sources & status',
+
+  // Paste view
+  'paste.title': 'Paste a traceroute',
+  'paste.description': 'Paste output from traceroute, tracert, mtr (text report or JSON), or RIPE Atlas JSON. Parsed locally in your browser with zero network requests.',
+  'paste.placeholder': 'Paste your trace text here...',
+  'paste.exampleButton': 'Fill with an example',
+  'paste.button': 'Compute Journey',
+  'paste.errorTitle': 'Trace not recognized',
+  'paste.firstUnknown': 'First un-understood line:',
+  'paste.acceptedFormats': 'Accepted formats: traceroute, tracert, mtr text report, mtr JSON, RIPE Atlas JSON.',
+  'paste.cliHint': 'Or run locally via terminal: npx packet-voyage trace example.org',
+  'paste.noSourceNotice': 'No departure point declared: only relative bounds apply. Declare your city to sharpen the light bound.',
+  'paste.pastedJourney': 'Pasted trace',
+
+  // Gallery view
+  'gallery.title': 'Journey Gallery',
+  'gallery.description': 'Six verified journeys exploring oceanic crossings, continental paths, light-speed rejections, and detours.',
+  'gallery.noticeFallback': 'Gallery datasets not built yet; showing built-in verified sample journeys.',
+  'gallery.loadButton': 'Inspect Journey',
+
+  // Classroom
+  'classroom.title': 'Classroom Activity: Light Bounded Networking',
+  'classroom.subtitle': 'Compute by hand the physical distance a network delay permits, deduce which city is physically possible, and verify your findings.',
+  'classroom.step1': 'Step 1: The speed of light',
+  'classroom.step1Text': 'In vacuum, light travels c = 299.79 km/ms. In optical fibre, glass slows it down to ~204 km/ms. A round-trip delay RTT must allow both ways (go and return).',
+  'classroom.exerciseDelay': 'Given a measured delay of 9.6 ms round-trip from Lyon:',
+  'classroom.q1': 'What is the absolute maximum vacuum distance one-way?',
+  'classroom.q1Hint': 'Formula: allowed = (9.6 ms / 2) × 299.79 km/ms',
+  'classroom.q2': 'Which candidate city is physically possible?',
+  'classroom.choiceParis': 'Paris, France (~391 km from Lyon)',
+  'classroom.choiceAshburn': 'Ashburn, USA (~6,496 km from Lyon)',
+  'classroom.checkButton': 'Verify my answer',
+  'classroom.success': 'Correct! In 9.6 ms, light in vacuum can travel at most 1,439 km. Ashburn (6,496 km away) violates physics and is rejected by light.',
+  'classroom.failure': 'Not quite. Check the vacuum bound: 9.6 / 2 * 299.79 = 1,439 km. A location 6,496 km away is physically impossible.',
+
+  // Sources & Licences
+  'sources.title': 'Sources, Provenance & Licences',
+  'sources.description': 'Every dataset and enrichment source used by Packet Voyage is documented below with its provenance, licence, and freshness.',
+  'sources.staleWarning': 'Notice: This dataset was retrieved more than 90 days ago and is due for an automated refresh.',
+  'sources.zeroNetwork': 'Zero network request guarantee: the static site bundles all datasets as local JSON assets and makes zero outbound HTTP requests.',
+
+  // Settings
+  'settings.title': 'Settings & Preferences',
+  'settings.language': 'Interface language',
+  'settings.units': 'Distance units',
+  'settings.projection': 'Map projection',
+  'settings.globe': 'Orthographic (Globe)',
+  'settings.flat': 'Equal Earth (Flat)',
+  'settings.animations': 'Animations',
+  'settings.reducedMotionNotice': 'prefers-reduced-motion is detected in your system settings. Automatic route stitching animations are disabled.',
+  'settings.consentStatus': 'Data dispatch consent (read-only)',
+  'settings.consentText': 'The hosted website never sends any data to third-party services. All processing is 100% local.',
+
+  // Compare
+  'compare.title': 'Compare Journeys',
+  'compare.description': 'Side-by-side comparison of two journeys (e.g. IPv4 vs IPv6 or transatlantic cable options).',
+  'compare.notEnough': 'The gallery needs at least two journeys to compare.',
+  'compare.journeyA': 'Journey A: Primary',
+  'compare.journeyB': 'Journey B: Comparison',
+
+  // Story & Passport
+  'story.title': 'Travel Log & Passport Stamps',
+  'story.logTitle': 'Journey Log',
+  'story.passportTitle': 'Passport Stamps',
+  'story.stampCountries': 'Countries visited by located hops',
+  'story.stampNetworks': 'Autonomous systems traversed',
+  'story.stampIxps': 'Internet exchanges crossed',
+
+  // Common
+  'classroom.empty': 'Answer the distance and choose a city, then check.',
+  'story.empty': 'No log built for this journey yet.',
+  'sources.th.dataset': 'Dataset',
+  'sources.th.origin': 'Origin',
+  'sources.th.licence': 'Licence',
+  'sources.th.retrieved': 'Retrieved',
+  'sources.th.features': 'Features',
+  'sources.th.attribution': 'Attribution',
+  'sources.noSheets': 'No provenance sheet bundled yet: the datasets are still being built.',
+  'sources.journeyCredits': 'Credits of this journey',
+
+  'journey.notFound': 'Journey not found in the gallery. Pick one below or paste a trace.',
+
+  'common.loading': 'Loading...',
+  'common.atLeast': 'at least',
+  'common.km': 'km',
+  'common.mi': 'mi',
+  'common.ms': 'ms',
+};
+
+export type I18nKey = keyof typeof EN_KEYS;

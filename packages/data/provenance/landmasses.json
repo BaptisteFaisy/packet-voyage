@@ -1,0 +1,13 @@
+{
+  "id": "landmasses",
+  "title": "World landmasses (110 m resolution)",
+  "origin": "Natural Earth (nvkelso/natural-earth-vector mirror)",
+  "url": "https://www.naturalearthdata.com/downloads/110m-physical-vectors/110m-land/",
+  "licence": "Public-Domain",
+  "retrieved_at": "2026-11-11",
+  "query": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_land.geojson",
+  "transform": "scripts/data/build-landmass.mjs",
+  "attribution": "Made with Natural Earth",
+  "features": 36,
+  "sha256": "70b1ab65491f0408d10b995aff5453fc075ef8f989df576c7d9a6244180d21a0"
+}
