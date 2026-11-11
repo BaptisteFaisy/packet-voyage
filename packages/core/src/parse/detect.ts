@@ -1,8 +1,13 @@
 import type { TraceFormat } from './types.ts';
 
+// Localised `tracert` headers and hop-limit lines: English, French, German,
+// Spanish, Italian, Portuguese. Detection is by shape, and these only widen the
+// set of openings recognised — the hop lines themselves are parsed by structure
+// (delays, then address), never by words (§16).
 const TRACERT_HEADER_RE =
-  /^(?:tracing route to|détermination de l'itinéraire vers|routenverfolgung zu|traza a la dirección|rilevazione instradamento verso)\b/i;
-const TRACERT_OVER_RE = /^(?:over a maximum of|avec un maximum de|über maximal)\s+\d+/i;
+  /^(?:tracing route to|détermination de l'itinéraire vers|routenverfolgung zu|traza a la dirección|rilevazione instradamento verso|traçando a rota para|traceren naar)\b/i;
+const TRACERT_OVER_RE =
+  /^(?:over a maximum of|avec un maximum de|über maximal|como máximo|com o máximo de|met maximaal|su un massimo di)\s+\d+/i;
 const TRACERT_LINE_RE = /^\s*\d+\s+(?:<\s*\d+\s*ms|\d+(?:[.,]\d+)?\s*ms|\*)(?:\s+(?:<\s*\d+\s*ms|\d+(?:[.,]\d+)?\s*ms|\*)){1,2}\s+\S+/i;
 const MTR_TEXT_HEADER_RE = /\bLoss%\s+Snt\s+Last\s+Avg\s+Best\s+Wrst/i;
 const MTR_TEXT_LINE_RE = /^\s*\d+\.(?:\|--|-\?)?\s+\S+\s+\d+(?:\.\d+)?%\s+\d+/;

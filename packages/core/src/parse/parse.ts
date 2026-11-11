@@ -4,6 +4,7 @@ import { parseMtrJson } from './mtr-json.ts';
 import { parseMtrText } from './mtr-text.ts';
 import { parseTracert } from './tracert.ts';
 import { parseTraceroute } from './traceroute.ts';
+import { normaliseTraceText } from './normalise.ts';
 import { createBaseTrace, type ParsedTrace, type TraceFormat } from './types.ts';
 
 const UNKNOWN_LINE_CAP = 50;
@@ -59,9 +60,14 @@ export function parseTrace(text: string, options?: { format?: TraceFormat }): Pa
     trace.warnings.push('Input was not a string');
     return trace;
   }
+  // A paste carries byte-level noise (BOM, CRLF, tabs); it is cleaned first and
+  // every cleaning is reported, so nothing is fixed behind the user's back.
+  const cleaned = normaliseTraceText(text);
   try {
-    const format = options?.format && options.format !== 'unknown' ? options.format : detectFormat(text);
-    const trace = dispatchFormat(format, text);
+    const format =
+      options?.format && options.format !== 'unknown' ? options.format : detectFormat(cleaned.text);
+    const trace = dispatchFormat(format, cleaned.text);
+    trace.warnings.unshift(...cleaned.warnings);
     if (trace.unknownLines.length > UNKNOWN_LINE_CAP) {
       trace.unknownLines = trace.unknownLines.slice(0, UNKNOWN_LINE_CAP);
       trace.warnings.push(`Truncated unknownLines to ${UNKNOWN_LINE_CAP} entries`);
@@ -70,7 +76,8 @@ export function parseTrace(text: string, options?: { format?: TraceFormat }): Pa
     return trace;
   } catch {
     const trace = createBaseTrace('unknown');
-    const first = firstMeaningfulLine(text);
+    trace.warnings.unshift(...cleaned.warnings);
+    const first = firstMeaningfulLine(cleaned.text);
     if (first !== '') trace.unknownLines.push(first);
     trace.warnings.push('Parsing failed unexpectedly; the input is kept for inspection');
     return trace;

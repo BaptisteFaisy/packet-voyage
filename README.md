@@ -26,9 +26,14 @@ Live site (no install, no account, no request): <https://baptistefaisy.github.io
 ```bash
 git clone https://github.com/BaptisteFaisy/packet-voyage && cd packet-voyage
 pnpm install && pnpm build
-node apps/cli/bin/voyage.mjs trace example.org      # one host, never a range
-node apps/cli/bin/voyage.mjs read trace.txt          # a trace you already have
-node apps/cli/bin/voyage.mjs share journey.json      # redact, then share a link
+node apps/cli/bin/voyage.mjs trace example.org       # one host, never a range
+node apps/cli/bin/voyage.mjs read trace.txt           # a trace you already have
+node apps/cli/bin/voyage.mjs explain journey.json --year 1987
+#   distance bounds, where the delay goes, which media fit, and what 1987 looked like
+node apps/cli/bin/voyage.mjs export journey.json --format geojson   # for QGIS, d3, anything GIS
+node apps/cli/bin/voyage.mjs export redacted.json --format markdown # a ticket-ready report
+node apps/cli/bin/voyage.mjs compare v4.json v6.json  # two journeys, facts only
+node apps/cli/bin/voyage.mjs share journey.json       # redact, then share a link
 ```
 
 > The npm package `packet-voyage` is not published yet, so `npx packet-voyage`
