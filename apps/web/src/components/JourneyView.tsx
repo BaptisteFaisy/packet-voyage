@@ -7,6 +7,7 @@ import { loadDatasets } from '../lib/datasets.ts';
 import { SummaryBanner } from './SummaryBanner.tsx';
 import { WorldMap } from './WorldMap.tsx';
 import { ExportImageButton } from './ExportImageButton.tsx';
+import { JourneyInsights } from './JourneyInsights.tsx';
 import { MapLegend } from './MapLegend.tsx';
 import { DelayTimeline } from './DelayTimeline.tsx';
 import { HopList } from './HopList.tsx';
@@ -55,6 +56,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
         <DetailPanel journey={journey} />
       </div>
       <DelayTimeline journey={journey} />
+      <JourneyInsights journey={journey} cables={cables} />
       <RoadmapTable journey={journey} />
     </div>
   );

@@ -549,3 +549,62 @@ thead th {
   color: var(--ink-muted);
   font-size: 0.85rem;
 }
+
+/* Insights panel (JourneyInsights): bounds, breakdown, media, era. */
+.insights-panel {
+  margin: 0.8rem 0;
+  padding: 0.4rem 0.9rem 0.6rem;
+  border: 1px solid var(--slate-line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.insights-panel > h2 {
+  margin: 0.4rem 0 0.2rem;
+  font-size: 1.05rem;
+}
+
+.media-list {
+  list-style: none;
+  margin: 0.2rem 0;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+.media-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.1rem 0;
+}
+
+/* A medium ruled out by light stays readable, but visibly in the background. */
+.media-item-muted {
+  opacity: 0.55;
+}
+
+.media-name {
+  min-width: 11rem;
+}
+
+.media-min-rtt {
+  color: var(--ink-muted);
+}
+
+.media-verdict {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.insights-era-label {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+
+#insights-era-year {
+  margin: 0.2rem 0 0.4rem;
+}
