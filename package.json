@@ -1,0 +1,37 @@
+{
+  "name": "packet-voyage-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Packet Voyage \u2014 a 1987 network diagnostic stitched to geography: follow the physical route of your own traceroute, bounded by the speed of light.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.6"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run --passWithNoTests",
+    "build": "node scripts/build.mjs",
+    "dev": "pnpm --filter @packet-voyage/web dev",
+    "guards": "node scripts/guards/run-all.mjs",
+    "voyage": "node apps/cli/bin/voyage.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/node": "^22.10.5",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/d3-geo": "^3.1.0",
+    "eslint": "^9.18.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "fast-check": "^3.23.2",
+    "jsdom": "^26.0.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0",
+    "vitest": "^2.1.8"
+  }
+}
