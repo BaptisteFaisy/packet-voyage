@@ -10,11 +10,12 @@ import { useCallback, useEffect, useState } from 'react';
 import type { Journey } from '@packet-voyage/schema';
 import { decodeShareHash } from '../lib/share-link.ts';
 import type { ShareFailure } from '../lib/share-link.ts';
+import { STATE_SLUGS } from '../lib/route.ts';
 import { useJourneyState } from '../state/journey.tsx';
 import { navigateTo } from './use-hash-route.ts';
 
 /** Slug of the journey screen opened from a link; it is not a gallery entry. */
-export const SHARED_SLUG = 'shared';
+export const SHARED_SLUG = STATE_SLUGS.shared;
 
 export interface ShareLinkState {
   failure: ShareFailure | null;
