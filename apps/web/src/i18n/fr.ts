@@ -281,4 +281,10 @@ export const FR_KEYS: Record<I18nKey, string> = {
   'features.copied': 'Copié',
   'features.shareLink': 'Lien de partage — le voyage voyage dans le fragment, jamais sur un serveur',
   'features.shareLinkEmpty': 'Pas encore de lien de partage.',
+  'features.limits.title': 'Ce que ce site ne peut volontairement pas faire',
+  'features.limits.text': 'Ce ne sont pas des fonctionnalités manquantes : c’est le contrat de vie privée. Chacune vit dans la ligne de commande, sur votre machine, avec votre accord.',
+  'features.limits.probe': 'Sonder Internet. Le site hébergé n’envoie rien, jamais : un navigateur n’a ni paquets bruts ni compteur de sauts.',
+  'features.limits.enrich': 'Interroger RIPE IPmap, RIPEstat, PeeringDB ou un résolveur sur vos adresses. C’est le CLI, après avoir nommé les services et obtenu votre accord.',
+  'features.limits.data': 'Télécharger la base de géolocalisation locale ou rafraîchir les préfixes de points d’échange. Le CLI, là encore, avec votre accord.',
+  'features.limits.agent': 'Un agent peut piloter l’outil via le serveur MCP : un hôte à la fois, cinq secondes d’écart, vingt traces par session, et votre approbation à chaque appel.',
 };
