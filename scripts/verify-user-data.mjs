@@ -31,7 +31,7 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const LIVE = process.env.LIVE_URL ?? 'https://baptistefaisy.github.io/packet-voyage/';
+const LIVE = process.env.LIVE_URL ?? 'https://tradoooo.github.io/packet-voyage/';
 const ORIGIN = new URL(LIVE).origin;
 const EVIDENCE_DIR = join(root, 'docs', 'evidence');
 const CLI = join(root, 'apps', 'cli', 'bin', 'voyage.mjs');
@@ -185,6 +185,60 @@ async function stepCatalogue(page) {
   return { blocks, label };
 }
 
+/**
+ * Step 5 — the chain of proof: every figure more than one block shows, read
+ * from the page itself, and checked block against block. The site publishes
+ * its figures as data attributes, so this is a machine check, not a reading of
+ * the prose.
+ */
+async function stepChain(page, journey) {
+  await page.goto(`${LIVE}#/features`, { waitUntil: 'networkidle', timeout: 60_000 });
+  await page.waitForSelector('[data-proof-key]', { timeout: 20_000 });
+  const facts = await page.$$eval('[data-proof-key]', (elements) =>
+    elements.map((element) => ({
+      key: element.getAttribute('data-proof-key'),
+      value: element.getAttribute('data-proof-value'),
+      block: element.closest('[data-proof-block]')?.getAttribute('data-proof-block') ?? '',
+    })),
+  );
+  const byKey = new Map();
+  for (const fact of facts) {
+    if (!byKey.has(fact.key)) byKey.set(fact.key, []);
+    byKey.get(fact.key).push(fact);
+  }
+  const checks = [];
+  for (const [key, list] of byKey) {
+    if (list.length < 2) continue;
+    const values = [...new Set(list.map((fact) => fact.value))];
+    checks.push({
+      name: `chain ${key}`,
+      shown: list.map((fact) => `${fact.block}=${fact.value}`).join(' '),
+      expected: 'one value',
+      ok: values.length === 1,
+    });
+  }
+  const distance = byKey.get('proof.distance')?.[0]?.value;
+  const oracle = journey.summary.distance_km_min;
+  checks.push({
+    name: 'chain proof.distance against the oracle',
+    shown: distance ?? '',
+    expected: Math.round(oracle),
+    ok: distance !== null && Math.abs(Number(distance) - oracle) <= 1,
+  });
+  const verdict = await page
+    .locator('[data-testid="chain-verdict"]')
+    .innerText()
+    .then((text) => text.trim())
+    .catch(() => '');
+  checks.push({
+    name: 'chain verdict',
+    shown: verdict,
+    expected: 'the blocks agree',
+    ok: /agree|concordent/i.test(verdict),
+  });
+  return checks;
+}
+
 /** One step of the proof: what was done, what the site said, and the verdict. */
 function buildStep(id, title, how, checks) {
   const failed = checks.filter((c) => !c.ok);
@@ -197,7 +251,7 @@ function reportSteps(steps) {
     lines.push(`## ${step.title}`, `How: ${step.how}`, '');
     for (const c of step.checks) {
       const expected = c.expected === null ? 'null' : String(c.expected);
-      lines.push(`- ${c.ok ? 'ok  ' : 'FAIL'} ${c.name}: "${c.shown}" — oracle ${expected}`);
+      lines.push(`- ${c.ok ? 'ok  ' : 'FAIL'} ${c.name}: "${c.shown}" — expected ${expected}`);
     }
     lines.push('', `**Step verdict: ${step.ok ? 'PASS' : `FAIL (${step.failed} check(s))`}**`, '');
   }
@@ -280,6 +334,7 @@ async function main() {
   const { browser, page, requests, errors } = await openBrowser(executablePath);
   const steps = await runDoors(page, traceText, oracle);
   const catalogue = await stepCatalogue(page);
+  const chainChecks = await stepChain(page, oracle.journey);
   await browser.close();
 
   steps.push(buildStep('catalogue', 'Step 4 — the catalogue demonstrates that journey',
@@ -288,6 +343,9 @@ async function main() {
       { name: 'feature blocks rendered', shown: String(catalogue.blocks), expected: 13, ok: catalogue.blocks >= 13 },
       { name: 'data named on screen', shown: catalogue.label ?? '', expected: 'Your data', ok: (catalogue.label ?? '').startsWith('Your data') },
     ]));
+  steps.push(buildStep('chain', 'Step 5 — the chain of proof: the blocks tell the same story',
+    'every figure more than one block shows, read from the page and compared block by block',
+    chainChecks));
 
   const external = requests.filter(
     (url) => !url.startsWith(ORIGIN) && !url.startsWith('data:') && !url.startsWith('blob:'),

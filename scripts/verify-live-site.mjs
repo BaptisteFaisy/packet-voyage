@@ -18,7 +18,7 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const LIVE = process.env.LIVE_URL ?? 'https://baptistefaisy.github.io/packet-voyage/';
+const LIVE = process.env.LIVE_URL ?? 'https://tradoooo.github.io/packet-voyage/';
 const ORIGIN = new URL(LIVE).origin;
 
 /** The screens a judge opens, in order, with what must be on each. */
