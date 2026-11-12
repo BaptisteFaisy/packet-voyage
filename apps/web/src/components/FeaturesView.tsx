@@ -5,158 +5,117 @@
  * is on screen, with the numbers it produces, and the views that go further are
  * one click away (§12.1, and the honesty contract: nothing is claimed here that
  * is not shown).
+ *
+ * "A real journey" is the visitor's own as soon as one is loaded — pasted,
+ * imported from a `journey.json`, or opened from a share link — and the gallery
+ * sample otherwise. The source of the numbers is named on screen, and switching
+ * back to the sample is one click (§12.2: no ambiguity about whose data this is).
  */
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import type { Journey } from '@packet-voyage/schema';
 import { useI18n } from '../i18n/context.tsx';
-import { routeHref } from '../lib/route.ts';
-import type { GalleryItem } from '../lib/gallery.ts';
+import type { Language } from '../i18n/context.tsx';
 import { useJourneyDatasets } from '../hooks/use-datasets.ts';
-import { CliCommands } from './CliCommands.tsx';
-import { ExportImageButton } from './ExportImageButton.tsx';
-import { CompareView } from './CompareView.tsx';
-import { DelayTimeline } from './DelayTimeline.tsx';
-import { ExportPanel } from './ExportPanel.tsx';
-import { HopCard } from './HopCard.tsx';
-import { JourneyInsights } from './JourneyInsights.tsx';
-import { MapLegend } from './MapLegend.tsx';
-import { PassportView } from './PassportView.tsx';
-import { RoadmapTable } from './RoadmapTable.tsx';
-import { ScalePanel } from './ScalePanel.tsx';
-import { StoryView } from './StoryView.tsx';
-import { WorldMap } from './WorldMap.tsx';
+import { useJourneyState } from '../state/journey.tsx';
+import type { GalleryItem } from '../lib/gallery.ts';
+import { CatalogueBlocks } from './features/CatalogueBlocks.tsx';
+import { FeatureSource } from './features/FeatureSource.tsx';
+import type { FeatureSourceKind } from './features/FeatureSource.tsx';
+import { RouteBlocks } from './features/RouteBlocks.tsx';
+import { TakeawayBlocks } from './features/TakeawayBlocks.tsx';
 
 export interface FeaturesViewProps {
   items: GalleryItem[];
 }
 
-const CLI_COMMANDS = [
-  { label: 'Trace one host', command: 'npx packet-voyage trace example.org' },
-  { label: 'Read a trace you already have', command: 'npx packet-voyage read trace.txt' },
-  { label: 'Explain the journey', command: 'npx packet-voyage explain journey.json --year 1987' },
-  { label: 'Export for a ticket or a GIS', command: 'npx packet-voyage export journey.json --format geojson' },
-  { label: 'Serve the four tools to an agent', command: 'npx packet-voyage mcp' },
-];
-
-const LIMIT_KEYS = [
-  'features.limits.probe',
-  'features.limits.enrich',
-  'features.limits.data',
-  'features.limits.agent',
-] as const;
-
-function Section({
-  id,
-  title,
-  text,
-  children,
-}: {
-  id: string;
+/** Whose journey the catalogue demonstrates, and what the blocks are given. */
+interface Demo {
+  kind: FeatureSourceKind;
+  journey: Journey | null;
   title: string;
-  text: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="feature-block" data-testid={`feature-${id}`} id={`feature-${id}`}>
-      <h3>{title}</h3>
-      <p className="feature-text">{text}</p>
-      {children}
-    </section>
-  );
+  slug?: string;
+  items: GalleryItem[];
 }
 
-/** The blocks that need a journey: map, timeline, hop, insights, table, exports. */
-function JourneyFeatures({ items }: { items: GalleryItem[] }) {
-  const { t } = useI18n();
-  const { masses, cables } = useJourneyDatasets();
-  const demo = items[0];
-  const journey = demo?.journey ?? null;
-  const rejectedHop = useMemo(
-    () => journey?.hops.find((hop) => (hop.location?.rejected.length ?? 0) > 0) ?? journey?.hops[3] ?? null,
-    [journey],
-  );
-  if (!journey) return null;
+/** The visitor's journey, as an entry the comparison block can select. */
+function yourItem(journey: Journey, label: string): GalleryItem {
+  return {
+    slug: 'yours',
+    title: label,
+    en: label,
+    fr: label,
+    family: journey.family,
+    journey,
+    fromGallery: false,
+  };
+}
 
-  return (
-    <>
-      <Section id="map" title={t('features.map.title')} text={t('features.map.text')}>
-        <WorldMap journey={journey} masses={masses} cables={cables} />
-        <MapLegend journey={journey} />
-      </Section>
-
-      <Section id="timeline" title={t('features.timeline.title')} text={t('features.timeline.text')}>
-        <DelayTimeline journey={journey} />
-      </Section>
-
-      {rejectedHop ? (
-        <Section id="hop" title={t('features.hop.title')} text={t('features.hop.text')}>
-          <HopCard hop={rejectedHop} />
-        </Section>
-      ) : null}
-
-      <Section id="insights" title={t('features.insights.title')} text={t('features.insights.text')}>
-        <JourneyInsights journey={journey} cables={cables} />
-        <ScalePanel journey={journey} />
-      </Section>
-
-      <Section id="roadmap" title={t('features.roadmap.title')} text={t('features.roadmap.text')}>
-        <RoadmapTable journey={journey} />
-      </Section>
-
-      <Section id="export" title={t('features.export.title')} text={t('features.export.text')}>
-        <ExportPanel journey={journey} slug={demo?.slug} />
-        <ExportImageButton journey={journey} masses={masses} cables={cables} />
-      </Section>
-
-      <Section id="story" title={t('features.story.title')} text={t('features.story.text')}>
-        <StoryView journey={journey} />
-        <PassportView journey={journey} />
-      </Section>
-
-      <Section id="compare" title={t('features.compare.title')} text={t('features.compare.text')}>
-        <CompareView items={items} />
-      </Section>
-    </>
-  );
+function pickDemo(
+  userJourney: Journey | null,
+  showDemo: boolean,
+  items: GalleryItem[],
+  yourLabel: string,
+  language: Language,
+): Demo {
+  if (userJourney && !showDemo) {
+    return {
+      kind: 'yours',
+      journey: userJourney,
+      title: yourLabel,
+      items: [yourItem(userJourney, yourLabel), ...items],
+    };
+  }
+  const sample = items[0] ?? null;
+  return {
+    kind: 'gallery',
+    journey: sample?.journey ?? null,
+    title: sample ? (language === 'fr' ? sample.fr : sample.en) : '',
+    slug: sample?.slug,
+    items,
+  };
 }
 
 /** The catalogue: one block per capability, each with a live example. */
 export function FeaturesView({ items }: FeaturesViewProps) {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
+  const { journey: userJourney } = useJourneyState();
+  const { masses, cables } = useJourneyDatasets();
+  // Asking for the sample never destroys the loaded journey: it only steps aside.
+  const [showDemo, setShowDemo] = useState(false);
+
+  const yourLabel = t('features.yourJourney');
+  const demo = useMemo(
+    () => pickDemo(userJourney, showDemo, items, yourLabel, language),
+    [userJourney, showDemo, items, yourLabel, language],
+  );
+  const canSwitch = userJourney !== null;
+  const onSwitch = canSwitch ? () => setShowDemo((current) => !current) : null;
+  const switchLabel = canSwitch
+    ? demo.kind === 'yours'
+      ? t('features.backToDemo')
+      : t('features.backToYours')
+    : null;
+
   return (
     <div className="features-view" data-testid="features-view">
       <h2>{t('features.title')}</h2>
       <p className="feature-text">{t('features.subtitle')}</p>
-      <JourneyFeatures items={items} />
-
-      <Section id="classroom" title={t('features.classroom.title')} text={t('features.classroom.text')}>
-        <a className="button" href={routeHref('classroom')} data-testid="feature-open-classroom">
-          {t('features.open')}
-        </a>
-      </Section>
-
-      <Section id="sources" title={t('features.sources.title')} text={t('features.sources.text')}>
-        <a className="button" href={routeHref('sources')} data-testid="feature-open-sources">
-          {t('features.open')}
-        </a>
-      </Section>
-
-      <Section id="paste" title={t('features.paste.title')} text={t('features.paste.text')}>
-        <a className="button" href={routeHref('gallery')} data-testid="feature-open-paste">
-          {t('features.open')}
-        </a>
-      </Section>
-
-      <Section id="cli" title={t('features.cli.title')} text={t('features.cli.text')}>
-        <CliCommands commands={CLI_COMMANDS} note={t('paste.cliHint')} />
-      </Section>
-
-      <Section id="limits" title={t('features.limits.title')} text={t('features.limits.text')}>
-        <ul className="limits-list" data-testid="feature-limits-list">
-          {LIMIT_KEYS.map((key) => (
-            <li key={key}>{t(key)}</li>
-          ))}
-        </ul>
-      </Section>
+      <FeatureSource
+        kind={demo.kind}
+        journey={demo.journey}
+        title={demo.title}
+        switchLabel={switchLabel}
+        onSwitch={onSwitch}
+      />
+      <RouteBlocks journey={demo.journey} masses={masses} cables={cables} />
+      <TakeawayBlocks
+        journey={demo.journey}
+        slug={demo.slug}
+        masses={masses}
+        cables={cables}
+        items={demo.items}
+      />
+      <CatalogueBlocks />
     </div>
   );
 }

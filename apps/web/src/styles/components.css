@@ -540,6 +540,20 @@ thead th {
   margin: 0.4rem auto 0;
 }
 
+/* Whose data the catalogue demonstrates, and the way back to the sample. */
+.feature-source {
+  border: 1px solid var(--slate-line);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  margin: 0.8rem 0 1.2rem;
+}
+
+.feature-source .hint {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+
 .share-error {
   border: 1px solid var(--rejected);
   border-radius: 8px;
