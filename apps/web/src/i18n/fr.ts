@@ -11,6 +11,7 @@ export const FR_KEYS: Record<I18nKey, string> = {
   'nav.classroom': 'Mode classe',
   'nav.sources': 'Sources & Licences',
   'nav.settings': 'Réglages',
+  'nav.useCases': 'Cas d’usage',
 
   // Summary Banner
   'summary.distance': 'Distance totale :',
@@ -360,4 +361,10 @@ export const FR_KEYS: Record<I18nKey, string> = {
   'chain.block.export': 'exports',
   'chain.block.story': 'récit',
   'chain.block.compare': 'comparaison',
+
+  // Les dix cas d'usage qu'il vaut la peine de faire d'abord, chacun démontré en un clic.
+  'usecases.title': 'Les dix cas d’usage à faire en premier',
+  'usecases.intro': 'Une personne, une question, et la capacité qui y répond. Chaque cas est une démo vivante : le clic charge le voyage qui le prouve et saute au bloc qui répond.',
+  'usecases.try': 'Ouvrir la démo',
+  'usecases.note': 'Six de ces dix cas sont faisables aujourd’hui, sans développement. Les mille autres sont dans docs/USE-CASES-1000.md.',
 };
