@@ -4,11 +4,13 @@ import { useI18n } from './i18n/context.tsx';
 import { PreferencesProvider, usePreferences } from './state/preferences.tsx';
 import { JourneyProvider, useJourneyState } from './state/journey.tsx';
 import { useHashRoute } from './hooks/use-hash-route.ts';
+import { useShareLink, SHARED_SLUG } from './hooks/use-share-link.ts';
 import { galleryAvailable, loadGallery } from './lib/gallery.ts';
 import type { GalleryItem } from './lib/gallery.ts';
 import { preloadOptionalCore } from './lib/journey-source.ts';
 import { SiteHeader } from './components/SiteHeader.tsx';
 import { SiteFooter } from './components/SiteFooter.tsx';
+import { ShareNotice } from './components/ShareNotice.tsx';
 import { FeaturesView } from './components/FeaturesView.tsx';
 import { HomeView } from './components/HomeView.tsx';
 import { JourneyView } from './components/JourneyView.tsx';
@@ -24,7 +26,9 @@ function JourneyRoute({ slug, items }: { slug: string | null; items: GalleryItem
   const { journey, setJourney } = useJourneyState();
 
   useEffect(() => {
-    if (!slug || slug === 'pasted') return;
+    // A pasted or shared journey lives in the state only: it is not a gallery
+    // entry, so there is nothing to look up (and nothing to overwrite).
+    if (!slug || slug === 'pasted' || slug === SHARED_SLUG) return;
     const item = items.find((entry) => entry.slug === slug);
     if (item) setJourney(item.journey);
   }, [slug, items, setJourney]);
@@ -79,6 +83,7 @@ function SourcesRoute({ items }: { items: GalleryItem[] }) {
 
 function Shell() {
   const route = useHashRoute();
+  const share = useShareLink();
   const { journey } = useJourneyState();
   const items = useMemo(() => loadGallery(), []);
 
@@ -89,6 +94,7 @@ function Shell() {
   return (
     <div className="app">
       <SiteHeader />
+      <ShareNotice failure={share.failure} opened={share.opened} onDismiss={share.dismiss} />
       <main className="app-main">{renderRoute(route.name, route.slug, items)}</main>
       <SiteFooter journey={journey} />
     </div>
