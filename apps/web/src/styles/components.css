@@ -475,6 +475,85 @@ thead th {
   font-size: 0.82rem;
 }
 
+/* Two ways in, side by side: paste a trace, or open a journey.json file. */
+.home-entry-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.import-journey {
+  margin-top: 2rem;
+  max-width: 30rem;
+  flex: 1 1 22rem;
+}
+
+.import-description,
+.import-privacy {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.import-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: baseline;
+  margin: 0.6rem 0;
+}
+
+.import-dropzone {
+  border: 1px dashed var(--slate-line);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  margin: 0.4rem 0;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.import-dropzone.dragging,
+.import-dropzone:focus-visible {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.import-error {
+  border: 1px solid var(--rejected);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  margin: 0.6rem 0;
+  background: rgba(248, 113, 113, 0.08);
+}
+
+.import-issues {
+  max-height: 12rem;
+  overflow-y: auto;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+}
+
+/* What a share link did: the journey it opened, or why it could not. */
+.share-notice {
+  max-width: 60rem;
+  margin: 0.4rem auto 0;
+}
+
+.share-error {
+  border: 1px solid var(--rejected);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  background: rgba(248, 113, 113, 0.08);
+}
+
+.share-opened {
+  border: 1px solid var(--slate-line);
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  color: var(--ink-muted);
+}
+
 .classroom-view {
   max-width: 46rem;
 }

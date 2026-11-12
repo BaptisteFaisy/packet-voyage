@@ -89,6 +89,20 @@ export const EN_KEYS = {
   'paste.noSourceNotice': 'No departure point declared: only relative bounds apply. Declare your city to sharpen the light bound.',
   'paste.pastedJourney': 'Pasted trace',
 
+  // Import a journey file
+  'import.title': 'Open a journey.json file',
+  'import.description': 'Load a journey written by the command line — trace, read or explain — and see it on the map, the timeline and the table.',
+  'import.pickFile': 'Choose a journey.json file',
+  'import.dropHint': 'or drop the file here',
+  'import.privacy': 'The file is read here, in your browser, on this machine. It is never uploaded and never sent anywhere: this site makes no network request.',
+  'import.formats': 'Expected: a journey.json written by packet-voyage (version 1).',
+  'import.errorTitle': 'This file could not be opened',
+  'import.errorUnreadable': 'The file could not be read: {detail}',
+  'import.errorNotJson': 'The file is not readable JSON: {detail}',
+  'import.errorNotJourney': 'The file is not a journey: it does not match the journey schema.',
+  'import.errorTooLarge': 'The file is too large to open here: {size} bytes for a {limit} byte limit.',
+  'import.issuesTitle': 'What the schema rejects:',
+
   // Gallery view
   'gallery.title': 'Journey Gallery',
   'gallery.description': 'Six verified journeys exploring oceanic crossings, continental paths, light-speed rejections, and detours.',

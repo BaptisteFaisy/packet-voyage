@@ -47,3 +47,20 @@ export function currentHash(): string {
   if (typeof window === 'undefined') return '#/';
   return window.location.hash || '#/';
 }
+
+/**
+ * Slugs that name a journey held by the shared state instead of the gallery: a
+ * trace pasted in the browser, a journey opened from a share link, a
+ * `journey.json` imported from disk. The journey screen must not look them up
+ * in the gallery (and must not overwrite them with a sample).
+ */
+export const STATE_SLUGS = {
+  pasted: 'pasted',
+  shared: 'shared',
+  imported: 'imported',
+} as const;
+
+export function isStateSlug(slug: string | null | undefined): boolean {
+  if (slug === null || slug === undefined) return false;
+  return (Object.values(STATE_SLUGS) as string[]).includes(slug);
+}
