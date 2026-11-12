@@ -76,6 +76,16 @@ async function startDemo(port) {
   throw new Error(`the demo server did not answer on port ${port}`);
 }
 
+/** Build the site: the demo must serve what the code says, not a stale dist. */
+function buildSite() {
+  const run = spawnSync(process.execPath, [join(root, 'scripts', 'build.mjs')], {
+    cwd: root,
+    encoding: 'utf8',
+    timeout: 300_000,
+  });
+  if (run.status !== 0) throw new Error(`the build failed: ${run.stderr?.slice(0, 400)}`);
+}
+
 /** The bench, run against the local server: it writes the proof itself. */
 function runBench(origin, trace) {
   const args = [join(root, 'scripts', 'verify-user-data.mjs')];
@@ -138,6 +148,7 @@ async function main() {
     stopDemo();
     return;
   }
+  buildSite();
   const origin = await startDemo(options.port);
   console.log(`demo: serveur sur ${origin} (pid ${readFileSync(PIDFILE, 'utf8').trim()})`);
   const status = runBench(origin, options.trace);
