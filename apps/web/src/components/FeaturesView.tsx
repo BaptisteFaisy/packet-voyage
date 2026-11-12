@@ -19,6 +19,7 @@ import { useJourneyDatasets } from '../hooks/use-datasets.ts';
 import { useJourneyState } from '../state/journey.tsx';
 import type { GalleryItem } from '../lib/gallery.ts';
 import { CatalogueBlocks } from './features/CatalogueBlocks.tsx';
+import { DataProvenance } from './features/DataProvenance.tsx';
 import { FeatureSource } from './features/FeatureSource.tsx';
 import type { FeatureSourceKind } from './features/FeatureSource.tsx';
 import { RouteBlocks } from './features/RouteBlocks.tsx';
@@ -107,6 +108,7 @@ export function FeaturesView({ items }: FeaturesViewProps) {
         switchLabel={switchLabel}
         onSwitch={onSwitch}
       />
+      <DataProvenance />
       <RouteBlocks journey={demo.journey} masses={masses} cables={cables} />
       <TakeawayBlocks
         journey={demo.journey}

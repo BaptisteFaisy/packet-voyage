@@ -316,6 +316,33 @@ export const EN_KEYS = {
   'features.limits.enrich': 'Ask RIPE IPmap, RIPEstat, PeeringDB or a resolver about your addresses. That is the CLI, after it names the services and you agree.',
   'features.limits.data': 'Download the local geolocation database or refresh the exchange-point prefixes. Again the CLI, again with consent.',
   'features.limits.agent': 'An agent can drive the tool through the MCP server: one host at a time, five seconds apart, twenty traces per session, and your approval on every call.',
+
+  // Proof of the blocks: the figures each capability computed, on the journey
+  // the visitor is looking at.
+  'proof.label': 'Proof on this journey',
+  'proof.from': 'from {target}, traced on {date}',
+  'proof.distance': 'distance',
+  'proof.located': 'hops located',
+  'proof.cables': 'compatible cables',
+  'proof.floor': 'light floor',
+  'proof.inflation': 'inflation',
+  'proof.residual': 'beyond the light',
+  'proof.delay': 'measured delay',
+  'proof.timed': 'steps timed',
+  'proof.hops': 'hops',
+  'proof.segments': 'segments',
+  'proof.holes': 'holes',
+  'proof.rejected': 'rejected by the light',
+  'proof.countries': 'countries',
+  'proof.networks': 'networks',
+  'proof.log': 'log entries',
+  'proof.hop': 'hop',
+  'proof.level': 'certainty',
+  'proof.source': 'source',
+  'proof.available': 'journeys to compare',
+  'proof.datasets': 'data',
+  'proof.retrieved': 'retrieved {date}',
+  'proof.dataHint': 'read from the bundle — never fetched',
 };
 
 export type I18nKey = keyof typeof EN_KEYS;

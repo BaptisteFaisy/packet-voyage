@@ -1,29 +1,7 @@
-import { useEffect, useState } from 'react';
 import type { Journey } from '@packet-voyage/schema';
 import { useI18n } from '../i18n/context.tsx';
-import { loadDatasets } from '../lib/datasets.ts';
-import { provenanceRows } from '../lib/provenance.ts';
-import type { ProvenanceRow } from '../lib/provenance.ts';
+import { useProvenanceData } from '../hooks/use-provenance.ts';
 import { ProvenanceTable } from './sources/ProvenanceTable.tsx';
-
-function useProvenanceData(): { rows: ProvenanceRow[]; loaded: boolean } {
-  const [rows, setRows] = useState<ProvenanceRow[]>([]);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    let alive = true;
-    void loadDatasets().then((datasets) => {
-      if (!alive) return;
-      setRows(provenanceRows(datasets.provenance, Date.now()));
-      setLoaded(true);
-    });
-    return () => {
-      alive = false;
-    };
-  }, []);
-
-  return { rows, loaded };
-}
 
 function JourneyCreditsList({ credits }: { credits: string[] }) {
   const { t } = useI18n();
