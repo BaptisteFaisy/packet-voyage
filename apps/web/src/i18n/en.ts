@@ -9,6 +9,7 @@ export const EN_KEYS = {
   'nav.classroom': 'Classroom',
   'nav.sources': 'Sources & Licences',
   'nav.settings': 'Settings',
+  'nav.useCases': 'Use cases',
 
   // Summary Banner
   'summary.distance': 'Total distance:',
@@ -358,6 +359,12 @@ export const EN_KEYS = {
   'chain.block.export': 'exports',
   'chain.block.story': 'log',
   'chain.block.compare': 'comparison',
+
+  // The ten best use cases, each one demonstrated in a click.
+  'usecases.title': 'The ten use cases worth doing first',
+  'usecases.intro': 'A person, a question, and the capability that answers it. Every case here is a live demo: clicking loads the journey that proves it and steps to the block that replies.',
+  'usecases.try': 'Open the demo',
+  'usecases.note': 'Six of these ten work today, with no development. The full thousand live in docs/USE-CASES-1000.md.',
 };
 
 export type I18nKey = keyof typeof EN_KEYS;

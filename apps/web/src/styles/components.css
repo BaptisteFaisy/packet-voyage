@@ -656,6 +656,60 @@ thead th {
   color: var(--rejected);
 }
 
+/* The ten use cases: one card per case, one click to the proof. */
+.use-cases-view {
+  max-width: 60rem;
+}
+
+.use-case-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.use-case {
+  display: flex;
+  gap: 0.9rem;
+  background: var(--panel);
+  border: 1px solid var(--slate-line);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+}
+
+.use-case-num {
+  flex: none;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  min-width: 2rem;
+}
+
+.use-case-body h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.02rem;
+}
+
+.use-case-body .persona {
+  margin: 0 0 0.4rem;
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+
+.use-case-body .question {
+  margin: 0 0 0.3rem;
+  color: var(--ink);
+  font-style: italic;
+}
+
+.use-case-body .answer {
+  margin: 0 0 0.7rem;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
 /* The datasets the figures come from, next to the numbers. */
 .feature-provenance {
   display: flex;

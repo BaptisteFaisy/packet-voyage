@@ -9,6 +9,7 @@ const LINKS = [
   { route: 'classroom', key: 'nav.classroom' },
   { route: 'sources', key: 'nav.sources' },
   { route: 'settings', key: 'nav.settings' },
+  { route: 'use-cases', key: 'nav.useCases' },
 ] as const;
 
 /** Site header: brand and hash navigation (§5.9 routes). */

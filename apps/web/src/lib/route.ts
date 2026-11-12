@@ -6,7 +6,8 @@ export type RouteName =
   | 'story'
   | 'classroom'
   | 'sources'
-  | 'settings';
+  | 'settings'
+  | 'use-cases';
 
 export interface Route {
   name: RouteName;
@@ -22,6 +23,7 @@ const KNOWN_ROUTES: RouteName[] = [
   'classroom',
   'sources',
   'settings',
+  'use-cases',
 ];
 
 export function parseRoute(hash: string): Route {
