@@ -27,6 +27,7 @@ const STOPS = [
   { hash: '#/journey/ocean-crossing', probe: '[data-testid="summary-banner"]', label: 'journey' },
   { hash: '#/journey/ocean-crossing', probe: '[data-testid="journey-insights"]', label: 'insights panel' },
   { hash: '#/journey/ocean-crossing', probe: '[data-testid="export-panel"]', label: 'export panel' },
+  { hash: '#/features', probe: '[data-testid="features-view"]', label: 'features catalogue' },
   { hash: '#/story', probe: '[data-testid="story-view"]', label: 'journey log' },
   { hash: '#/compare', probe: '[data-testid="compare-view"]', label: 'compare' },
   { hash: '#/classroom', probe: '[data-testid="classroom-view"]', label: 'classroom' },

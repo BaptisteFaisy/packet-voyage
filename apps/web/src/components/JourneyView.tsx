@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
-import type { Cable, Journey, Landmass } from '@packet-voyage/schema';
+import type { Journey } from '@packet-voyage/schema';
 import { useI18n } from '../i18n/context.tsx';
 import { useJourneyState } from '../state/journey.tsx';
 import { useJourneyKeyboard } from '../hooks/use-journey-keyboard.ts';
-import { loadDatasets } from '../lib/datasets.ts';
+import { useJourneyDatasets } from '../hooks/use-datasets.ts';
 import { SummaryBanner } from './SummaryBanner.tsx';
 import { WorldMap } from './WorldMap.tsx';
 import { ExportImageButton } from './ExportImageButton.tsx';
@@ -15,20 +14,6 @@ import { DelayTimeline } from './DelayTimeline.tsx';
 import { HopList } from './HopList.tsx';
 import { DetailPanel } from './DetailPanel.tsx';
 import { RoadmapTable } from './RoadmapTable.tsx';
-
-function useJourneyDatasets(): { masses: Landmass[]; cables: Cable[] } {
-  const [data, setData] = useState<{ masses: Landmass[]; cables: Cable[] }>({ masses: [], cables: [] });
-  useEffect(() => {
-    let alive = true;
-    void loadDatasets().then((ds) => {
-      if (alive) setData({ masses: ds.masses, cables: ds.cables });
-    });
-    return () => {
-      alive = false;
-    };
-  }, []);
-  return data;
-}
 
 /**
  * The journey screen (§12.1 screen 2): banner on top, map in the centre,

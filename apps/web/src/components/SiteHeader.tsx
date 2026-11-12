@@ -3,6 +3,7 @@ import { routeHref } from '../lib/route.ts';
 
 const LINKS = [
   { route: 'gallery', key: 'nav.gallery' },
+  { route: 'features', key: 'nav.features' },
   { route: 'compare', key: 'nav.compare' },
   { route: 'story', key: 'nav.story' },
   { route: 'classroom', key: 'nav.classroom' },

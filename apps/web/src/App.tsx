@@ -9,6 +9,7 @@ import type { GalleryItem } from './lib/gallery.ts';
 import { preloadOptionalCore } from './lib/journey-source.ts';
 import { SiteHeader } from './components/SiteHeader.tsx';
 import { SiteFooter } from './components/SiteFooter.tsx';
+import { FeaturesView } from './components/FeaturesView.tsx';
 import { HomeView } from './components/HomeView.tsx';
 import { JourneyView } from './components/JourneyView.tsx';
 import { StoryView } from './components/StoryView.tsx';
@@ -52,6 +53,8 @@ function StoryRoute({ items }: { items: GalleryItem[] }) {
 
 function renderRoute(routeName: string, slug: string | null, items: GalleryItem[]) {
   switch (routeName) {
+    case 'features':
+      return <FeaturesView items={items} />;
     case 'journey':
       return <JourneyRoute slug={slug} items={items} />;
     case 'compare':
