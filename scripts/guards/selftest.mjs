@@ -216,7 +216,7 @@ async function testBundleSize(tmp) {
 async function testHooks(tmp) {
   const root = join(tmp, 'hooks');
   await writeTree(root, {
-    '.kiro/probe-allowlist.txt': 'localhost\n127.0.0.1\n::1\n198.51.100.0/24\n',
+    '.kiro/probe-allowlist.txt': 'localhost\n127.0.0.1\n::1\n198.51.100.0/24\n203.0.113.0/24\n',
     'apps/web/src/Bad.tsx': 'export const s = "Your packet crossed the sea";\n',
     'gallery/g1/trace.txt': '1 10.20.30.40 2 ms\n',
     'packages/data/datasets/test.json': '[]',
@@ -224,10 +224,28 @@ async function testHooks(tmp) {
   assert.equal((await checkProbeCommand(root, 'traceroute 198.51.100.5')).allowed, true);
   assert.equal((await checkProbeCommand(root, 'mtr 1.1.1.1')).allowed, false);
 
+  // Indirect probe (2026-11-12): the product's own `trace` subcommand spawns
+  // mtr/traceroute, so it must face the same allowlist whatever the launcher.
+  assert.equal((await checkProbeCommand(root, 'pnpm voyage trace example.org')).allowed, false);
+  assert.equal((await checkProbeCommand(root, 'npx packet-voyage trace 8.8.8.8')).allowed, false);
+  assert.equal(
+    (await checkProbeCommand(root, 'node apps/cli/bin/voyage.mjs trace www.google.com --from Lyon --cycles 3 --out x.json')).allowed,
+    false,
+  );
+  assert.equal((await checkProbeCommand(root, 'pnpm voyage trace 203.0.113.80')).allowed, true);
+  assert.equal((await checkProbeCommand(root, 'pnpm voyage trace 198.51.100.9 --from Lyon --cycles 2 --json --out /tmp/j.json')).allowed, true);
+  // The file-based subcommands never probe: they stay allowed.
+  assert.equal((await checkProbeCommand(root, 'pnpm voyage read gallery/ocean-crossing/trace.txt')).allowed, true);
+  assert.equal((await checkProbeCommand(root, 'pnpm voyage explain journey.json --year 2026')).allowed, true);
+
   const pRefuse = runHook('scripts/hooks/probe-guard.mjs', { cwd: root, tool_name: 'shell', tool_input: { command: 'ping 8.8.8.8' } });
   assert.notEqual(pRefuse.status, 0);
   const pAllow = runHook('scripts/hooks/probe-guard.mjs', { cwd: root, tool_name: 'shell', tool_input: { command: 'ping 127.0.0.1' } });
   assert.equal(pAllow.status, 0);
+  const vRefuse = runHook('scripts/hooks/probe-guard.mjs', { cwd: root, tool_name: 'shell', tool_input: { command: 'pnpm voyage trace example.org' } });
+  assert.notEqual(vRefuse.status, 0);
+  const vAllow = runHook('scripts/hooks/probe-guard.mjs', { cwd: root, tool_name: 'shell', tool_input: { command: 'pnpm voyage read gallery/g1/trace.txt' } });
+  assert.equal(vAllow.status, 0);
 
   const cRefuse = runHook('scripts/hooks/claims-guard.mjs', { cwd: root, tool_input: { file_path: 'apps/web/src/Bad.tsx' } });
   assert.notEqual(cRefuse.status, 0);

@@ -83,6 +83,7 @@ apps/mcp/          optional MCP server: trace_host, read_trace, explain_journey,
 gallery/           six redacted sample journeys
 .kiro/             steering, specs, hooks, agents, skills — the build was driven from here
 docs/              CONTRACTS.md (interfaces) and fr/CAHIER-DES-CHARGES.md (specification)
+docs/REAL-DATA.md  the real-data procedure: who may probe, how, and what may enter the repo
 ```
 
 ## Honesty, privacy, licences
