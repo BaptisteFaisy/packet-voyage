@@ -166,3 +166,36 @@ describe('FeaturesView — with no journey loaded, the gallery demo as before', 
     expectEveryBlock();
   });
 });
+
+describe('FeaturesView — each block carries the figures it computed', () => {
+  const PROOF_BLOCKS = ['map', 'timeline', 'hop', 'insights', 'roadmap', 'export', 'story', 'compare'];
+
+  it('VOY-F-30 every block that computes something shows its proof', async () => {
+    renderWithProviders(<FeaturesView items={items} />);
+    await waitFor(() => expect(screen.getByTestId('feature-proof-map')).toBeTruthy());
+    for (const block of PROOF_BLOCKS) {
+      expect(screen.getByTestId(`feature-proof-${block}`), block).toBeTruthy();
+    }
+  });
+
+  it('the proof shows the figures of the journey on screen, not of the sample', async () => {
+    renderWithProviders(
+      <WithLoadedJourney journey={CONTINENTAL}>
+        <FeaturesView items={items} />
+      </WithLoadedJourney>,
+    );
+    await waitFor(() => expect(screen.getByTestId('feature-proof-map')).toBeTruthy());
+    const map = screen.getByTestId('feature-proof-map').textContent ?? '';
+    expect(map).toContain('793 km');
+    expect(map).toContain('5 / 6');
+    expect(map).not.toContain('6,657');
+  });
+
+  it('VOY-F-48 names the datasets the figures come from, read from the bundle', async () => {
+    renderWithProviders(<FeaturesView items={items} />);
+    await waitFor(() => expect(screen.getByTestId('feature-provenance')).toBeTruthy());
+    const text = screen.getByTestId('feature-provenance').textContent ?? '';
+    expect(text).toContain('Submarine telecommunication cables');
+    expect(text).toContain('never fetched');
+  });
+});

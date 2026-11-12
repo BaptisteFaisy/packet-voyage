@@ -554,6 +554,58 @@ thead th {
   font-size: 0.85rem;
 }
 
+/* The proof of a block: the figures it computed, and where they come from. */
+.feature-proof {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  border: 1px solid var(--slate-line);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 0.45rem 0.8rem;
+  margin: 0.7rem 0 0;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+
+.feature-proof .proof-mark {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.feature-proof .proof-label {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.feature-proof .proof-fact strong {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.feature-proof .proof-source {
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+}
+
+/* The datasets the figures come from, next to the numbers. */
+.feature-provenance {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  border: 1px solid var(--slate-line);
+  border-radius: 8px;
+  padding: 0.45rem 0.8rem;
+  margin: 0.6rem 0 1.1rem;
+  font-size: 0.8rem;
+}
+
+.feature-provenance .proof-label {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 .share-error {
   border: 1px solid var(--rejected);
   border-radius: 8px;
