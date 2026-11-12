@@ -11,11 +11,10 @@
  * Skipped with a clear message when no browser is installed.
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { readdirSync, existsSync } from 'node:fs';
-import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+import { findChromium } from './lib/browser.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const LIVE = process.env.LIVE_URL ?? 'https://tradoooo.github.io/packet-voyage/';
@@ -35,19 +34,6 @@ const STOPS = [
   { hash: '#/settings', probe: '[data-testid="settings-view"]', label: 'settings' },
 ];
 
-function findChromium() {
-  if (process.env.PLAYWRIGHT_CHROMIUM) return process.env.PLAYWRIGHT_CHROMIUM;
-  const cache = join(homedir(), '.cache', 'ms-playwright');
-  if (!existsSync(cache)) return null;
-  const builds = readdirSync(cache).filter((name) => name.startsWith('chromium-')).sort().reverse();
-  for (const build of builds) {
-    for (const rel of ['chrome-linux64/chrome', 'chrome-mac/Chromium.app/Contents/MacOS/Chromium']) {
-      const binary = join(cache, build, rel);
-      if (existsSync(binary)) return binary;
-    }
-  }
-  return null;
-}
 
 /** Visit every screen and report which ones actually rendered. */
 async function visitScreens(page) {

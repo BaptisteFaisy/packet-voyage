@@ -35,7 +35,10 @@ function isAllowedNetworkPath(relPath) {
   // The browser proof of VOY-N-01 serves the built site on loopback only, to a
   // headless Chromium on the same machine: it opens a server and never reaches
   // the Internet. It is the single exception, and it is named, not a folder.
+  // `scripts/lib/serve-dist.mjs` is that one server, factored out so the demo
+  // environment and the proofs share it instead of each opening their own.
   if (relPath === 'scripts/verify-no-request.mjs') return true;
+  if (relPath === 'scripts/lib/serve-dist.mjs') return true;
   if (/\.test\.(?:ts|tsx|mjs)$/.test(relPath)) return true;
   return false;
 }

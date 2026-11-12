@@ -20,7 +20,9 @@
     "verify:no-request": "node scripts/verify-no-request.mjs",
     "calibrate": "node scripts/calibrate.mjs",
     "verify:live": "node scripts/verify-live-site.mjs",
-  "verify:user-data": "node scripts/verify-user-data.mjs"
+    "verify:user-data": "node scripts/verify-user-data.mjs",
+    "demo": "node scripts/demo.mjs",
+    "demo:stop": "node scripts/demo.mjs --stop"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",

@@ -11,60 +11,22 @@
  * Skipped with a clear message when no browser is installed: a proof must never
  * turn a build red on a machine that has nothing to prove.
  */
-import { createServer } from 'node:http';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { homedir } from 'node:os';
-import { dirname, extname, join, resolve } from 'node:path';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { existsSync, readFileSync } from 'node:fs';
+
+import { dirname, join, resolve } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+import { findChromium } from './lib/browser.mjs';
+import { serveDist } from './lib/serve-dist.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(root, 'apps', 'web', 'dist');
 const EVIDENCE_DIR = join(root, 'docs', 'evidence');
 
-const MIME = {
-  '.html': 'text/html; charset=utf-8',
-  '.js': 'text/javascript; charset=utf-8',
-  '.css': 'text/css; charset=utf-8',
-  '.json': 'application/json; charset=utf-8',
-  '.svg': 'image/svg+xml',
-  '.png': 'image/png',
-  '.ico': 'image/x-icon',
-  '.woff2': 'font/woff2',
-};
-
 /** Minimal static server, bound to loopback: nothing outside can reach it. */
-async function startServer() {
-  const server = createServer(async (req, res) => {
-    const path = decodeURIComponent((req.url ?? '/').split('?')[0]);
-    const file = join(DIST, path === '/' ? 'index.html' : path);
-    if (!file.startsWith(DIST) || !existsSync(file)) {
-      res.writeHead(404).end('not found');
-      return;
-    }
-    const body = await readFile(file);
-    res.writeHead(200, { 'content-type': MIME[extname(file)] ?? 'application/octet-stream' });
-    res.end(body);
-  });
-  await new Promise((done) => server.listen(0, '127.0.0.1', done));
-  return { server, port: server.address().port };
-}
 
 /** Newest installed Chromium, or the one the caller points at. */
-function findChromium() {
-  if (process.env.PLAYWRIGHT_CHROMIUM) return process.env.PLAYWRIGHT_CHROMIUM;
-  const cache = join(homedir(), '.cache', 'ms-playwright');
-  if (!existsSync(cache)) return null;
-  const builds = readdirSync(cache).filter((name) => name.startsWith('chromium-')).sort();
-  for (const build of builds.reverse()) {
-    const binary = join(cache, build, 'chrome-linux64', 'chrome');
-    if (existsSync(binary)) return binary;
-    const mac = join(cache, build, 'chrome-mac', 'Chromium.app', 'Contents', 'MacOS', 'Chromium');
-    if (existsSync(mac)) return mac;
-  }
-  return null;
-}
 
 function classify(url, origin) {
   if (url.startsWith('data:') || url.startsWith('blob:')) return 'inline';
@@ -126,7 +88,7 @@ async function main() {
     process.exit(0);
   }
   const { chromium } = await import('playwright-core');
-  const { server, port } = await startServer();
+  const { server, port } = await serveDist(root);
   const origin = `http://127.0.0.1:${port}`;
   const requests = [];
   const browser = await chromium.launch({ executablePath, args: ['--no-sandbox'] });
