@@ -191,6 +191,17 @@ describe('FeaturesView — each block carries the figures it computed', () => {
     expect(map).not.toContain('6,657');
   });
 
+  it('VOY-F-30 the same figure reads the same in every block that shows it', async () => {
+    renderWithProviders(<FeaturesView items={items} />);
+    await waitFor(() => expect(screen.getByTestId('feature-proof-map')).toBeTruthy());
+    const map = screen.getByTestId('feature-proof-map').textContent ?? '';
+    const exportProof = screen.getByTestId('feature-proof-export').textContent ?? '';
+    const distanceIn = (text: string) => text.match(/at least [\d,]+ km/)?.[0] ?? null;
+    expect(distanceIn(map)).toBeTruthy();
+    expect(distanceIn(exportProof)).toBe(distanceIn(map));
+    expect(screen.getByTestId('chain-verdict').textContent).toContain('the blocks agree');
+  });
+
   it('VOY-F-48 names the datasets the figures come from, read from the bundle', async () => {
     renderWithProviders(<FeaturesView items={items} />);
     await waitFor(() => expect(screen.getByTestId('feature-provenance')).toBeTruthy());

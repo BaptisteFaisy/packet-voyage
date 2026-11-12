@@ -43,7 +43,7 @@ describe('proofFacts — the figures a block computed', () => {
       { key: 'proof.hop', value: '#4', unit: 'text' },
       { key: 'proof.level', value: 'solid', unit: 'text' },
       { key: 'proof.source', value: 'ixp-prefix, name-hint', unit: 'text' },
-      { key: 'proof.rejected', value: 1, unit: 'count' },
+      { key: 'proof.rejectedHop', value: 1, unit: 'count' },
     ]);
   });
 

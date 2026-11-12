@@ -335,6 +335,7 @@ export const FR_KEYS: Record<I18nKey, string> = {
   'proof.segments': 'segments',
   'proof.holes': 'trous',
   'proof.rejected': 'rejetées par la lumière',
+  'proof.rejectedHop': 'candidats rejetés sur cette étape',
   'proof.countries': 'pays',
   'proof.networks': 'réseaux',
   'proof.log': 'entrées de carnet',
@@ -345,4 +346,18 @@ export const FR_KEYS: Record<I18nKey, string> = {
   'proof.datasets': 'données',
   'proof.retrieved': 'récupéré le {date}',
   'proof.dataHint': 'lues dans le paquet — jamais téléchargées',
+
+  // La chaîne de preuve : les chiffres que plusieurs blocs montrent, et s’ils concordent.
+  'chain.title': 'La chaîne de preuve',
+  'chain.text': 'Plusieurs blocs montrent le même chiffre. La chaîne les liste et dit s’ils racontent la même chose — pour que la page se lise d’un bloc.',
+  'chain.agree': '{count} chiffres partagés par deux blocs ou plus, et les blocs concordent.',
+  'chain.divergence': '{count} chiffres racontés différemment par deux blocs.',
+  'chain.block.map': 'carte',
+  'chain.block.timeline': 'frise',
+  'chain.block.hop': 'étape',
+  'chain.block.insights': 'insights',
+  'chain.block.roadmap': 'table',
+  'chain.block.export': 'exports',
+  'chain.block.story': 'récit',
+  'chain.block.compare': 'comparaison',
 };

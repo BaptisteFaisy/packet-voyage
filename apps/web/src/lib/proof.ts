@@ -98,7 +98,9 @@ function hopFacts(hop: Hop | null): ProofFact[] {
     { key: 'proof.hop', value: `#${hop.ttl}`, unit: 'text' },
     { key: 'proof.level', value: located?.level ?? 'unlocated', unit: 'text' },
     { key: 'proof.source', value: located?.sources.join(', ') || '—', unit: 'text' },
-    { key: 'proof.rejected', value: located?.rejected.length ?? 0, unit: 'count' },
+    // The hop's own rejections — not the journey's: two different quantities,
+    // two different labels, so the chain never compares them.
+    { key: 'proof.rejectedHop', value: located?.rejected.length ?? 0, unit: 'count' },
   ];
 }
 
