@@ -24,11 +24,12 @@
  * CLI bundle: run `pnpm build` once before the first use.
  */
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { homedir, tmpdir } from 'node:os';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+import { findChromium } from './lib/browser.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const LIVE = process.env.LIVE_URL ?? 'https://tradoooo.github.io/packet-voyage/';
@@ -123,17 +124,6 @@ function compareBanner(shown, journey) {
   return cells.map(([name, expected, tolerance]) => check(name, shown[name] ?? '', expected, tolerance));
 }
 
-function findChromium() {
-  if (process.env.PLAYWRIGHT_CHROMIUM) return process.env.PLAYWRIGHT_CHROMIUM;
-  const cache = join(homedir(), '.cache', 'ms-playwright');
-  if (!existsSync(cache)) return null;
-  for (const build of readdirSync(cache).filter((n) => n.startsWith('chromium-')).sort().reverse()) {
-    for (const rel of ['chrome-linux64/chrome', 'chrome-mac/Chromium.app/Contents/MacOS/Chromium']) {
-      if (existsSync(join(cache, build, rel))) return join(cache, build, rel);
-    }
-  }
-  return null;
-}
 
 /** Read the nine numbers of the banner the site is showing right now. */
 async function readBanner(page) {
@@ -278,9 +268,10 @@ function writeEvidence(steps, network) {
       ? 'VERDICT: every door of the site gives the visitor’s own data exactly like the command line, and calls nobody.'
       : 'VERDICT: FAILED — see above.', '',
   ];
-  const log = join(EVIDENCE_DIR, `user-data-${date}.log`);
+  const prefix = process.env.EVIDENCE_PREFIX ?? 'user-data';
+  const log = join(EVIDENCE_DIR, `${prefix}-${date}.log`);
   writeFileSync(log, `${lines.join('\n')}\n`, 'utf8');
-  const json = join(EVIDENCE_DIR, `user-data-${date}.json`);
+  const json = join(EVIDENCE_DIR, `${prefix}-${date}.json`);
   writeFileSync(json, `${JSON.stringify({ url: LIVE, date, steps, network }, null, 2)}\n`, 'utf8');
   return { log, json, ok: failed === 0 };
 }
