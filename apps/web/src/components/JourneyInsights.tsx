@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { Cable, Journey } from '@packet-voyage/schema';
 import type { DelayBreakdown, DistanceBounds, MediumCheck } from '@packet-voyage/core';
 import { useI18n } from '../i18n/context.tsx';
+import { CertaintyInspector } from './CertaintyInspector.tsx';
 import type { Language } from '../i18n/context.tsx';
 import { usePreferences } from '../state/preferences.tsx';
 import {
@@ -14,6 +15,7 @@ import type { DistanceUnit } from '../lib/format.ts';
 import { loadDatasets } from '../lib/datasets.ts';
 import { formatMediaLabel, insightsModel, traceYearOf } from '../lib/insights.ts';
 import type { InsightsModel } from '../lib/insights.ts';
+import { EraRfsTimeline } from './EraRfsTimeline.tsx';
 
 /** The two certainty levels the other cards use. */
 type Certainty = 'measured' | 'inferred';
@@ -30,7 +32,7 @@ function Block(props: {
     <section className={`card-section level-${props.level}`} data-testid={props.testId}>
       <h3>
         {props.title}
-        <span className="level-badge">{props.level}</span>
+        <CertaintyInspector certainty={props.level} label={props.level} />
       </h3>
       {props.children}
     </section>
@@ -180,6 +182,10 @@ function EraBlock(props: {
       <p data-testid="insights-era-now">
         {t('insights.eraNow', { count: era.compatible_now.length })}
       </p>
+      {/* The frise of the commissioning years: when the compatible cables entered
+          service, where the chosen year stands among them, and how many cables
+          the dataset leaves undated. */}
+      <EraRfsTimeline cables={era.compatible_now} year={year} />
       <p className="card-line" data-testid="insights-era-verdict" data-undated={era.undated}>
         {era.verdict[language]}
       </p>

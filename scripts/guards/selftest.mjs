@@ -61,6 +61,20 @@ async function testVocabulary(tmp) {
   });
   const bad = await checkVocabulary(root);
   assert.equal(bad.hits.length, 3);
+
+  // The prose is scanned too: a README claiming the packet travelled through a
+  // cable would undo, in one sentence, the whole point of the product.
+  await writeTree(root, { 'README.md': '# Demo\n\nYour packet travelled through cable X.\n' });
+  const prose = await checkVocabulary(root);
+  assert.ok(prose.hits.some((h) => h.file === 'README.md'), 'README must be scanned');
+
+  // ...but a file whose job is to state the rule stays exempt.
+  await writeTree(root, {
+    'README.md': '# Demo\n\nCompatible cables for this crossing.\n',
+    'docs/fr/spec.md': 'Never write "your packet travelled through".\n',
+    'apps/web/src/Bad.tsx': 'export const a = "Compatible cables for this crossing";\n',
+  });
+  assert.equal((await checkVocabulary(root)).hits.length, 0);
 }
 
 async function testDataLicence(tmp) {

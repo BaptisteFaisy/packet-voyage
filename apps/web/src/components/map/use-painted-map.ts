@@ -41,6 +41,15 @@ export function usePaintedMap(input: PaintedMapInput): PaintedMap {
     () => litCableIds(journey, input.selectedSegment),
     [journey, input.selectedSegment],
   );
+  // The direct great-circle between the first and the last located point: drawn
+  // under the route, the gap between the two IS the detour (§7.11).
+  const directArc = useMemo(() => {
+    const nodes = scene.nodes;
+    const first = nodes[0];
+    const last = nodes[nodes.length - 1];
+    return first && last && first !== last ? { from: first.position, to: last.position } : null;
+  }, [scene.nodes]);
+
   const projection = useMemo(
     () => makeProjection(kind, input.width, input.height, rotation),
     [kind, input.width, input.height, rotation],
@@ -69,6 +78,7 @@ export function usePaintedMap(input: PaintedMapInput): PaintedMap {
     selectedHop: input.selectedHop,
     hoveredHop: input.hoveredHop,
     lightCones: input.lightCones ?? false,
+    directArc,
   });
 
   return { projection, scene };

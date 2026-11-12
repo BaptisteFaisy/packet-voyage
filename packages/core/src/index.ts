@@ -20,3 +20,5 @@ export * from './share/index.ts';
 export * from './analytics/index.ts';
 export * from './report/index.ts';
 export * from './pipeline.ts';
+export * from './scale/index.ts';
+export * from './clocks/index.ts';

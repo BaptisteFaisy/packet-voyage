@@ -7,6 +7,7 @@ import type { Cable, Landmass, Position } from '@packet-voyage/schema';
 import type { GeoPath, GeoProjection } from 'd3-geo';
 import { geoGraticule10 } from 'd3-geo';
 import type { RouteLeg } from './map-geometry.ts';
+import { greatCirclePoints } from './journey-source.ts';
 import { getNetworkStyle } from './styling.ts';
 
 export const SEA_COLOR = '#0b1220';
@@ -17,6 +18,7 @@ export const CABLE_LIT = '#fbbf24';
 export const ROUTE_COLOR = '#7dd3fc';
 export const REJECTED_COLOR = '#f87171';
 export const SECONDARY_COLOR = '#fbbf24';
+export const DIRECT_ARC_COLOR = '#94a3b8';
 
 function lineString(points: Position[]): GeoJSON.LineString {
   return { type: 'LineString', coordinates: points.map((p) => [p.lon, p.lat]) };
@@ -194,5 +196,36 @@ export function drawLightDiscs(ctx: CanvasRenderingContext2D, path: GeoPath, rin
     ctx.stroke();
   }
   ctx.restore();
+  ctx.setLineDash([]);
+}
+
+/** Number of intervals sampling the direct great-circle arc. */
+export const DIRECT_ARC_STEPS = 48;
+
+/**
+ * The direct great-circle between origin and destination, painted UNDER the
+ * observed route (§12.3): the visible gap between the grey dotted arc and the
+ * stitched route IS the detour — the "paperclip" reads in three seconds.
+ * Grey, dotted and thinner than the route: a reference line, never a claim
+ * about where the packet went. Coincident endpoints draw nothing; on the
+ * globe, an arc with both endpoints on the far side stays hidden.
+ */
+export function drawDirectArc(
+  ctx: CanvasRenderingContext2D,
+  path: GeoPath,
+  projection: GeoProjection,
+  from: Position,
+  to: Position,
+): void {
+  if (from.lat === to.lat && from.lon === to.lon) return;
+  const origin = projection([from.lon, from.lat]);
+  const target = projection([to.lon, to.lat]);
+  if (origin === null && target === null) return;
+  ctx.strokeStyle = DIRECT_ARC_COLOR;
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 6]);
+  ctx.beginPath();
+  path(lineString(greatCirclePoints(from, to, DIRECT_ARC_STEPS)));
+  ctx.stroke();
   ctx.setLineDash([]);
 }

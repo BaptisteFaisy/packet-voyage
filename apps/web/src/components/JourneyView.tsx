@@ -9,6 +9,7 @@ import { WorldMap } from './WorldMap.tsx';
 import { ExportImageButton } from './ExportImageButton.tsx';
 import { ExportPanel } from './ExportPanel.tsx';
 import { JourneyInsights } from './JourneyInsights.tsx';
+import { ScalePanel } from './ScalePanel.tsx';
 import { MapLegend } from './MapLegend.tsx';
 import { DelayTimeline } from './DelayTimeline.tsx';
 import { HopList } from './HopList.tsx';
@@ -34,7 +35,7 @@ function useJourneyDatasets(): { masses: Landmass[]; cables: Cable[] } {
  * hop list on the left, delay timeline at the bottom, and the roadmap table
  * that carries everything the map shows (VOY-F-30..34).
  */
-export function JourneyView({ journey }: { journey: Journey }) {
+export function JourneyView({ journey, slug }: { journey: Journey; slug?: string }) {
   const { t } = useI18n();
   const { announcement } = useJourneyState();
   const { masses, cables } = useJourneyDatasets();
@@ -58,7 +59,8 @@ export function JourneyView({ journey }: { journey: Journey }) {
       </div>
       <DelayTimeline journey={journey} />
       <JourneyInsights journey={journey} cables={cables} />
-      <ExportPanel journey={journey} />
+      <ScalePanel journey={journey} />
+      <ExportPanel journey={journey} slug={slug} />
       <RoadmapTable journey={journey} />
     </div>
   );

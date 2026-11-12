@@ -31,6 +31,36 @@ const VOCABULARY_SELF = [
   'packages/core/src/story/vocabulary.test.ts',
 ];
 
+/**
+ * Reader-facing prose is scanned too: a README that says "your packet travelled
+ * through cable X" would undo, in one sentence, everything the product is careful
+ * about. These are the files a judge reads first.
+ */
+const MARKDOWN_TARGETS = ['README.md', 'SECURITY.md', 'CONTRIBUTING.md'];
+const MARKDOWN_DIRS = ['docs'];
+
+/**
+ * Files whose job is to STATE or QUOTE the rule: the specification, the steering,
+ * the specs, the contract, the build journal (it shows a before/after label),
+ * the idea backlog and the power declaration. They contain the forbidden
+ * wordings on purpose, as counter-examples, and scanning them would only produce
+ * false positives — the same reasoning as `VOCABULARY_SELF` above.
+ */
+const MARKDOWN_EXEMPT = [
+  'docs/CONTRACTS.md',
+  'KIRO_JOURNAL.md',
+  'docs/IDEAS.md',
+  'docs/IDEAS-1000.md',
+];
+const MARKDOWN_EXEMPT_PREFIXES = ['docs/fr/', 'docs/ideas/', '.kiro/', 'power/'];
+
+function statesTheRule(relPath) {
+  return (
+    MARKDOWN_EXEMPT.includes(relPath) ||
+    MARKDOWN_EXEMPT_PREFIXES.some((prefix) => relPath.startsWith(prefix))
+  );
+}
+
 /** Load FORBIDDEN_PATTERNS from core vocabulary.ts if present, else fallback. */
 export async function loadVocabularyPatterns(root) {
   const vocabPath = join(root, 'packages/core/src/story/vocabulary.ts');
@@ -82,7 +112,8 @@ export function scanVocabularyText(content, relPath, patterns) {
   // The rule itself and its unit test quote the forbidden wordings on purpose:
   // they are the specification's examples, not product labels.
   if (VOCABULARY_SELF.includes(relPath)) return [];
-  if (relPath.startsWith('docs/') || relPath.startsWith('scripts/guards/')) return [];
+  if (relPath.startsWith('scripts/guards/')) return [];
+  if (relPath.endsWith('.md') && statesTheRule(relPath)) return [];
   const hits = [];
   const lines = content.split(/\r?\n/);
   for (let i = 0; i < lines.length; i += 1) {
@@ -108,11 +139,23 @@ export async function checkVocabulary(root, targetFiles = null) {
   if (!files) {
     const web = await walkFiles(root, 'apps/web/src');
     const story = await walkFiles(root, 'packages/core/src/story');
-    files = [...web, ...story].filter((f) => f.endsWith('.ts') || f.endsWith('.tsx'));
+    const code = [...web, ...story].filter((f) => f.endsWith('.ts') || f.endsWith('.tsx'));
+    const prose = [];
+    for (const rel of MARKDOWN_TARGETS) {
+      if (existsSync(join(root, rel))) prose.push(rel);
+    }
+    for (const dir of MARKDOWN_DIRS) {
+      for (const rel of await walkFiles(root, dir)) {
+        // Top level of the directory only: the sub-folders are the specification
+        // and the backlog, which quote the rule (see MARKDOWN_EXEMPT_PREFIXES).
+        if (rel.endsWith('.md') && !rel.slice(dir.length + 1).includes('/')) prose.push(rel);
+      }
+    }
+    files = [...code, ...prose];
   }
   const hits = [];
   for (const rel of files) {
-    if (!rel.endsWith('.ts') && !rel.endsWith('.tsx')) continue;
+    if (!/\.(tsx?|md)$/.test(rel)) continue;
     const abs = join(root, rel);
     if (!existsSync(abs)) continue;
     const text = await readFile(abs, 'utf8');

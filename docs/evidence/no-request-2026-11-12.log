@@ -1,0 +1,35 @@
+# Browser network log — 2026-11-12
+
+Proof for VOY-N-01 and §18 line 4: the built site, served on loopback and
+visited like a judge would visit it, issues no request to any other origin.
+
+Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; font-src 'self'; base-uri 'none'; form-action 'none'
+Assets served from the loopback origin: 12
+Inline (data:/blob:) resources: 0
+External requests: 0
+
+## Visit
+- clicked the ocean crossing
+- skipped a map element — [data-testid="world-map-overlay"] > * is present but not clickable
+- skipped close the panel — [data-testid="detail-panel"] [data-testid="close-detail"] is not in the page
+- clicked a roadmap row
+- clicked settings
+- switched the language to French
+- clicked sources
+- clicked classroom
+
+## Every request issued
+- GET http://127.0.0.1:32863/index.html
+- GET http://127.0.0.1:32863/assets/index-A_Klo-e0.js
+- GET http://127.0.0.1:32863/assets/index-B_xuuORu.css
+- GET http://127.0.0.1:32863/assets/src-eIz40yAw.js
+- GET http://127.0.0.1:32863/assets/fixed-links-32wCgc4I.js
+- GET http://127.0.0.1:32863/assets/hints-Y62wMazt.js
+- GET http://127.0.0.1:32863/assets/landmasses-hK_6HLaW.js
+- GET http://127.0.0.1:32863/assets/submarine-cables-BX07K3Oo.js
+- GET http://127.0.0.1:32863/assets/fixed-links-CgJrbsj1.js
+- GET http://127.0.0.1:32863/assets/hints-fxbtIwg6.js
+- GET http://127.0.0.1:32863/assets/landmasses-DJgZaW3-.js
+- GET http://127.0.0.1:32863/assets/submarine-cables-B3XWLE7Y.js
+
+VERDICT: 0 external request(s) after load — 12 loopback asset(s)

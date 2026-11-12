@@ -9,6 +9,7 @@
 import { useState } from 'react';
 import type { Journey } from '@packet-voyage/schema';
 import { useI18n } from '../i18n/context.tsx';
+import { QrShare } from './QrShare.tsx';
 import {
   downloadTextFile,
   geoJsonDownload,
@@ -19,6 +20,8 @@ import {
 
 export interface ExportPanelProps {
   journey: Journey;
+  /** Set when the journey is one of the gallery's: its link is short enough to scan. */
+  slug?: string;
 }
 
 type PanelState = 'idle' | 'busy' | 'error';
@@ -118,13 +121,14 @@ function ReportBlock({ journey }: { journey: Journey }) {
   );
 }
 
-export function ExportPanel({ journey }: ExportPanelProps) {
+export function ExportPanel({ journey, slug }: ExportPanelProps) {
   const { t } = useI18n();
   return (
     <section className="export-panel" data-testid="export-panel">
       <h3>{t('exportPanel.title')}</h3>
       <GeoJsonBlock journey={journey} />
       <ReportBlock journey={journey} />
+      <QrShare journey={journey} slug={slug} />
     </section>
   );
 }
