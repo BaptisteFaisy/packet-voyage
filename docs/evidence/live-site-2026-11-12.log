@@ -8,6 +8,7 @@ Browser: headless Chromium, no credentials, no local build.
 - journey (#/journey/ocean-crossing): rendered
 - insights panel (#/journey/ocean-crossing): rendered
 - export panel (#/journey/ocean-crossing): rendered
+- features catalogue (#/features): rendered
 - journey log (#/story): rendered
 - compare (#/compare): rendered
 - classroom (#/classroom): rendered
