@@ -1,5 +1,5 @@
 {
-  "url": "https://baptistefaisy.github.io/packet-voyage/",
+  "url": "https://tradoooo.github.io/packet-voyage/",
   "date": "2026-11-12",
   "steps": [
     {
@@ -198,7 +198,7 @@
       "checks": [
         {
           "name": "feature blocks rendered",
-          "shown": "13",
+          "shown": "14",
           "expected": 13,
           "ok": true
         },
@@ -211,22 +211,73 @@
       ],
       "ok": true,
       "failed": 0
+    },
+    {
+      "id": "chain",
+      "title": "Step 5 — the chain of proof: the blocks tell the same story",
+      "how": "every figure more than one block shows, read from the page and compared block by block",
+      "checks": [
+        {
+          "name": "chain proof.distance",
+          "shown": "map=6253.58522572968 export=6253.58522572968",
+          "expected": "one value",
+          "ok": true
+        },
+        {
+          "name": "chain proof.floor",
+          "shown": "map=60.76044045356286 insights=60.76044045356286",
+          "expected": "one value",
+          "ok": true
+        },
+        {
+          "name": "chain proof.hops",
+          "shown": "timeline=8 roadmap=8 export=8",
+          "expected": "one value",
+          "ok": true
+        },
+        {
+          "name": "chain proof.countries",
+          "shown": "insights=3 story=3",
+          "expected": "one value",
+          "ok": true
+        },
+        {
+          "name": "chain proof.segments",
+          "shown": "roadmap=6 export=6",
+          "expected": "one value",
+          "ok": true
+        },
+        {
+          "name": "chain proof.distance against the oracle",
+          "shown": "6253.58522572968",
+          "expected": 6254,
+          "ok": true
+        },
+        {
+          "name": "chain verdict",
+          "shown": "5 figures shared by two blocks or more, and the blocks agree.",
+          "expected": "the blocks agree",
+          "ok": true
+        }
+      ],
+      "ok": true,
+      "failed": 0
     }
   ],
   "network": {
     "requests": [
-      "https://baptistefaisy.github.io/packet-voyage/",
-      "https://baptistefaisy.github.io/packet-voyage/assets/index-n_630nlp.js",
-      "https://baptistefaisy.github.io/packet-voyage/assets/index-DVLoMqPY.css",
-      "https://baptistefaisy.github.io/packet-voyage/assets/src-B8n9GnO4.js",
-      "https://baptistefaisy.github.io/packet-voyage/assets/fixed-links-32wCgc4I.js",
-      "https://baptistefaisy.github.io/packet-voyage/assets/hints-Y62wMazt.js",
-      "https://baptistefaisy.github.io/packet-voyage/assets/landmasses-hK_6HLaW.js",
-      "https://baptistefaisy.github.io/packet-voyage/assets/submarine-cables-BX07K3Oo.js",
-      "https://baptistefaisy.github.io/packet-voyage/assets/fixed-links-CgJrbsj1.js",
-      "https://baptistefaisy.github.io/packet-voyage/assets/hints-fxbtIwg6.js",
-      "https://baptistefaisy.github.io/packet-voyage/assets/landmasses-DJgZaW3-.js",
-      "https://baptistefaisy.github.io/packet-voyage/assets/submarine-cables-B3XWLE7Y.js"
+      "https://tradoooo.github.io/packet-voyage/",
+      "https://tradoooo.github.io/packet-voyage/assets/index-CK6ZdHAL.js",
+      "https://tradoooo.github.io/packet-voyage/assets/index-YkOuJyQM.css",
+      "https://tradoooo.github.io/packet-voyage/assets/src-CxQXtV78.js",
+      "https://tradoooo.github.io/packet-voyage/assets/fixed-links-32wCgc4I.js",
+      "https://tradoooo.github.io/packet-voyage/assets/hints-Y62wMazt.js",
+      "https://tradoooo.github.io/packet-voyage/assets/landmasses-hK_6HLaW.js",
+      "https://tradoooo.github.io/packet-voyage/assets/submarine-cables-BX07K3Oo.js",
+      "https://tradoooo.github.io/packet-voyage/assets/fixed-links-CgJrbsj1.js",
+      "https://tradoooo.github.io/packet-voyage/assets/hints-fxbtIwg6.js",
+      "https://tradoooo.github.io/packet-voyage/assets/landmasses-DJgZaW3-.js",
+      "https://tradoooo.github.io/packet-voyage/assets/submarine-cables-B3XWLE7Y.js"
     ],
     "errors": [],
     "external": []
