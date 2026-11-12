@@ -18,5 +18,6 @@ export {
 } from './load.ts';
 export { DatasetError } from './errors.ts';
 export type { DatasetIssue, SafeParser } from './errors.ts';
+export { PROVENANCE_ALIASES, creditsFromSheets, resolveProvenanceId } from './credits.ts';
 export { DATASET_IDS, DATASET_FILES, PROVENANCE_FILES } from './datasets.ts';
 export type { DatasetId } from './datasets.ts';

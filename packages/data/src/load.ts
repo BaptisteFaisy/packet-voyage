@@ -22,21 +22,9 @@ import {
   RAW_PROVENANCE,
 } from './datasets.ts';
 import type { DatasetId } from './datasets.ts';
+import { creditsFromSheets } from './credits.ts';
 import { DatasetError } from './errors.ts';
 import type { SafeParser } from './errors.ts';
-
-/**
- * Alias map: the `source` ids used inside the datasets (CONTRACTS §2/§3, e.g.
- * `CableMatch.source: 'osm-cables'`) resolve to provenance sheet ids here, so
- * `creditsFor` accepts both vocabularies.
- */
-const PROVENANCE_ALIASES: Record<string, DatasetId> = {
-  'osm-cables': 'submarine-cables',
-  'curated-sample': 'submarine-cables',
-  'natural-earth': 'landmasses',
-  'natural-earth-110m': 'landmasses',
-  'hand-curated': 'hints',
-};
 
 /** Validate one raw payload as an array of entries. */
 function validateArray<T>(id: DatasetId, file: string, itemSchema: SafeParser<T>, raw: unknown): T[] {
@@ -98,27 +86,13 @@ export const loadProvenance: () => Provenance[] = memoise(() => {
   return sheets;
 });
 
-/** Resolve a dataset id or a source alias into a provenance sheet id. */
-function resolveId(id: string): DatasetId | null {
-  if ((DATASET_IDS as readonly string[]).includes(id)) return id as DatasetId;
-  return PROVENANCE_ALIASES[id] ?? null;
-}
-
 /**
  * Attribution strings for the given dataset ids (or source aliases such as
- * `osm-cables`). Duplicates collapse; unknown ids are ignored — credits must
- * degrade gracefully in the UI rather than crash a journey page (VOY-F-48).
+ * `osm-cables`). The resolution itself lives in `credits.ts`, pure, so the site
+ * computes the very same credits from the sheets it lazy-loads (VOY-F-48).
  */
 export function creditsFor(ids: string[]): string[] {
-  const sheets = loadProvenance();
-  const byId = new Map(sheets.map((s) => [s.id, s]));
-  const credits = new Set<string>();
-  for (const id of ids) {
-    const resolved = resolveId(id);
-    const sheet = resolved ? byId.get(resolved) : undefined;
-    if (sheet) credits.add(sheet.attribution);
-  }
-  return [...credits].sort((a, b) => a.localeCompare(b));
+  return creditsFromSheets(loadProvenance(), ids);
 }
 
 /** Age of a provenance sheet in whole days, relative to `now`. */

@@ -6,6 +6,10 @@
  * callers fall back to graceful emptiness (no land, no cables, no hints).
  */
 import type { Cable, FixedLink, HintCity, Landmass, Provenance } from '@packet-voyage/schema';
+// Deep path, not the package barrel: `@packet-voyage/data` statically imports
+// every dataset JSON, which would pull 116 kB gzip out of the lazy chunks and
+// into the main bundle (VOY-N-07). `credits.ts` is pure and imports no data.
+import { creditsFromSheets } from '../../../../packages/data/src/credits.ts';
 
 type JsonModule = { default: unknown };
 
@@ -22,6 +26,8 @@ export interface Datasets {
   links: FixedLink[];
   hints: HintCity[];
   provenance: Provenance[];
+  /** Attribution lines of the datasets actually bundled (VOY-F-48). */
+  credits: string[];
   available: boolean;
 }
 
@@ -31,6 +37,7 @@ const EMPTY: Datasets = {
   links: [],
   hints: [],
   provenance: [],
+  credits: [],
   available: false,
 };
 
@@ -81,6 +88,23 @@ async function loadProvenance(modules: Record<string, () => Promise<JsonModule>>
 
 let cached: Datasets | null = null;
 
+/** Provenance-sheet id of each bundled kind (CONTRACTS §5.7). */
+const DATASET_IDS_BY_KIND = {
+  cables: 'submarine-cables',
+  masses: 'landmasses',
+  links: 'fixed-links',
+  hints: 'hints',
+} as const;
+
+type DatasetKind = keyof typeof DATASET_IDS_BY_KIND;
+
+/** The ids of the datasets that really arrived, so the credits match the data used. */
+function usedDatasetIds(arrays: Record<string, unknown[]>): string[] {
+  return (Object.keys(DATASET_IDS_BY_KIND) as DatasetKind[])
+    .filter((kind) => (arrays[kind] ?? []).length > 0)
+    .map((kind) => DATASET_IDS_BY_KIND[kind]);
+}
+
 /** Load every bundled dataset once; `{ available: false }` while L7 is pending. */
 export async function loadDatasets(): Promise<Datasets> {
   if (cached) return cached;
@@ -98,6 +122,7 @@ export async function loadDatasets(): Promise<Datasets> {
     links: (arrays.links ?? []) as FixedLink[],
     hints: (arrays.hints ?? []) as HintCity[],
     provenance,
+    credits: creditsFromSheets(provenance, usedDatasetIds(arrays)),
     available: true,
   };
   return cached;

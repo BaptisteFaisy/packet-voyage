@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import type { Journey } from '@packet-voyage/schema';
 import { useI18n } from '../i18n/context.tsx';
-import { buildLocalJourney } from '../lib/local-journey.ts';
-import { loadDatasets } from '../lib/datasets.ts';
+import { computeUserJourney } from '../lib/user-journey.ts';
 
 const EXAMPLE_TRACE = `traceroute to www.example.org (203.0.113.80), 30 hops max, 60 byte packets
  1  gw.home.example (192.0.2.1)  1.204 ms  1.301 ms  1.402 ms
@@ -45,37 +44,73 @@ function CleaningNotice({ warnings }: { warnings: string[] }) {
   );
 }
 
+interface PasteState {
+  text: string;
+  busy: boolean;
+  error: { line: string | null } | null;
+  warnings: string[];
+  setText: (value: string) => void;
+  submit: () => void;
+}
+
 /**
- * Paste-a-trace (VOY-F-01, VOY-F-02, §12.2): a textarea; on submit the
- * journey is computed locally with name hints only — no request at all.
- * The unreadable case shows the first line not understood and the accepted
- * formats.
+ * The paste computation: the same pipeline the CLI runs (`computeUserJourney`),
+ * with the honest exits — what the reader cleaned, and the first line it did not
+ * understand. A computation that throws is reported, never swallowed.
  */
-export function PasteTrace({ onComputed }: { onComputed?: (journey: Journey) => void }) {
-  const { t } = useI18n();
+function usePasteCompute(onComputed?: (journey: Journey) => void): PasteState {
   const [text, setText] = useState('');
+  const [busy, setBusy] = useState(false);
   const [error, setError] = useState<{ line: string | null } | null>(null);
   const [warnings, setWarnings] = useState<string[]>([]);
 
   const submit = () => {
     setError(null);
-    const result = buildLocalJourney(text, {
-      tracedAt: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'),
-    });
-    // What the reader had to clean before understanding the paste (BOM, CRLF,
-    // tabs…): told to the user, never fixed silently.
-    setWarnings(result.warnings ?? []);
-    if (!result.ok || !result.journey) {
-      setError({ line: result.unknownLine });
-      return;
-    }
-    onComputed?.(result.journey);
+    setBusy(true);
+    void computeUserJourney(text, { tracedAt: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z') })
+      .then((result) => {
+        setWarnings(result.warnings);
+        if (!result.ok || !result.journey) {
+          setError({ line: result.unknownLine });
+          return;
+        }
+        onComputed?.(result.journey);
+      })
+      .catch((cause: unknown) => setError({ line: (cause as Error).message }))
+      .finally(() => setBusy(false));
   };
+
+  return { text, busy, error, warnings, setText, submit };
+}
+
+/** The two actions: compute the journey, or fill the appendix B example. */
+function PasteActions({ busy, onSubmit, onExample }: { busy: boolean; onSubmit: () => void; onExample: () => void }) {
+  const { t } = useI18n();
+  return (
+    <div className="paste-actions">
+      <button type="button" onClick={onSubmit} disabled={busy} data-testid="paste-submit">
+        {t('paste.button')}
+      </button>
+      <button type="button" className="link-button" disabled={busy} onClick={onExample} data-testid="paste-example">
+        {t('paste.exampleButton')}
+      </button>
+    </div>
+  );
+}
+
+/**
+ * Paste-a-trace (VOY-F-01, VOY-F-02, §12.2): a textarea; on submit the journey
+ * is computed locally, in the browser, with the bundled datasets — no request
+ * at all (VOY-N-01).
+ */
+export function PasteTrace({ onComputed }: { onComputed?: (journey: Journey) => void }) {
+  const { t } = useI18n();
+  const paste = usePasteCompute(onComputed);
 
   return (
     <section className="paste-trace" data-testid="paste-trace">
       <h2>{t('paste.title')}</h2>
-      <CleaningNotice warnings={warnings} />
+      <CleaningNotice warnings={paste.warnings} />
       <p className="paste-description">{t('paste.description')}</p>
       <label htmlFor="trace-input" className="sr-only">
         {t('paste.title')}
@@ -84,31 +119,14 @@ export function PasteTrace({ onComputed }: { onComputed?: (journey: Journey) => 
         id="trace-input"
         className="paste-input mono"
         rows={10}
-        value={text}
+        value={paste.text}
         placeholder={t('paste.placeholder')}
-        onChange={(event) => setText(event.target.value)}
+        onChange={(event) => paste.setText(event.target.value)}
         data-testid="paste-input"
       />
-      <div className="paste-actions">
-        <button type="button" onClick={submit} data-testid="paste-submit">
-          {t('paste.button')}
-        </button>
-        <button type="button" className="link-button" onClick={() => setText(EXAMPLE_TRACE)}>
-          {t('paste.exampleButton')}
-        </button>
-      </div>
-      {error ? <PasteError line={error.line} /> : null}
+      <PasteActions busy={paste.busy} onSubmit={paste.submit} onExample={() => paste.setText(EXAMPLE_TRACE)} />
+      {paste.error ? <PasteError line={paste.error.line} /> : null}
       <p className="paste-hint">{t('paste.cliHint')}</p>
     </section>
   );
-}
-
-/** Loads bundled datasets then computes, for callers that want the data. */
-export async function computeWithDatasets(text: string): Promise<Journey | null> {
-  const datasets = await loadDatasets();
-  const result = buildLocalJourney(text, {
-    tracedAt: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'),
-    hints: datasets.hints.length > 0 ? datasets.hints : undefined,
-  });
-  return result.journey;
 }
