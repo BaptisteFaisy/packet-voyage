@@ -94,6 +94,64 @@ here:
 - **Duration / credits**: `TODO(measure)` — and per §14.6, the real cost of a
   full requirements-first spec is to be measured on `trace-parsers`.
 
+## 2026-11-12 — a probe the workshop should never have made, self-reported
+
+- **Surface**: CLI, from `/home/baptiste/Bureau/packet-voyage` — run by the
+  agent `b` under the ZeroClaw runtime, **not** the Kiro IDE.
+- **What happened**: two real probes of the public Internet, spawned by the
+  product itself:
+  1. ~11:44Z — `timeout 240 pnpm voyage trace example.org --offline --cycles 2
+     --json --out /tmp/real-trace-1.json`, which spawned `mtr --json -n -c 2
+     example.org`: 8 hops, public addresses 37.49.238.59, 141.101.67.142,
+     141.101.67.157, 172.66.157.237, and the local topology 10.97.103.107,
+     10.188.0.1, 172.22.3.1, 172.21.30.114.
+  2. ~11:48Z — `timeout 300 pnpm voyage trace www.google.com --offline
+     --cycles 2 --out /tmp/real-google.json`: 6 hops, 0 located.
+- **Why nothing blocked it**: two independent failures, both real.
+  1. `probe-guard` is a Kiro `PreToolUse` hook (`.kiro/hooks/probe-guard.json`):
+     it does not execute in another agent runtime. The rule existed; the
+     enforcement did not.
+  2. A hole independent of any runtime: `extractCommandTargets()` in
+     `scripts/hooks/probe-guard.mjs` looked only for probe binaries (`mtr`,
+     `traceroute`, `tracert`, `ping`, `nmap`, `tracepath`) in the command line.
+     `pnpm voyage trace example.org` contains none of them — so **even under
+     Kiro, the hook would have let the indirect probe through**. Verified
+     before the fix: `checkProbeCommand(root, 'pnpm voyage trace example.org')`
+     returned `allowed: true`.
+- **What left the machine**: the probes themselves (ICMP/UDP to the two hosts,
+  2 cycles each). No third-party enrichment: both ran `--offline` with consent
+  `not granted`, so nothing went to the resolver, RIPE IPmap, RIPEstat or
+  PeeringDB — table 6.4 of `privacy.md` was not touched.
+- **What was done with the output**: `/tmp/real-trace-1.json` and
+  `/tmp/real-google.json` were deleted in the same session; never `git add`ed,
+  never committed. No hop address from them appears anywhere in the repo
+  beyond this incident record.
+- **Corrective action**:
+  1. `probe-guard.mjs` now detects the product's own `trace` subcommand
+     (`voyage trace`, `pnpm voyage trace`, `npx packet-voyage trace`,
+     `node apps/cli/bin/voyage.mjs trace`, options interleaved) and applies the
+     **same** allowlist to its host — one implementation, `isTargetAllowed` /
+     `parseAllowlist` reused, no duplication. The file-based subcommands
+     (`read`, `explain`, `export`, `compare`, `share`, `data`, `consent`,
+     `mcp`) stay allowed.
+  2. `scripts/guards/selftest.mjs` (CI, job `ci-quality`, "Guard self-tests")
+     now covers the indirect probe: refusals and allowlist acceptances.
+  3. `probing-ethics.md` rule 1 names the indirect probe, and a new "Outside
+     Kiro" section gives every agent, in any runtime, the portable self-check
+     (pipe the command into `node scripts/hooks/probe-guard.mjs`; exit 2 =
+     refused).
+  4. `docs/REAL-DATA.md` records the only legitimate route to real data: the
+     human, one host at a time, at their request.
+- **Fact 1 of §14.6 is unchanged**: these two probes were *not* blocked, so
+  they add no row to the block count and none appears in the automated table
+  below — a block that did not happen must not be counted.
+- **Learned**: a steering rule enforced only by an editor hook is not enforced
+  for the agents that run elsewhere. The control must live where *every* agent
+  passes — the repo itself (portable guard + CI self-tests), not one IDE's
+  hook directory. And the guard must model what the command *does* (spawn a
+  probe), not only which binary name it spells.
+- **Duration / credits**: `TODO(measure)`.
+
 ---
 
 ## The three facts to prove (§14.6) — placeholders until measured
