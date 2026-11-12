@@ -3,6 +3,7 @@ export { buildStory } from './story.ts';
 export { passport } from './passport.ts';
 export { checkVocabulary, FORBIDDEN_PATTERNS } from './vocabulary.ts';
 export type { VocabularyReport } from './vocabulary.ts';
+export { assertStoryNumbersComeFromJourney, extractNumbers, journeyNumbers } from './numbers.ts';
 export {
   arrivalTexts,
   crossingTexts,

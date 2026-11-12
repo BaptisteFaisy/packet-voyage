@@ -22,6 +22,8 @@ function Row({ row }: { row: RoadmapRow }) {
         <span className="cell-sub"> · {row.confidence}</span>
       </td>
       <td className="mono">{formatMs(row.delayMs, language)}</td>
+      {/* The local hour deduced from the longitude: inferred, and labelled so. */}
+      <td className="mono">{row.localTime ?? '—'}</td>
       <td className="mono">
         {row.distanceKm === null
           ? '—'
@@ -60,6 +62,7 @@ export function RoadmapTable({ journey }: { journey: Journey }) {
               <th scope="col">{t('roadmap.th.details')}</th>
               <th scope="col">{t('roadmap.th.certainty')}</th>
               <th scope="col">{t('roadmap.th.delay')}</th>
+              <th scope="col">{t('clock.localTime')}</th>
               <th scope="col">{t('roadmap.th.distance')}</th>
               <th scope="col">{t('roadmap.th.sources')}</th>
             </tr>

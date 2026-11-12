@@ -1,4 +1,4 @@
-import type { Cable, Journey, Landmass } from '@packet-voyage/schema';
+import type { Cable, Journey, Landmass, Position } from '@packet-voyage/schema';
 import type { GeoPath, GeoProjection } from 'd3-geo';
 import type { RouteLeg, RouteNode } from '../../lib/map-geometry.ts';
 import type { AnimationPlan } from '../../lib/map-animation.ts';
@@ -6,6 +6,7 @@ import { animationStateAt } from '../../lib/map-animation.ts';
 import {
   SECONDARY_COLOR,
   drawCableWatermark,
+  drawDirectArc,
   drawLand,
   drawLeg,
   drawLightDiscs,
@@ -46,6 +47,8 @@ export interface PaintInput {
   hoveredHop: number | null;
   /** Draw the disc of positions each delay allows (§7.6). Off by default. */
   lightCones?: boolean;
+  /** Direct great-circle origin→destination, dotted grey under the route. Off by default. */
+  directArc?: { from: Position; to: Position } | null;
 }
 
 function legStyle(journey: Journey, leg: RouteLeg): { certainty: 'measured' | 'inferred' | 'assumed'; network: string | null } {
@@ -70,6 +73,9 @@ export function paintScene(input: PaintInput): void {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   drawSea(ctx, path, projection);
   drawLand(ctx, path, scene.masses);
+  if (input.directArc) {
+    drawDirectArc(ctx, path, projection, input.directArc.from, input.directArc.to);
+  }
   drawCableWatermark(ctx, path, scene.cables);
   drawLitCables(ctx, path, scene.cables, scene.litCableIds);
   if (input.lightCones === true) {

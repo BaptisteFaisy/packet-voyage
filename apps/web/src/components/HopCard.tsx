@@ -1,8 +1,16 @@
 import type { ReactNode } from 'react';
-import type { Hop, Rejection } from '@packet-voyage/schema';
+import type {
+  ConfidenceLevel,
+  Hop,
+  Location as HopLocation,
+  Rejection,
+} from '@packet-voyage/schema';
 import { useI18n } from '../i18n/context.tsx';
 import { formatInteger, formatMs, formatNumber } from '../lib/format.ts';
+import { CertaintyInspector } from './CertaintyInspector.tsx';
 import { RejectedExplainer } from './RejectedExplainer.tsx';
+import { RejectionContrast } from './RejectionContrast.tsx';
+import { WhyUnknown } from './WhyUnknown.tsx';
 
 interface SectionProps {
   title: string;
@@ -10,12 +18,29 @@ interface SectionProps {
   children: ReactNode;
 }
 
+/** The band of a hop no source placed: there is no city to name it after. */
+const UNLOCATED_TEST_ID = 'why-unknown-unlocated';
+
+/** Test id of the band, named after the place it explains (as `rejection-…`). */
+function whyTestId(city: string): string {
+  return `why-unknown-${city.trim().replace(/\s+/g, '-')}`;
+}
+
+/**
+ * A location is assumed when nothing agrees on it: `uncertain` means the
+ * candidates contradict each other, `unlocated` means none won. Both deserve
+ * the "why we cannot know more" band; a `solid` or `probable` one does not.
+ */
+function isAssumed(level: ConfidenceLevel): boolean {
+  return level === 'uncertain' || level === 'unlocated';
+}
+
 function Section({ title, level, children }: SectionProps) {
   return (
     <section className={`card-section level-${level ?? 'none'}`}>
       <h3>
         {title}
-        {level ? <span className="level-badge">{level}</span> : null}
+        {level ? <CertaintyInspector certainty={level} label={level} /> : null}
       </h3>
       {children}
     </section>
@@ -40,6 +65,15 @@ function RejectionLine({ rejection, envelopeMs }: { rejection: Rejection; envelo
       <s>{allowedText}</s>
       <span className="rejection-reason">{rejection.reason}</span>
       <RejectedExplainer rejection={rejection} envelopeMs={envelopeMs} />
+      <RejectionContrast rejection={rejection} envelopeMs={envelopeMs} />
+      {/* The refused city was proposed by a source: say which, and what the
+          light bound can and cannot do with it (§7.6). */}
+      <WhyUnknown
+        certainty="inferred"
+        city={rejection.city}
+        sources={[rejection.source]}
+        testId={whyTestId(rejection.city)}
+      />
     </li>
   );
 }
@@ -101,32 +135,55 @@ export function HopNetworkSection({ hop }: { hop: Hop }) {
   );
 }
 
+/** The retained place: its name, its level, its confidence and its sources. */
+function RetainedLocation({ location }: { location: HopLocation }) {
+  const { t, language } = useI18n();
+  return (
+    <>
+      <p className="card-line" data-testid="hop-city">
+        <strong>
+          {location.city}
+          {location.country ? `, ${location.country}` : ''}
+        </strong>{' '}
+        <CertaintyInspector
+          certainty={isAssumed(location.level) ? 'assumed' : 'inferred'}
+          label={location.level}
+          sources={location.sources}
+        />
+      </p>
+      <p className="card-line">
+        {t('hop.certainty')}: {formatNumber(location.confidence * 100, language)}%
+      </p>
+      <p className="card-line" data-testid="hop-sources">
+        {t('hop.sources')}: {location.sources.join(', ') || '—'}
+      </p>
+      {isAssumed(location.level) ? (
+        <WhyUnknown
+          certainty="assumed"
+          city={location.city}
+          sources={location.sources}
+          testId={whyTestId(location.city)}
+        />
+      ) : null}
+    </>
+  );
+}
+
 /** The retained location, its level, its sources — and the rejections. */
 export function HopLocationSection({ hop }: { hop: Hop }) {
-  const { t, language } = useI18n();
+  const { t } = useI18n();
   const location = hop.location;
   return (
     <Section title={t('hop.location')} level="inferred">
       {location ? (
-        <>
-          <p className="card-line" data-testid="hop-city">
-            <strong>
-              {location.city}
-              {location.country ? `, ${location.country}` : ''}
-            </strong>{' '}
-            <span className="level-badge">{location.level}</span>
-          </p>
-          <p className="card-line">
-            {t('hop.certainty')}: {formatNumber(location.confidence * 100, language)}%
-          </p>
-          <p className="card-line" data-testid="hop-sources">
-            {t('hop.sources')}: {location.sources.join(', ') || '—'}
-          </p>
-        </>
+        <RetainedLocation location={location} />
       ) : (
-        <p className="card-line" data-testid="hop-not-located">
-          {t('hop.notLocated')}
-        </p>
+        <>
+          <p className="card-line" data-testid="hop-not-located">
+            {t('hop.notLocated')}
+          </p>
+          <WhyUnknown certainty="assumed" unlocated testId={UNLOCATED_TEST_ID} />
+        </>
       )}
       {location && location.rejected.length > 0 ? (
         <>

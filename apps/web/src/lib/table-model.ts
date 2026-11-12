@@ -3,6 +3,7 @@
  * hop order, screen-reader friendly. Pure logic, no React.
  */
 import type { Certainty, Hop, Journey, Segment } from '@packet-voyage/schema';
+import { localTimeAt } from '@packet-voyage/core';
 
 export type RowKind = 'hop' | 'segment';
 
@@ -20,6 +21,15 @@ export interface RoadmapRow {
   distanceIsMinimum: boolean;
   details: string;
   sources: string;
+  /** Local hour deduced from the longitude, at the instant of the trace: inferred. */
+  localTime: string | null;
+}
+
+/** The local hour at a longitude, or null when the hop has no position. */
+export function localTimeOf(hop: Hop, tracedAt: string | undefined): string | null {
+  const lon = hop.location?.lon;
+  if (lon === undefined || !tracedAt) return null;
+  return localTimeAt(lon, tracedAt);
 }
 
 /** A hop row carries measured data (address, delays); the location level is separate. */
@@ -44,7 +54,7 @@ export function hopDetails(hop: Hop): string {
   return parts.join(' · ');
 }
 
-export function hopRow(hop: Hop): RoadmapRow {
+export function hopRow(hop: Hop, tracedAt?: string): RoadmapRow {
   const location = hop.location;
   const rtts = hop.replies.flatMap((reply) => reply.rtt_ms);
   return {
@@ -63,6 +73,7 @@ export function hopRow(hop: Hop): RoadmapRow {
       ? `${location.city}${location.country ? `, ${location.country}` : ''} · ${hopDetails(hop)}`
       : hopDetails(hop),
     sources: location ? location.sources.join(', ') : '—',
+    localTime: localTimeOf(hop, tracedAt),
   };
 }
 
@@ -87,6 +98,7 @@ export function segmentRow(segment: Segment, journey: Journey): RoadmapRow {
     delayMs: segment.delta_ms ?? null,
     distanceKm: segment.geodesic_km,
     distanceIsMinimum: true,
+    localTime: null,
     details:
       segment.cables.length > 0
         ? `${segment.kind} · compatible cables: ${segment.cables.length}${segment.other_cables > 0 ? ` (+${segment.other_cables})` : ''}`
@@ -114,7 +126,7 @@ export function interleaveRows(hopRows: RoadmapRow[], segmentRows: RoadmapRow[])
 /** Every row of the roadmap table for a journey. */
 export function roadmapRows(journey: Journey): RoadmapRow[] {
   return interleaveRows(
-    journey.hops.map((hop) => hopRow(hop)),
+    journey.hops.map((hop) => hopRow(hop, journey.traced_at)),
     journey.segments.map((segment) => segmentRow(segment, journey)),
   );
 }
