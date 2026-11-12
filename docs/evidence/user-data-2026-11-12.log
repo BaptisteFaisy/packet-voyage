@@ -1,28 +1,66 @@
 # User-data check — 2026-11-12
 
 URL: https://baptistefaisy.github.io/packet-voyage/
-Input: /home/baptiste/tmp/pv-userdata/docs/examples/lyon-ashburn.txt
-Oracle: voyage read --offline (same pipeline, run in Node)
+Oracle: voyage read --offline (the same pipeline, run in Node)
+Browser: headless Chromium, no credentials, no local build.
 
-## Banner numbers, site against oracle
-- ok   summary-distance: "TOTAL DISTANCE: at least 6,254 km" (oracle 6254 ±1)
-- ok   summary-rtt: "MEASURED ROUND-TRIP DELAY: 91.7 ms" (oracle 91.702 ±0.1)
-- ok   summary-light-floor: "FIBRE LIGHT FLOOR: 60.8 ms" (oracle 60.76044045356286 ±0.1)
-- ok   summary-inflation: "ROUTE INFLATION: ×1.51" (oracle 1.509238565676375 ±0.01)
-- ok   summary-countries: "COUNTRIES WHERE A HOP WAS LOCATED: 3 (FR, GB, US)" (oracle 3 ±0)
-- ok   summary-networks: "DISTINCT NETWORKS: 0" (oracle 0 ±0)
-- ok   summary-ixps: "INTERNET EXCHANGE POINTS: 0" (oracle 0 ±0)
-- ok   summary-rejections: "LOCATIONS REJECTED BY LIGHT: 0" (oracle 0 ±0)
-- ok   summary-gaps: "UNLOCATED OR SILENT HOPS: 1" (oracle 1 ±0)
+## Step 1 — the visitor pastes the trace
+How: the text is pasted in the site and computed there
 
-## Catalogue
-- feature blocks rendered: 13
-- data on screen: Your data — www.example.org, traced on 12 Nov 2026.
+- ok   summary-distance: "TOTAL DISTANCE: at least 6,254 km" — oracle 6254
+- ok   summary-rtt: "MEASURED ROUND-TRIP DELAY: 91.7 ms" — oracle 91.702
+- ok   summary-light-floor: "FIBRE LIGHT FLOOR: 60.8 ms" — oracle 60.76044045356286
+- ok   summary-inflation: "ROUTE INFLATION: ×1.51" — oracle 1.509238565676375
+- ok   summary-countries: "COUNTRIES WHERE A HOP WAS LOCATED: 3 (FR, GB, US)" — oracle 3
+- ok   summary-networks: "DISTINCT NETWORKS: 0" — oracle 0
+- ok   summary-ixps: "INTERNET EXCHANGE POINTS: 0" — oracle 0
+- ok   summary-rejections: "LOCATIONS REJECTED BY LIGHT: 0" — oracle 0
+- ok   summary-gaps: "UNLOCATED OR SILENT HOPS: 1" — oracle 1
+
+**Step verdict: PASS**
+
+## Step 2 — the visitor opens the journey.json the command line wrote
+How: `voyage read --offline --json` wrote it; the site reads it with the File API
+
+- ok   summary-distance: "TOTAL DISTANCE: at least 6,254 km" — oracle 6254
+- ok   summary-rtt: "MEASURED ROUND-TRIP DELAY: 91.7 ms" — oracle 91.702
+- ok   summary-light-floor: "FIBRE LIGHT FLOOR: 60.8 ms" — oracle 60.76044045356286
+- ok   summary-inflation: "ROUTE INFLATION: ×1.51" — oracle 1.509238565676375
+- ok   summary-countries: "COUNTRIES WHERE A HOP WAS LOCATED: 3 (FR, GB, US)" — oracle 3
+- ok   summary-networks: "DISTINCT NETWORKS: 0" — oracle 0
+- ok   summary-ixps: "INTERNET EXCHANGE POINTS: 0" — oracle 0
+- ok   summary-rejections: "LOCATIONS REJECTED BY LIGHT: 0" — oracle 0
+- ok   summary-gaps: "UNLOCATED OR SILENT HOPS: 1" — oracle 1
+
+**Step verdict: PASS**
+
+## Step 3 — the visitor opens a share link
+How: the journey rides in the fragment; no server stores it
+
+- ok   summary-distance: "TOTAL DISTANCE: at least 6,254 km" — oracle 6254
+- ok   summary-rtt: "MEASURED ROUND-TRIP DELAY: 91.7 ms" — oracle 91.702
+- ok   summary-light-floor: "FIBRE LIGHT FLOOR: 60.8 ms" — oracle 60.76044045356286
+- ok   summary-inflation: "ROUTE INFLATION: ×1.51" — oracle 1.509238565676375
+- ok   summary-countries: "COUNTRIES WHERE A HOP WAS LOCATED: 3 (FR, GB, US)" — oracle 3
+- ok   summary-networks: "DISTINCT NETWORKS: 0" — oracle 0
+- ok   summary-ixps: "INTERNET EXCHANGE POINTS: 0" — oracle 0
+- ok   summary-rejections: "LOCATIONS REJECTED BY LIGHT: 0" — oracle 0
+- ok   summary-gaps: "UNLOCATED OR SILENT HOPS: 1" — oracle 1
+
+**Step verdict: PASS**
+
+## Step 4 — the catalogue demonstrates that journey
+How: every block of #/features runs on the loaded journey
+
+- ok   feature blocks rendered: "13" — oracle 13
+- ok   data named on screen: "Your data — www.example.org, traced on 12 Nov 2026." — oracle Your data
+
+**Step verdict: PASS**
 
 ## Network
 - requests: 12
 - outside https://baptistefaisy.github.io: 0
 - errors: 0
 
-VERDICT: the deployed site computes the visitor’s own trace exactly like the command line, and calls nobody.
+VERDICT: every door of the site gives the visitor’s own data exactly like the command line, and calls nobody.
 
