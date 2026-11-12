@@ -11,6 +11,7 @@ import { useI18n } from '../i18n/context.tsx';
 import { MAX_QR_TEXT, qrGeometry, qrMatrix, qrSvg, QrTooLongError } from '../lib/qr.ts';
 import type { QrGeometry } from '../lib/qr.ts';
 import { downloadTextFile } from '../lib/exporters.ts';
+import { CopyButton } from './CopyButton.tsx';
 
 const QR_SIZE = 220;
 
@@ -83,6 +84,13 @@ export function QrShare(props: QrShareProps) {
       ) : (
         <QrSvg geometry={result.geometry} label={t('qr.title')} />
       )}
+      {result.link ? (
+        <p className="share-link" data-testid="qr-share-link">
+          <span className="hint">{t('features.shareLink')}</span>{' '}
+          <code className="mono">{result.link}</code>{' '}
+          <CopyButton text={result.link} label={t('features.copy')} copiedLabel={t('features.copied')} testId="qr-copy-link" />
+        </p>
+      ) : null}
       {!tooLong ? (
         <button
           type="button"

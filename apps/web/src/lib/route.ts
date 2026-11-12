@@ -1,4 +1,5 @@
 export type RouteName =
+  | 'features'
   | 'gallery'
   | 'journey'
   | 'compare'
@@ -13,6 +14,7 @@ export interface Route {
 }
 
 const KNOWN_ROUTES: RouteName[] = [
+  'features',
   'gallery',
   'journey',
   'compare',
