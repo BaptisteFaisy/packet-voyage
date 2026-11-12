@@ -12,6 +12,7 @@ import { routeHref } from '../lib/route.ts';
 import type { GalleryItem } from '../lib/gallery.ts';
 import { useJourneyDatasets } from '../hooks/use-datasets.ts';
 import { CliCommands } from './CliCommands.tsx';
+import { ExportImageButton } from './ExportImageButton.tsx';
 import { CompareView } from './CompareView.tsx';
 import { DelayTimeline } from './DelayTimeline.tsx';
 import { ExportPanel } from './ExportPanel.tsx';
@@ -33,7 +34,15 @@ const CLI_COMMANDS = [
   { label: 'Read a trace you already have', command: 'npx packet-voyage read trace.txt' },
   { label: 'Explain the journey', command: 'npx packet-voyage explain journey.json --year 1987' },
   { label: 'Export for a ticket or a GIS', command: 'npx packet-voyage export journey.json --format geojson' },
+  { label: 'Serve the four tools to an agent', command: 'npx packet-voyage mcp' },
 ];
+
+const LIMIT_KEYS = [
+  'features.limits.probe',
+  'features.limits.enrich',
+  'features.limits.data',
+  'features.limits.agent',
+] as const;
 
 function Section({
   id,
@@ -95,6 +104,7 @@ function JourneyFeatures({ items }: { items: GalleryItem[] }) {
 
       <Section id="export" title={t('features.export.title')} text={t('features.export.text')}>
         <ExportPanel journey={journey} slug={demo?.slug} />
+        <ExportImageButton journey={journey} masses={masses} cables={cables} />
       </Section>
 
       <Section id="story" title={t('features.story.title')} text={t('features.story.text')}>
@@ -138,6 +148,14 @@ export function FeaturesView({ items }: FeaturesViewProps) {
 
       <Section id="cli" title={t('features.cli.title')} text={t('features.cli.text')}>
         <CliCommands commands={CLI_COMMANDS} note={t('paste.cliHint')} />
+      </Section>
+
+      <Section id="limits" title={t('features.limits.title')} text={t('features.limits.text')}>
+        <ul className="limits-list" data-testid="feature-limits-list">
+          {LIMIT_KEYS.map((key) => (
+            <li key={key}>{t(key)}</li>
+          ))}
+        </ul>
       </Section>
     </div>
   );

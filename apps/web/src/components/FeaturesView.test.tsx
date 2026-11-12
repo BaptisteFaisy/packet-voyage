@@ -10,7 +10,7 @@ const items = loadGallery();
 /** Every block the catalogue promises; the point of the page is that none is missing. */
 const BLOCKS = [
   'map', 'timeline', 'hop', 'insights', 'roadmap', 'export', 'story',
-  'compare', 'classroom', 'sources', 'paste', 'cli',
+  'compare', 'classroom', 'sources', 'paste', 'cli', 'limits',
 ];
 
 describe('FeaturesView — every capability is on one page', () => {
@@ -45,6 +45,15 @@ describe('FeaturesView — every capability is on one page', () => {
     expect(cli.textContent).toContain('export');
     const text = screen.getByTestId('feature-cli').textContent ?? '';
     expect(text.toLowerCase()).toMatch(/never probes|ne sonde jamais/);
+  });
+
+  it('shows the image export and says what the site deliberately cannot do', () => {
+    renderWithProviders(<FeaturesView items={items} />);
+    expect(screen.getByTestId('feature-export').querySelector('[data-testid="export-image-button"]')).toBeTruthy();
+    const limits = screen.getByTestId('feature-limits-list');
+    expect(limits.querySelectorAll('li').length).toBe(4);
+    expect(limits.textContent).toMatch(/sends nothing|n\u2019envoie rien/);
+    expect(screen.getByTestId('cli-commands').textContent).toContain('packet-voyage mcp');
   });
 
   it('reads in French too', () => {

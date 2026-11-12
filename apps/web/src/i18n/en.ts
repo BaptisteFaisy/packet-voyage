@@ -279,6 +279,12 @@ export const EN_KEYS = {
   'features.copied': 'Copied',
   'features.shareLink': 'Share link — the journey travels in the fragment, never on a server',
   'features.shareLinkEmpty': 'No share link yet.',
+  'features.limits.title': 'What this site deliberately cannot do',
+  'features.limits.text': 'These are not missing features; they are the privacy contract. Each one lives in the command line, on your machine, with your consent.',
+  'features.limits.probe': 'Probe the Internet. The hosted site sends nothing, ever: a browser has no raw packets and no hop counter.',
+  'features.limits.enrich': 'Ask RIPE IPmap, RIPEstat, PeeringDB or a resolver about your addresses. That is the CLI, after it names the services and you agree.',
+  'features.limits.data': 'Download the local geolocation database or refresh the exchange-point prefixes. Again the CLI, again with consent.',
+  'features.limits.agent': 'An agent can drive the tool through the MCP server: one host at a time, five seconds apart, twenty traces per session, and your approval on every call.',
 };
 
 export type I18nKey = keyof typeof EN_KEYS;
