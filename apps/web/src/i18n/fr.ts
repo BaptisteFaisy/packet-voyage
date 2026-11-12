@@ -91,6 +91,20 @@ export const FR_KEYS: Record<I18nKey, string> = {
   'paste.noSourceNotice': "Aucun point de départ déclaré : seules les bornes relatives s'appliquent. Déclarez votre ville pour resserrer la borne de la lumière.",
   'paste.pastedJourney': 'Trace collée',
 
+  // Ouvrir un fichier de voyage
+  'import.title': 'Ouvrir un fichier journey.json',
+  'import.description': 'Chargez un voyage écrit par la ligne de commande — trace, read ou explain — et retrouvez-le sur la carte, la frise et le tableau.',
+  'import.pickFile': 'Choisir un fichier journey.json',
+  'import.dropHint': 'ou déposez le fichier ici',
+  'import.privacy': 'Le fichier est lu ici, dans votre navigateur, sur cette machine. Il n’est jamais téléversé ni envoyé où que ce soit : ce site ne fait aucune requête réseau.',
+  'import.formats': 'Attendu : un journey.json produit par packet-voyage (version 1).',
+  'import.errorTitle': 'Ce fichier n’a pas pu être ouvert',
+  'import.errorUnreadable': 'Le fichier n’a pas pu être lu : {detail}',
+  'import.errorNotJson': 'Le fichier n’est pas un JSON lisible : {detail}',
+  'import.errorNotJourney': 'Le fichier n’est pas un voyage : il ne respecte pas le schéma journey.',
+  'import.errorTooLarge': 'Le fichier est trop volumineux pour être ouvert ici : {size} octets pour une limite de {limit} octets.',
+  'import.issuesTitle': 'Ce que le schéma rejette :',
+
   // Gallery view
   'gallery.title': 'Galerie de voyages',
   'gallery.description': "Six voyages vérifiés explorant traversées océaniques, trajets continentaux, rejets par la vitesse de la lumière et détours.",
