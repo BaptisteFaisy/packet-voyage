@@ -21,6 +21,7 @@ import { ClassroomView } from './components/ClassroomView.tsx';
 import { SourcesView } from './components/SourcesView.tsx';
 import { SettingsView } from './components/SettingsView.tsx';
 import { CompareView } from './components/CompareView.tsx';
+import { UseCasesView } from './components/UseCasesView.tsx';
 
 function JourneyRoute({ slug, items }: { slug: string | null; items: GalleryItem[] }) {
   const { t } = useI18n();
@@ -73,6 +74,8 @@ function renderRoute(routeName: string, slug: string | null, items: GalleryItem[
       return <SourcesRoute items={items} />;
     case 'settings':
       return <SettingsView />;
+    case 'use-cases':
+      return <UseCasesView items={items} />;
     default:
       return <HomeView items={items} fromGallery={galleryAvailable()} />;
   }
