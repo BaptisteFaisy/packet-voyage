@@ -12,7 +12,7 @@ what is inferred and what is assumed.
 [![CI](https://github.com/BaptisteFaisy/packet-voyage/actions/workflows/ci.yml/badge.svg)](https://github.com/BaptisteFaisy/packet-voyage/actions/workflows/ci.yml)
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](./LICENSE)
 
-Live site (no install, no account, no request): <https://baptistefaisy.github.io/packet-voyage/>
+Live site (no install, no account, no request): <https://tradoooo.github.io/packet-voyage/>
 
 ### Try it in thirty seconds
 
