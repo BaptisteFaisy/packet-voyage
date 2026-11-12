@@ -20,5 +20,7 @@ export interface BlockProofProps {
 
 export function BlockProof({ journey, block, hop, available }: BlockProofProps) {
   const facts = proofFacts({ journey, block, hop, available });
-  return <FeatureProof facts={facts} journey={journey} testId={`feature-proof-${block}`} />;
+  return (
+    <FeatureProof facts={facts} journey={journey} block={block} testId={`feature-proof-${block}`} />
+  );
 }

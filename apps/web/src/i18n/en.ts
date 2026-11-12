@@ -333,6 +333,7 @@ export const EN_KEYS = {
   'proof.segments': 'segments',
   'proof.holes': 'holes',
   'proof.rejected': 'rejected by the light',
+  'proof.rejectedHop': 'candidates rejected on this hop',
   'proof.countries': 'countries',
   'proof.networks': 'networks',
   'proof.log': 'log entries',
@@ -343,6 +344,20 @@ export const EN_KEYS = {
   'proof.datasets': 'data',
   'proof.retrieved': 'retrieved {date}',
   'proof.dataHint': 'read from the bundle — never fetched',
+
+  // The chain of proof: the figures several blocks show, and whether they agree.
+  'chain.title': 'The proof chain',
+  'chain.text': 'Several blocks show the same figure. The chain lists them and says whether they tell the same story — so the page can be read as a whole.',
+  'chain.agree': '{count} figures shared by two blocks or more, and the blocks agree.',
+  'chain.divergence': '{count} figures are told differently by two blocks.',
+  'chain.block.map': 'map',
+  'chain.block.timeline': 'timeline',
+  'chain.block.hop': 'hop',
+  'chain.block.insights': 'insights',
+  'chain.block.roadmap': 'table',
+  'chain.block.export': 'exports',
+  'chain.block.story': 'log',
+  'chain.block.compare': 'comparison',
 };
 
 export type I18nKey = keyof typeof EN_KEYS;

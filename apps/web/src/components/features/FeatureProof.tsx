@@ -17,6 +17,8 @@ export interface FeatureProofProps {
   facts: ProofFact[];
   /** The journey those figures come from. */
   journey: Journey;
+  /** The block these figures belong to, for the machine-readable form. */
+  block?: string;
   testId?: string;
 }
 
@@ -37,19 +39,30 @@ export function formatFact(fact: ProofFact, unit: DistanceUnit, language: Langua
   }
 }
 
-export function FeatureProof({ facts, journey, testId = 'feature-proof' }: FeatureProofProps) {
+export function FeatureProof({ facts, journey, block, testId = 'feature-proof' }: FeatureProofProps) {
   const { t, language } = useI18n();
   const { prefs } = usePreferences();
   if (facts.length === 0) return null;
 
   return (
-    <p className="feature-proof" data-testid={testId}>
+    <p
+      className="feature-proof"
+      data-testid={testId}
+      data-proof-block={block}
+    >
       <span className="proof-mark" aria-hidden="true">
         ✓
       </span>
       <span className="proof-label">{t('proof.label')}</span>
       {facts.map((fact) => (
-        <span className="proof-fact" key={fact.key} data-testid={`${testId}-${fact.key}`}>
+        <span
+          className="proof-fact"
+          key={fact.key}
+          data-testid={`${testId}-${fact.key}`}
+          data-proof-key={fact.key}
+          data-proof-value={fact.value === null || fact.value === undefined ? '' : String(fact.value)}
+          data-proof-unit={fact.unit}
+        >
           {t(fact.key)}: <strong>{formatFact(fact, prefs.unit, language)}</strong>
         </span>
       ))}

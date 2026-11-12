@@ -22,6 +22,7 @@ import { CatalogueBlocks } from './features/CatalogueBlocks.tsx';
 import { DataProvenance } from './features/DataProvenance.tsx';
 import { FeatureSource } from './features/FeatureSource.tsx';
 import type { FeatureSourceKind } from './features/FeatureSource.tsx';
+import { ProofChain } from './features/ProofChain.tsx';
 import { RouteBlocks } from './features/RouteBlocks.tsx';
 import { TakeawayBlocks } from './features/TakeawayBlocks.tsx';
 
@@ -117,6 +118,7 @@ export function FeaturesView({ items }: FeaturesViewProps) {
         cables={cables}
         items={demo.items}
       />
+      {demo.journey ? <ProofChain journey={demo.journey} /> : null}
       <CatalogueBlocks />
     </div>
   );
