@@ -2,6 +2,10 @@
  * Kiro PreToolUse (`shell`) hook: probe-guard (§14.3, VOY-N-02).
  * Refuses any shell command containing `traceroute`, `tracert`, `mtr`, `ping`,
  * `nmap`, or `tracepath` whose target is not in `.kiro/probe-allowlist.txt`.
+ * Also refuses the *indirect* probe: the product's own `voyage trace <host>`
+ * subcommand spawns those same binaries, so it goes through the same
+ * allowlist whatever the launcher (`pnpm`, `npx`, `node`, installed binary) —
+ * see the 2026-11-12 journal entry.
  */
 import console from 'node:console';
 import { existsSync } from 'node:fs';
@@ -12,6 +16,13 @@ import { isMain } from '../guards/lib.mjs';
 import { readHookPayload } from './hook-lib.mjs';
 
 const PROBE_TOOLS = new Set(['traceroute', 'tracert', 'mtr', 'ping', 'nmap', 'tracepath']);
+
+/** The product's own CLI: its `trace` subcommand is an indirect probe. */
+const VOYAGE_NAMES = new Set(['voyage', 'packet-voyage']);
+const VOYAGE_SCRIPT_RX = /^voyage\.(?:mjs|js|cjs|ts)$/;
+const VOYAGE_LAUNCHERS = new Set(['pnpm', 'npx', 'node']);
+/** Value-taking flags of the voyage CLI (mirrors `VALUE_FLAGS` in apps/cli/src/cli.ts). */
+const VOYAGE_VALUE_FLAGS = new Set(['proto', 'cycles', 'from', 'out', 'level', 'base-url', 'year', 'format', 'language']);
 
 /** Minimal IP version detection without importing node:net (this is a guard). */
 function ipVersion(ip) {
@@ -88,6 +99,86 @@ export function isTargetAllowed(target, allowlist) {
   return false;
 }
 
+function tokenBase(tok) {
+  return (tok ?? '').split('/').pop().toLowerCase();
+}
+
+/** Positional targets of a direct probe invocation starting at `idx`. */
+function probeTargets(tokens, idx) {
+  const targets = [];
+  for (let j = idx + 1; j < tokens.length; j += 1) {
+    const tok = tokens[j];
+    if (tok.startsWith('-')) {
+      // Only the flags that really take a value swallow the next token:
+      // `traceroute -n` and `tracert -d` mean "no DNS", and treating them as
+      // `-n <value>` would eat the target and refuse a legitimate command.
+      if (/^-[cqwfmspigtz]$/.test(tok) || /^--(cycles|queries|wait|interface|first|max|port|source|tos|length|packets)=?$/.test(tok)) {
+        if (!tok.includes('=')) j += 1;
+      }
+      continue;
+    }
+    targets.push(tok);
+  }
+  return targets;
+}
+
+/**
+ * If tokens[start] opens an invocation of the product's own CLI, return the
+ * index just past the launcher, else -1. Covers `voyage …`, `pnpm [run|exec|dlx]
+ * voyage …`, `npx [-y] packet-voyage …` and `node path/to/voyage.mjs …`.
+ */
+function voyageLauncherEnd(tokens, start) {
+  const first = tokenBase(tokens[start]);
+  if (VOYAGE_NAMES.has(first)) return start + 1;
+  if (!VOYAGE_LAUNCHERS.has(first)) return -1;
+  let i = start + 1;
+  while (i < tokens.length) {
+    const tok = tokens[i];
+    if (tok === 'run' || tok === 'exec' || tok === 'dlx') {
+      i += 1;
+      continue;
+    }
+    if (tok.startsWith('-')) {
+      // `npx -y`, `npx -p <pkg>`, `node --flag`: skip the flag, and its value when it takes one.
+      if (/^(?:-p|--package|-r|--require|-C|--dir|--filter|-F)$/.test(tok)) i += 1;
+      i += 1;
+      continue;
+    }
+    const base = tokenBase(tok);
+    return VOYAGE_NAMES.has(base) || VOYAGE_SCRIPT_RX.test(base) ? i + 1 : -1;
+  }
+  return -1;
+}
+
+/**
+ * Indirect probe (2026-11-12 incident): `voyage trace <host>` spawns
+ * `mtr --json -n` / `traceroute -n`, so its host must pass the same allowlist
+ * as a direct probe binary. The other subcommands (`read`, `explain`, `export`,
+ * `compare`, `share`, `data`, `consent`, `mcp`) work on recorded files and
+ * never probe: they stay allowed.
+ */
+function matchVoyageTrace(tokens, start) {
+  const after = voyageLauncherEnd(tokens, start);
+  if (after < 0 || tokens[after] !== 'trace') return null;
+  const targets = [];
+  let allPositional = false;
+  for (let j = after + 1; j < tokens.length; j += 1) {
+    const tok = tokens[j];
+    if (allPositional) {
+      targets.push(tok);
+    } else if (tok === '--') {
+      allPositional = true;
+    } else if (tok.startsWith('-')) {
+      const eq = tok.indexOf('=');
+      const name = eq >= 0 ? tok.slice(2, eq) : tok.replace(/^--?/, '');
+      if (eq < 0 && VOYAGE_VALUE_FLAGS.has(name)) j += 1; // the flag's value is not a target
+    } else {
+      targets.push(tok);
+    }
+  }
+  return { tool: 'voyage trace', targets };
+}
+
 function extractCommandTargets(cmd) {
   const segments = cmd.split(/[;&|\n]+/);
   const invocations = [];
@@ -97,23 +188,13 @@ function extractCommandTargets(cmd) {
     let idx = 0;
     while (idx < tokens.length && /^[A-Za-z_]\w*=/.test(tokens[idx])) idx += 1;
     if (tokens[idx] === 'sudo' || tokens[idx] === 'env' || tokens[idx] === 'command') idx += 1;
-    const bin = (tokens[idx] ?? '').split('/').pop().toLowerCase();
-    if (!PROBE_TOOLS.has(bin)) continue;
-    const targets = [];
-    for (let j = idx + 1; j < tokens.length; j += 1) {
-      const tok = tokens[j];
-      if (tok.startsWith('-')) {
-        // Only the flags that really take a value swallow the next token:
-        // `traceroute -n` and `tracert -d` mean "no DNS", and treating them as
-        // `-n <value>` would eat the target and refuse a legitimate command.
-        if (/^-[cqwfmspigtz]$/.test(tok) || /^--(cycles|queries|wait|interface|first|max|port|source|tos|length|packets)=?$/.test(tok)) {
-          if (!tok.includes('=')) j += 1;
-        }
-        continue;
-      }
-      targets.push(tok);
+    const bin = tokenBase(tokens[idx]);
+    if (PROBE_TOOLS.has(bin)) {
+      invocations.push({ tool: bin, targets: probeTargets(tokens, idx) });
+      continue;
     }
-    invocations.push({ tool: bin, targets });
+    const indirect = matchVoyageTrace(tokens, idx);
+    if (indirect) invocations.push(indirect);
   }
   return invocations;
 }
