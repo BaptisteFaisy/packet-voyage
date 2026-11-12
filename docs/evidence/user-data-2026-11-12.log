@@ -1,0 +1,28 @@
+# User-data check — 2026-11-12
+
+URL: https://baptistefaisy.github.io/packet-voyage/
+Input: /home/baptiste/tmp/pv-userdata/docs/examples/lyon-ashburn.txt
+Oracle: voyage read --offline (same pipeline, run in Node)
+
+## Banner numbers, site against oracle
+- ok   summary-distance: "TOTAL DISTANCE: at least 6,254 km" (oracle 6254 ±1)
+- ok   summary-rtt: "MEASURED ROUND-TRIP DELAY: 91.7 ms" (oracle 91.702 ±0.1)
+- ok   summary-light-floor: "FIBRE LIGHT FLOOR: 60.8 ms" (oracle 60.76044045356286 ±0.1)
+- ok   summary-inflation: "ROUTE INFLATION: ×1.51" (oracle 1.509238565676375 ±0.01)
+- ok   summary-countries: "COUNTRIES WHERE A HOP WAS LOCATED: 3 (FR, GB, US)" (oracle 3 ±0)
+- ok   summary-networks: "DISTINCT NETWORKS: 0" (oracle 0 ±0)
+- ok   summary-ixps: "INTERNET EXCHANGE POINTS: 0" (oracle 0 ±0)
+- ok   summary-rejections: "LOCATIONS REJECTED BY LIGHT: 0" (oracle 0 ±0)
+- ok   summary-gaps: "UNLOCATED OR SILENT HOPS: 1" (oracle 1 ±0)
+
+## Catalogue
+- feature blocks rendered: 13
+- data on screen: Your data — www.example.org, traced on 12 Nov 2026.
+
+## Network
+- requests: 12
+- outside https://baptistefaisy.github.io: 0
+- errors: 0
+
+VERDICT: the deployed site computes the visitor’s own trace exactly like the command line, and calls nobody.
+

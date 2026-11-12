@@ -19,7 +19,8 @@
     "voyage": "node apps/cli/bin/voyage.mjs",
     "verify:no-request": "node scripts/verify-no-request.mjs",
     "calibrate": "node scripts/calibrate.mjs",
-    "verify:live": "node scripts/verify-live-site.mjs"
+    "verify:live": "node scripts/verify-live-site.mjs",
+  "verify:user-data": "node scripts/verify-user-data.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
