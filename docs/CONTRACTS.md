@@ -482,8 +482,14 @@ export function loadFixedLinks(): FixedLink[];
 export function loadHints(): HintCity[];
 export function loadProvenance(): Provenance[];
 export function creditsFor(ids: string[]): string[];      // attribution strings
+export function creditsFromSheets(sheets: Provenance[], ids: string[]): string[]; // pure: the site's path
 export function staleProvenance(days?: number): Provenance[];  // VOY-N-11, 90 days
 ```
+
+`creditsFromSheets` is the attribution logic with the sheets as an argument, so
+a caller that already holds them — the site, which lazy-loads the provenance
+chunks — gets exactly the credits `creditsFor` gives the CLI, without importing
+the loaders (and the dataset JSON they statically pull) into its main bundle.
 
 Files live in `packages/data/datasets/<id>.json` with a sibling
 `packages/data/provenance/<id>.json` (schema above). Every dataset **must** have
@@ -529,6 +535,14 @@ Component contract (keep these names so tests and the roadmap line up):
 `DelayTimeline`, `HopList`, `HopCard`, `CrossingCard`, `RoadmapTable`,
 `StoryView`, `PassportView`, `ClassroomView`, `SourcesView`, `SettingsView`,
 `CompareView`. Shared logic in `apps/web/src/lib/` (no React import there).
+
+A pasted trace is computed by `computeJourney` of `@packet-voyage/core` with the
+bundled datasets (`lib/user-journey.ts`): the site runs **the same pipeline as
+the CLI**, never a reduced copy of it, so a visitor's own trace gets the light
+floor, the inflation, the sea crossings, the compatible cables, the journey log
+and the credits — every number the catalogue demonstrates. `lib/user-journey.test.ts`
+locks the parity against `voyage read` over every recorded trace of the
+repository.
 
 ### 5.10 L10 — `gallery/`
 
