@@ -27,6 +27,7 @@ const STOPS = [
   { hash: '#/journey/ocean-crossing', probe: '[data-testid="journey-insights"]', label: 'insights panel' },
   { hash: '#/journey/ocean-crossing', probe: '[data-testid="export-panel"]', label: 'export panel' },
   { hash: '#/features', probe: '[data-testid="features-view"]', label: 'features catalogue' },
+  { hash: '#/use-cases', probe: '[data-testid^="use-case-"]', count: 10, label: 'use cases (10 cards)' },
   { hash: '#/story', probe: '[data-testid="story-view"]', label: 'journey log' },
   { hash: '#/compare', probe: '[data-testid="compare-view"]', label: 'compare' },
   { hash: '#/classroom', probe: '[data-testid="classroom-view"]', label: 'classroom' },
@@ -46,7 +47,17 @@ async function visitScreens(page) {
       .waitForSelector(stop.probe, { timeout: 15_000, state: 'attached' })
       .then(() => true)
       .catch(() => false);
-    visited.push(`${stop.label} (${stop.hash || '/'}): ${present ? 'rendered' : 'MISSING'}`);
+    if (!present) {
+      visited.push(`${stop.label} (${stop.hash || '/'}): MISSING`);
+      continue;
+    }
+    if (stop.count) {
+      const found = await page.locator(stop.probe).count();
+      const ok = found >= stop.count;
+      visited.push(`${stop.label} (${stop.hash || '/'}): ${ok ? 'rendered' : `MISSING (${found}/${stop.count})`}`);
+      continue;
+    }
+    visited.push(`${stop.label} (${stop.hash || '/'}): rendered`);
   }
   return visited;
 }
@@ -63,7 +74,26 @@ async function interact(page) {
   await toggle.click({ timeout: 10_000 });
   await page.waitForTimeout(800);
   const cone = await toggle.getAttribute('aria-pressed');
-  return { banner, cone, coneDrawn: cone === 'true' };
+  // A use case must land on the block that answers it: one click, the right
+  // place on screen. The block is checked *in the viewport*, not merely in the
+  // DOM — a scroll that never happened would leave the reader where they were.
+  await page.goto(`${LIVE}#/use-cases`, { waitUntil: 'networkidle' });
+  await page.locator('[data-testid="use-case-op-03"] button').first().click();
+  await page.waitForTimeout(1500);
+  const hash = await page.evaluate(() => globalThis.location.hash);
+  const inView = await page
+    .locator('#feature-hop')
+    .first()
+    .evaluate((element) => {
+      const box = element.getBoundingClientRect();
+      // The button lands the block's top at the viewport top; a few pixels of
+      // slack absorb subpixel rounding. The block must start in the upper part
+      // of the screen — centring a block taller than the viewport would push
+      // its title above the top, which is exactly the defect this proves away.
+      return box.top >= -8 && box.top < globalThis.innerHeight * 0.6;
+    })
+    .catch(() => false);
+  return { banner, cone, coneDrawn: cone === 'true', useCaseLanded: hash.includes('#/features') && inView, useCaseHash: hash };
 }
 
 async function main() {
@@ -87,22 +117,23 @@ async function main() {
   const interaction = await interact(page);
   const lines = [`# Live site check — ${process.env.EVIDENCE_DATE ?? new Date().toISOString().slice(0, 10)}`, '',
     `URL: ${LIVE}`, 'Browser: headless Chromium, no credentials, no local build.', ''];
-  const { banner, cone, coneDrawn } = interaction;
+  const { banner, cone, coneDrawn, useCaseLanded, useCaseHash } = interaction;
 
   const external = requests.filter((url) => !url.startsWith(ORIGIN) && !url.startsWith('data:') && !url.startsWith('blob:'));
   lines.push('## Screens', ...visited.map((line) => `- ${line}`), '',
     '## Interactions',
     `- opened the ocean crossing: "${banner.replace(/\s+/g, ' ').trim().slice(0, 120)}"`,
-    `- light cone toggle clicked: aria-pressed=${cone} (${coneDrawn ? 'discs drawn' : 'NOT DRAWN'})`, '',
+    `- light cone toggle clicked: aria-pressed=${cone} (${coneDrawn ? 'discs drawn' : 'NOT DRAWN'})`,
+    `- use case « op-03 » clicked: url=${useCaseHash} (${useCaseLanded ? 'block in view' : 'NOT on the block'})`, '',
     '## Network',
     `- requests: ${requests.length}`,
     `- requests outside ${ORIGIN}: ${external.length}`,
     ...external.map((url) => `  - ${url}`),
     `- errors: ${errors.length}`,
     ...errors.map((line) => `  - ${line}`), '',
-    external.length === 0 && errors.length === 0 && coneDrawn &&
+    external.length === 0 && errors.length === 0 && coneDrawn && useCaseLanded &&
       visited.every((line) => line.includes('rendered'))
-      ? 'VERDICT: the public site renders every screen, opens a journey, draws the light cone, and calls nobody.'
+      ? 'VERDICT: the public site renders every screen, opens a journey, draws the light cone, lands a use case on its block, and calls nobody.'
       : 'VERDICT: FAILED — see above.', '');
 
   const evidence = join(root, 'docs', 'evidence', `live-site-${process.env.EVIDENCE_DATE ?? new Date().toISOString().slice(0, 10)}.log`);
@@ -111,7 +142,7 @@ async function main() {
   await browser.close();
   console.log(lines.filter((line) => line.startsWith('VERDICT'))[0]);
   console.log(`verify-live-site: log written to ${evidence.slice(root.length + 1)}`);
-  const failed = external.length > 0 || errors.length > 0 || !coneDrawn ||
+  const failed = external.length > 0 || errors.length > 0 || !coneDrawn || !useCaseLanded ||
     !visited.every((line) => line.includes('rendered'));
   process.exit(failed ? 1 : 0);
 }

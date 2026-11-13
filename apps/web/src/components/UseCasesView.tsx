@@ -26,7 +26,7 @@ export function UseCasesView({ items }: UseCasesViewProps) {
     if (item) setJourney(item.journey);
     navigateTo('#/features');
     window.setTimeout(() => {
-      document.getElementById(`feature-${block}`)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      document.getElementById(`feature-${block}`)?.scrollIntoView({ block: 'start', behavior: 'smooth' });
     }, 80);
   };
 
