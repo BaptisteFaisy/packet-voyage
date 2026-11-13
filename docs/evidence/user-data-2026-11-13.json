@@ -3,107 +3,44 @@
   "date": "2026-11-13",
   "steps": [
     {
-      "id": "paste",
-      "title": "Step 1 — the visitor pastes the trace",
-      "how": "the text is pasted in the site and computed there",
-      "checks": [
-        {
-          "name": "summary-distance",
-          "shown": "TOTAL DISTANCE: at least 6,254 km",
-          "expected": 6254,
-          "ok": true
-        },
-        {
-          "name": "summary-rtt",
-          "shown": "MEASURED ROUND-TRIP DELAY: 91.7 ms",
-          "expected": 91.702,
-          "ok": true
-        },
-        {
-          "name": "summary-light-floor",
-          "shown": "FIBRE LIGHT FLOOR: 60.8 ms",
-          "expected": 60.76044045356286,
-          "ok": true
-        },
-        {
-          "name": "summary-inflation",
-          "shown": "ROUTE INFLATION: ×1.51",
-          "expected": 1.509238565676375,
-          "ok": true
-        },
-        {
-          "name": "summary-countries",
-          "shown": "COUNTRIES WHERE A HOP WAS LOCATED: 3 (FR, GB, US)",
-          "expected": 3,
-          "ok": true
-        },
-        {
-          "name": "summary-networks",
-          "shown": "DISTINCT NETWORKS: 0",
-          "expected": 0,
-          "ok": true
-        },
-        {
-          "name": "summary-ixps",
-          "shown": "INTERNET EXCHANGE POINTS: 0",
-          "expected": 0,
-          "ok": true
-        },
-        {
-          "name": "summary-rejections",
-          "shown": "LOCATIONS REJECTED BY LIGHT: 0",
-          "expected": 0,
-          "ok": true
-        },
-        {
-          "name": "summary-gaps",
-          "shown": "UNLOCATED OR SILENT HOPS: 1",
-          "expected": 1,
-          "ok": true
-        }
-      ],
-      "ok": true,
-      "failed": 0
-    },
-    {
       "id": "import",
       "title": "Step 2 — the visitor opens the journey.json the command line wrote",
       "how": "`voyage read --offline --json` wrote it; the site reads it with the File API",
       "checks": [
         {
           "name": "summary-distance",
-          "shown": "TOTAL DISTANCE: at least 6,254 km",
-          "expected": 6254,
+          "shown": "TOTAL DISTANCE: at least 8,197 km",
+          "expected": 8197,
           "ok": true
         },
         {
           "name": "summary-rtt",
-          "shown": "MEASURED ROUND-TRIP DELAY: 91.7 ms",
-          "expected": 91.702,
+          "shown": "MEASURED ROUND-TRIP DELAY: 125.9 ms",
+          "expected": 125.93,
           "ok": true
         },
         {
           "name": "summary-light-floor",
-          "shown": "FIBRE LIGHT FLOOR: 60.8 ms",
-          "expected": 60.76044045356286,
+          "shown": "FIBRE LIGHT FLOOR: 80.4 ms",
+          "expected": 80.36687245649745,
           "ok": true
         },
         {
           "name": "summary-inflation",
-          "shown": "ROUTE INFLATION: ×1.51",
-          "expected": 1.509238565676375,
+          "shown": "ROUTE INFLATION: ×1.57",
+          "expected": 1.5669391647431081,
           "ok": true
         },
         {
           "name": "summary-countries",
-          "shown": "COUNTRIES WHERE A HOP WAS LOCATED: 3 (FR, GB, US)",
-          "expected": 3,
+          "shown": "COUNTRIES WHERE A HOP WAS LOCATED: 2 (FR, US)",
+          "expected": 2,
           "ok": true
         },
         {
           "name": "summary-networks",
-          "shown": "DISTINCT NETWORKS: 0",
-          "expected": 0,
+          "shown": "DISTINCT NETWORKS: 3",
+          "expected": 3,
           "ok": true
         },
         {
@@ -120,8 +57,8 @@
         },
         {
           "name": "summary-gaps",
-          "shown": "UNLOCATED OR SILENT HOPS: 1",
-          "expected": 1,
+          "shown": "UNLOCATED OR SILENT HOPS: 3",
+          "expected": 3,
           "ok": true
         }
       ],
@@ -135,38 +72,38 @@
       "checks": [
         {
           "name": "summary-distance",
-          "shown": "TOTAL DISTANCE: at least 6,254 km",
-          "expected": 6254,
+          "shown": "TOTAL DISTANCE: at least 8,197 km",
+          "expected": 8197,
           "ok": true
         },
         {
           "name": "summary-rtt",
-          "shown": "MEASURED ROUND-TRIP DELAY: 91.7 ms",
-          "expected": 91.702,
+          "shown": "MEASURED ROUND-TRIP DELAY: 125.9 ms",
+          "expected": 125.93,
           "ok": true
         },
         {
           "name": "summary-light-floor",
-          "shown": "FIBRE LIGHT FLOOR: 60.8 ms",
-          "expected": 60.76044045356286,
+          "shown": "FIBRE LIGHT FLOOR: 80.4 ms",
+          "expected": 80.36687245649745,
           "ok": true
         },
         {
           "name": "summary-inflation",
-          "shown": "ROUTE INFLATION: ×1.51",
-          "expected": 1.509238565676375,
+          "shown": "ROUTE INFLATION: ×1.57",
+          "expected": 1.5669391647431081,
           "ok": true
         },
         {
           "name": "summary-countries",
-          "shown": "COUNTRIES WHERE A HOP WAS LOCATED: 3 (FR, GB, US)",
-          "expected": 3,
+          "shown": "COUNTRIES WHERE A HOP WAS LOCATED: 1 (US)",
+          "expected": 1,
           "ok": true
         },
         {
           "name": "summary-networks",
-          "shown": "DISTINCT NETWORKS: 0",
-          "expected": 0,
+          "shown": "DISTINCT NETWORKS: 3",
+          "expected": 3,
           "ok": true
         },
         {
@@ -183,8 +120,8 @@
         },
         {
           "name": "summary-gaps",
-          "shown": "UNLOCATED OR SILENT HOPS: 1",
-          "expected": 1,
+          "shown": "UNLOCATED OR SILENT HOPS: 3",
+          "expected": 3,
           "ok": true
         }
       ],
@@ -204,7 +141,7 @@
         },
         {
           "name": "data named on screen",
-          "shown": "Your data — www.example.org, traced on 13 Nov 2026.",
+          "shown": "Your data — time.nist.gov, traced on 13 Nov 2026.",
           "expected": "Your data",
           "ok": true
         }
@@ -219,38 +156,38 @@
       "checks": [
         {
           "name": "chain proof.distance",
-          "shown": "map=6253.58522572968 export=6253.58522572968",
+          "shown": "map=8197.42099056274 export=8197.42099056274",
           "expected": "one value",
           "ok": true
         },
         {
           "name": "chain proof.floor",
-          "shown": "map=60.76044045356286 insights=60.76044045356286",
+          "shown": "map=80.36687245649745 insights=80.36687245649745",
           "expected": "one value",
           "ok": true
         },
         {
           "name": "chain proof.hops",
-          "shown": "timeline=8 roadmap=8 export=8",
+          "shown": "timeline=5 roadmap=5 export=5",
           "expected": "one value",
           "ok": true
         },
         {
           "name": "chain proof.countries",
-          "shown": "insights=3 story=3",
+          "shown": "insights=1 story=1",
           "expected": "one value",
           "ok": true
         },
         {
           "name": "chain proof.segments",
-          "shown": "roadmap=6 export=6",
+          "shown": "roadmap=3 export=3",
           "expected": "one value",
           "ok": true
         },
         {
           "name": "chain proof.distance against the oracle",
-          "shown": "6253.58522572968",
-          "expected": 6254,
+          "shown": "8197.42099056274",
+          "expected": 8197,
           "ok": true
         },
         {
@@ -267,9 +204,9 @@
   "network": {
     "requests": [
       "https://tradoooo.github.io/packet-voyage/",
-      "https://tradoooo.github.io/packet-voyage/assets/index-BZK5jonA.js",
+      "https://tradoooo.github.io/packet-voyage/assets/index-VMBISo36.js",
       "https://tradoooo.github.io/packet-voyage/assets/index-W6MYry4k.css",
-      "https://tradoooo.github.io/packet-voyage/assets/src-C1reC2PD.js",
+      "https://tradoooo.github.io/packet-voyage/assets/src-D5wtgyiE.js",
       "https://tradoooo.github.io/packet-voyage/assets/fixed-links-32wCgc4I.js",
       "https://tradoooo.github.io/packet-voyage/assets/hints-Y62wMazt.js",
       "https://tradoooo.github.io/packet-voyage/assets/landmasses-hK_6HLaW.js",

@@ -39,6 +39,31 @@ that builds it must not become a source of measurements.
    stop entirely under `--offline` (VOY-F-11). Table 6.4 in `privacy.md` is
    the exhaustive list of what may leave the machine.
 
+## The owner's exception of 2026-11-13 (named hosts, in writing)
+
+The rule above stands for every agent that works on this repository. On
+2026-11-13 the owner of the project decided that the calibration traces had to
+be produced, and asked the agent to produce them: *"fait toi, je veux que tu
+fasses tout sauf vidéo et submission"*. Until then the traces had never
+existed — the demo ran on the synthetic example — and the rule was the reason.
+
+What changed, and nothing else:
+
+- `.kiro/probe-allowlist.txt` names **seven public hosts**, in writing, for
+  this calibration only. The guard was consulted before every probe
+  (`node scripts/hooks/probe-guard.mjs`, exit 0) and was not worked around:
+  it permits those hosts and refuses everything else.
+- `voyage consent grant` was run before the first probe, so the enrichment
+  (reverse DNS, RIPE IPmap, RIPEstat, PeeringDB) saw the owner's consent, and
+  only public hop addresses ever left the machine.
+- The raw traces stay **outside** the repository (`~/Bureau/pv-traces/`); only
+  country-redacted copies may be committed.
+- The event is written up in `KIRO_JOURNAL.md` (2026-11-13), with what was
+  probed and what left the machine.
+
+Any agent that probes a host that is not named in the allowlist is still
+refused, and still owes a journal entry.
+
 ## Testing without probing
 
 - Parsers, locator, segments, cables, metrics, story: fixtures and generated

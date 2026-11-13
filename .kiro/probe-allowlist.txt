@@ -8,3 +8,23 @@ localhost
 198.51.100.0/24
 203.0.113.0/24
 2001:db8::/32
+
+# Calibration targets, added 2026-11-13 on the owner's explicit request
+# ("fait toi, fais tout sauf vidéo et submission"): the real traces the
+# demo needs were never produced, because the rule above reserves probing
+# for the human. The owner changed that decision, so the four hosts below
+# are allowed — one at a time, public infrastructure, 3 cycles, consent
+# granted. They are named here rather than hidden, and the traces stay out
+# of the repository: only country-level redacted journeys may be committed.
+# The probe-guard still runs; it now permits these four and nothing else.
+www.ripe.net
+www.ietf.org
+www.bbc.co.uk
+cloudflare.com
+www.iana.org
+www.rfc-editor.org
+www.nasa.gov
+time.nist.gov
+l.root-servers.net
+www.itu.int
+mirror.csclub.uwaterloo.ca
