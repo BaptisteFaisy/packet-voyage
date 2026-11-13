@@ -154,6 +154,66 @@ here:
 
 ---
 
+## 2026-11-13 — the real traces, at the owner's request, and the bug they uncovered
+
+- **Surface**: CLI and site, from `/home/baptiste/Bureau/packet-voyage` — run by
+  the agent `b` under the ZeroClaw runtime, **not** the Kiro IDE.
+- **What the owner decided**: the project reserved probing for the human, so
+  the calibration traces had never been produced and the demo had always run on
+  the synthetic example (`www.example.org`, RFC 5737 addresses). On
+  2026-11-13 the owner asked for the agent to produce them: *"fait toi, je
+  veux que tu fasses tout sauf vidéo et submission"*. The allowlist is
+  therefore extended — **seven named hosts, in writing**, in
+  `.kiro/probe-allowlist.txt` — and `voyage consent grant` was run before the
+  first probe. The guard was not worked around: it was consulted (exit 0,
+  `node scripts/hooks/probe-guard.mjs`), it now permits those hosts and
+  nothing else, and the raw traces stay outside the repository
+  (`~/Bureau/pv-traces/`, country-redacted copies only).
+- **What was measured** (`mtr --json -c 3`, from Lyon, 2026-11-13):
+  - `time.nist.gov` — 9 hops, Paris (NTT) → Denver (Lumen/Level3) → NIST,
+    **125.9 ms** measured;
+  - `mirror.csclub.uwaterloo.ca` — 24 hops, **Paris → London → Newark →
+    Montreal → Toronto → Waterloo**, 101.7 ms, four countries;
+  - `www.itu.int` — 17 hops, Paris → Geneva.
+- **The bug the real traces uncovered (this is the important part).** The
+  command line enriches a trace before computing it, and the enriched
+  candidates **replaced** the candidates of the router names:
+  `computeJourney` did `input.candidates ?? hintCandidates(...)`. The
+  enrichment knows a handful of networks; the names know the city. So **every
+  real trace came out unlocated**: `time.nist.gov` gave *1 located hop, 0 km,
+  no light floor*, while the same trace pasted into the site — which computes
+  without candidates — located it. The example of §7.14 hid the bug because
+  its fixture wrote the name-hint candidates by hand.
+  - The fix adds the names to the enrichment's candidates instead of letting
+    them replace them (`packages/core/src/pipeline.ts`).
+  - Measured on the same trace, before → after: located hops **1 → 3**,
+    distance **0 → 8,197 km**, light floor **0 → 80.4 ms**, inflation
+    **none → ×1.57**, countries **FR → FR, US**, and the crossing gained its
+    compatible cables (Tangerine, Yellow, IRIS, CeltixConnect-1, Havfrue/AEC-2
+    and 62 more) — the product's headline claim, on a real route, for the
+    first time.
+  - The gallery is regenerated accordingly: `ocean-crossing` now locates
+    **9 hops out of 10** instead of 8, one gap fewer; the distance, the floor,
+    the inflation and the rejection are unchanged.
+- **A second defect, found by the bench on a real journey**: the share step
+  compared the site with the oracle of the journey *before* redaction, while
+  the visitor opens the journey *after* it. The redaction drops the
+  departure's coordinates, so a country only the departure carried is
+  legitimately gone from the shared journey. The bench now asks the command
+  line for the redacted journey and compares the site with **that** — the
+  same data on both sides.
+- **What left the machine**: the probes themselves, and — with the owner's
+  consent granted — the reverse-DNS lookups of the *public* hop addresses, the
+  RIPE IPmap and RIPEstat queries for them, and one PeeringDB IXP-prefix
+  directory download. No private address was ever sent (table 6.4 of
+  `privacy.md`): the access-network hops (10.97.103.107, 10.188.0.1,
+  172.22.3.1, 172.21.30.114) were skipped before any lookup.
+- **Credit for the fix**: `packages/core/src/pipeline.ts`,
+  `packages/core/src/pipeline.test.ts` (three new tests), `gallery/` (regenerated),
+  `scripts/verify-user-data.mjs`, `scripts/demo.mjs` (`--journey`).
+
+---
+
 ## The three facts to prove (§14.6) — placeholders until measured
 
 1. **The project is built under its own rule.** The agent writing a probe tool
