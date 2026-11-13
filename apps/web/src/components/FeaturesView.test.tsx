@@ -82,7 +82,7 @@ describe('FeaturesView — every capability is on one page', () => {
   it('gives the command line for tracing your own route, and never claims to probe', () => {
     renderWithProviders(<FeaturesView items={items} />);
     const cli = screen.getByTestId('cli-commands');
-    expect(cli.textContent).toContain('packet-voyage trace');
+    expect(cli.textContent).toContain('pnpm voyage trace');
     expect(cli.textContent).toContain('export');
     const text = screen.getByTestId('feature-cli').textContent ?? '';
     expect(text.toLowerCase()).toMatch(/never probes|ne sonde jamais/);
@@ -94,12 +94,32 @@ describe('FeaturesView — every capability is on one page', () => {
     const limits = screen.getByTestId('feature-limits-list');
     expect(limits.querySelectorAll('li').length).toBe(4);
     expect(limits.textContent).toMatch(/sends nothing|n\u2019envoie rien/);
-    expect(screen.getByTestId('cli-commands').textContent).toContain('packet-voyage mcp');
+    expect(screen.getByTestId('cli-commands').textContent).toContain('pnpm voyage mcp');
   });
 
   it('reads in French too', () => {
     renderWithProviders(<FeaturesView items={items} />, { language: 'fr' });
     expect(screen.getByTestId('features-view').textContent).toContain('Tout ce que sait faire');
+  });
+});
+
+describe('FeaturesView — the command line it shows is a command that exists', () => {
+  it('never advertises a command that does not exist: npx is not published yet', () => {
+    renderWithProviders(<FeaturesView items={items} />);
+    const cli = screen.getByTestId('cli-commands');
+    const copied = Array.from(cli.querySelectorAll('code')).map((c) => c.textContent ?? '');
+    expect(copied.length).toBeGreaterThan(0);
+    for (const command of copied) {
+      expect(command, command).not.toMatch(/^npx /);
+    }
+    expect(cli.textContent).toMatch(/not published|n'est pas encore publié/);
+  });
+
+  it('reads in French too', () => {
+    renderWithProviders(<FeaturesView items={items} />, { language: 'fr' });
+    const cli = screen.getByTestId('cli-commands');
+    expect(cli.textContent).toMatch(/pas encore publié/);
+    expect(Array.from(cli.querySelectorAll('code')).every((c) => !(c.textContent ?? '').startsWith('npx '))).toBe(true);
   });
 });
 
