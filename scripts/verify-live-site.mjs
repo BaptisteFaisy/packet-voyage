@@ -1,0 +1,150 @@
+#!/usr/bin/env node
+/**
+ * End-to-end check of the PUBLIC site, as a visitor would run it: an anonymous
+ * headless browser, no token, no local build. It walks the screens a judge would
+ * open and records every request, so "accessible to everyone" is a file in the
+ * repository and not a claim (§18 asks for proofs, not impressions).
+ *
+ *   node scripts/verify-live-site.mjs                 # the deployed site
+ *   LIVE_URL=http://127.0.0.1:4173/ node scripts/…    # a local preview
+ *
+ * Skipped with a clear message when no browser is installed.
+ */
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import process from 'node:process';
+import { fileURLToPath } from 'node:url';
+import { findChromium } from './lib/browser.mjs';
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const LIVE = process.env.LIVE_URL ?? 'https://tradoooo.github.io/packet-voyage/';
+const ORIGIN = new URL(LIVE).origin;
+
+/** The screens a judge opens, in order, with what must be on each. */
+const STOPS = [
+  { hash: '', probe: '[data-testid="gallery-view"]', label: 'gallery' },
+  { hash: '#/journey/ocean-crossing', probe: '[data-testid="summary-banner"]', label: 'journey' },
+  { hash: '#/journey/ocean-crossing', probe: '[data-testid="journey-insights"]', label: 'insights panel' },
+  { hash: '#/journey/ocean-crossing', probe: '[data-testid="export-panel"]', label: 'export panel' },
+  { hash: '#/features', probe: '[data-testid="features-view"]', label: 'features catalogue' },
+  { hash: '#/use-cases', probe: '[data-testid^="use-case-"]', count: 10, label: 'use cases (10 cards)' },
+  { hash: '#/story', probe: '[data-testid="story-view"]', label: 'journey log' },
+  { hash: '#/compare', probe: '[data-testid="compare-view"]', label: 'compare' },
+  { hash: '#/classroom', probe: '[data-testid="classroom-view"]', label: 'classroom' },
+  { hash: '#/sources', probe: '[data-testid="sources-view"]', label: 'sources' },
+  { hash: '#/settings', probe: '[data-testid="settings-view"]', label: 'settings' },
+];
+
+
+/** Visit every screen and report which ones actually rendered. */
+async function visitScreens(page) {
+  const visited = [];
+  for (const stop of STOPS) {
+    await page.goto(`${LIVE}${stop.hash}`, { waitUntil: 'networkidle', timeout: 60_000 });
+    // `networkidle` can fire before a lazily imported journey chunk has been
+    // rendered, so the probe itself is awaited, not merely counted.
+    const present = await page
+      .waitForSelector(stop.probe, { timeout: 15_000, state: 'attached' })
+      .then(() => true)
+      .catch(() => false);
+    if (!present) {
+      visited.push(`${stop.label} (${stop.hash || '/'}): MISSING`);
+      continue;
+    }
+    if (stop.count) {
+      const found = await page.locator(stop.probe).count();
+      const ok = found >= stop.count;
+      visited.push(`${stop.label} (${stop.hash || '/'}): ${ok ? 'rendered' : `MISSING (${found}/${stop.count})`}`);
+      continue;
+    }
+    visited.push(`${stop.label} (${stop.hash || '/'}): rendered`);
+  }
+  return visited;
+}
+
+/** The interactions that prove the product is alive, not a screenshot. */
+async function interact(page) {
+  await page.goto(`${LIVE}#/`, { waitUntil: 'networkidle' });
+  await page.locator('[data-testid="gallery-open-ocean-crossing"]').first().click();
+  await page.waitForTimeout(2000);
+  const banner = (await page.locator('[data-testid="summary-banner"]').first().textContent()) ?? '';
+  // A real click, not a forced one: an overlay covering the button would make
+  // this time out, which is exactly the regression we want to catch here.
+  const toggle = page.locator('[data-testid="light-cone-toggle"]').first();
+  await toggle.click({ timeout: 10_000 });
+  await page.waitForTimeout(800);
+  const cone = await toggle.getAttribute('aria-pressed');
+  // A use case must land on the block that answers it: one click, the right
+  // place on screen. The block is checked *in the viewport*, not merely in the
+  // DOM — a scroll that never happened would leave the reader where they were.
+  await page.goto(`${LIVE}#/use-cases`, { waitUntil: 'networkidle' });
+  await page.locator('[data-testid="use-case-op-03"] button').first().click();
+  await page.waitForTimeout(1500);
+  const hash = await page.evaluate(() => globalThis.location.hash);
+  const inView = await page
+    .locator('#feature-hop')
+    .first()
+    .evaluate((element) => {
+      const box = element.getBoundingClientRect();
+      // The button lands the block's top at the viewport top; a few pixels of
+      // slack absorb subpixel rounding. The block must start in the upper part
+      // of the screen — centring a block taller than the viewport would push
+      // its title above the top, which is exactly the defect this proves away.
+      return box.top >= -8 && box.top < globalThis.innerHeight * 0.6;
+    })
+    .catch(() => false);
+  return { banner, cone, coneDrawn: cone === 'true', useCaseLanded: hash.includes('#/features') && inView, useCaseHash: hash };
+}
+
+async function main() {
+  const executablePath = findChromium();
+  if (!executablePath) {
+    console.log('verify-live-site: skipped — no Chromium found (set PLAYWRIGHT_CHROMIUM)');
+    process.exit(0);
+  }
+  const { chromium } = await import('playwright-core');
+  const browser = await chromium.launch({ executablePath, args: ['--no-sandbox'] });
+  const page = await browser.newPage();
+  const requests = [];
+  const errors = [];
+  page.on('request', (request) => requests.push(request.url()));
+  page.on('response', (response) => {
+    if (response.status() >= 400) errors.push(`HTTP ${response.status()} ${response.url()}`);
+  });
+  page.on('pageerror', (error) => errors.push(`page error: ${String(error).slice(0, 200)}`));
+
+  const visited = await visitScreens(page);
+  const interaction = await interact(page);
+  const lines = [`# Live site check — ${process.env.EVIDENCE_DATE ?? new Date().toISOString().slice(0, 10)}`, '',
+    `URL: ${LIVE}`, 'Browser: headless Chromium, no credentials, no local build.', ''];
+  const { banner, cone, coneDrawn, useCaseLanded, useCaseHash } = interaction;
+
+  const external = requests.filter((url) => !url.startsWith(ORIGIN) && !url.startsWith('data:') && !url.startsWith('blob:'));
+  lines.push('## Screens', ...visited.map((line) => `- ${line}`), '',
+    '## Interactions',
+    `- opened the ocean crossing: "${banner.replace(/\s+/g, ' ').trim().slice(0, 120)}"`,
+    `- light cone toggle clicked: aria-pressed=${cone} (${coneDrawn ? 'discs drawn' : 'NOT DRAWN'})`,
+    `- use case « op-03 » clicked: url=${useCaseHash} (${useCaseLanded ? 'block in view' : 'NOT on the block'})`, '',
+    '## Network',
+    `- requests: ${requests.length}`,
+    `- requests outside ${ORIGIN}: ${external.length}`,
+    ...external.map((url) => `  - ${url}`),
+    `- errors: ${errors.length}`,
+    ...errors.map((line) => `  - ${line}`), '',
+    external.length === 0 && errors.length === 0 && coneDrawn && useCaseLanded &&
+      visited.every((line) => line.includes('rendered'))
+      ? 'VERDICT: the public site renders every screen, opens a journey, draws the light cone, lands a use case on its block, and calls nobody.'
+      : 'VERDICT: FAILED — see above.', '');
+
+  const evidence = join(root, 'docs', 'evidence', `live-site-${process.env.EVIDENCE_DATE ?? new Date().toISOString().slice(0, 10)}.log`);
+  mkdirSync(dirname(evidence), { recursive: true });
+  writeFileSync(evidence, lines.join('\n'));
+  await browser.close();
+  console.log(lines.filter((line) => line.startsWith('VERDICT'))[0]);
+  console.log(`verify-live-site: log written to ${evidence.slice(root.length + 1)}`);
+  const failed = external.length > 0 || errors.length > 0 || !coneDrawn || !useCaseLanded ||
+    !visited.every((line) => line.includes('rendered'));
+  process.exit(failed ? 1 : 0);
+}
+
+await main();

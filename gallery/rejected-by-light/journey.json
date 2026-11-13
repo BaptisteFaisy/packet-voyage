@@ -1,0 +1,548 @@
+{
+  "version": 1,
+  "traced_at": "2026-11-12T12:05:30Z",
+  "tool": "traceroute",
+  "protocol": "udp",
+  "family": 4,
+  "source": {
+    "label": "FR",
+    "lat": null,
+    "lon": null,
+    "precision": "country",
+    "declared": true
+  },
+  "target": {
+    "host": "www.example.org",
+    "ip": "203.0.113.80"
+  },
+  "hops": [
+    {
+      "ttl": 1,
+      "replies": [
+        {
+          "ip": "198.51.100.1",
+          "name": "gw.home.example",
+          "rtt_ms": [
+            0.8,
+            0.792,
+            0.808
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64496,
+      "as_name": "Example Access",
+      "ixp": null,
+      "envelope_ms": 0.792,
+      "location": {
+        "lat": 43.3,
+        "lon": 5.37,
+        "city": "Marseille",
+        "country": "FR",
+        "confidence": 1,
+        "level": "solid",
+        "sources": [
+          "declared"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 2,
+      "replies": [
+        {
+          "ip": "198.51.100.2",
+          "name": "be10.par2.isp.example",
+          "rtt_ms": [
+            8.418,
+            8.334,
+            8.503
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64500,
+      "as_name": "Example ISP",
+      "ixp": null,
+      "envelope_ms": 8.334,
+      "location": {
+        "lat": 48.86,
+        "lon": 2.35,
+        "city": "Paris",
+        "country": "FR",
+        "confidence": 0.94,
+        "level": "solid",
+        "sources": [
+          "ipmap-latency",
+          "name-hint"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 3,
+      "replies": [
+        {
+          "ip": "198.51.100.3",
+          "name": "ix-paris.transit.example.net",
+          "rtt_ms": [
+            8.418,
+            8.334,
+            8.503
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64501,
+      "as_name": "Example Transit",
+      "ixp": "Example-IX Paris",
+      "envelope_ms": 8.334,
+      "location": {
+        "lat": 48.86,
+        "lon": 2.35,
+        "city": "Paris",
+        "country": "FR",
+        "confidence": 0.988,
+        "level": "solid",
+        "sources": [
+          "ipmap-latency",
+          "ixp-prefix",
+          "name-hint"
+        ],
+        "rejected": [
+          {
+            "source": "geodb",
+            "city": "Ashburn",
+            "country": "US",
+            "reason": "light",
+            "allowed_km": 1299.22493,
+            "needed_km": 6655.272768693342
+          }
+        ]
+      }
+    },
+    {
+      "ttl": 4,
+      "replies": [
+        {
+          "ip": "198.51.100.4",
+          "name": "ae3.lon1.transit.example.net",
+          "rtt_ms": [
+            12.766,
+            12.639,
+            12.894
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64501,
+      "as_name": "Example Transit",
+      "ixp": null,
+      "envelope_ms": 12.639,
+      "location": {
+        "lat": 51.51,
+        "lon": -0.13,
+        "city": "London",
+        "country": "GB",
+        "confidence": 0.94,
+        "level": "solid",
+        "sources": [
+          "ipmap-latency",
+          "name-hint"
+        ],
+        "rejected": [
+          {
+            "source": "geodb",
+            "city": "Tokyo",
+            "country": "JP",
+            "reason": "light",
+            "allowed_km": 1944.522905,
+            "needed_km": 10090.460060785814
+          }
+        ]
+      }
+    },
+    {
+      "ttl": 5,
+      "replies": [
+        {
+          "ip": "198.51.100.5",
+          "name": "be2.nyc2.transit.example.net",
+          "rtt_ms": [
+            80.359,
+            79.555,
+            81.162
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64501,
+      "as_name": "Example Transit",
+      "ixp": null,
+      "envelope_ms": 79.555,
+      "location": {
+        "lat": 40.71,
+        "lon": -74.01,
+        "city": "New York",
+        "country": "US",
+        "confidence": 0.94,
+        "level": "solid",
+        "sources": [
+          "ipmap-latency",
+          "name-hint"
+        ],
+        "rejected": [
+          {
+            "source": "geodb",
+            "city": "Sydney",
+            "country": "AU",
+            "reason": "light",
+            "allowed_km": 11974.896725000002,
+            "needed_km": 16891.945337706424
+          }
+        ]
+      }
+    },
+    {
+      "ttl": 6,
+      "replies": [
+        {
+          "ip": "198.51.100.6",
+          "name": "xe0.iad3.host.example.com",
+          "rtt_ms": [
+            84.822,
+            83.974,
+            85.67
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64512,
+      "as_name": "Example Host",
+      "ixp": null,
+      "envelope_ms": 83.974,
+      "location": {
+        "lat": 39.04,
+        "lon": -77.49,
+        "city": "Ashburn",
+        "country": "US",
+        "confidence": 0.94,
+        "level": "solid",
+        "sources": [
+          "ipmap-latency",
+          "name-hint"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 7,
+      "replies": [
+        {
+          "ip": "203.0.113.80",
+          "name": "www.example.org",
+          "rtt_ms": [
+            86.519,
+            85.653,
+            87.384
+          ]
+        }
+      ],
+      "class": "documentation",
+      "envelope_ms": 85.653,
+      "location": null
+    }
+  ],
+  "segments": [
+    {
+      "from_ttl": 0,
+      "to_ttl": 1,
+      "kind": "local",
+      "geodesic_km": 0,
+      "delta_ms": 0.792,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 1,
+      "to_ttl": 2,
+      "kind": "undetermined",
+      "geodesic_km": 660.527864178954,
+      "delta_ms": 7.542,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 2,
+      "to_ttl": 3,
+      "kind": "local",
+      "geodesic_km": 0,
+      "delta_ms": 0,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 3,
+      "to_ttl": 4,
+      "kind": "sea",
+      "geodesic_km": 343.47406573887207,
+      "delta_ms": 4.305,
+      "skipped_hops": 0,
+      "cables": [
+        {
+          "id": "uk-france-3",
+          "name": "UK-France 3",
+          "compatibility": 0.6,
+          "band": "high",
+          "landings": [
+            "Unnamed landing",
+            "London area"
+          ],
+          "length_km": 138,
+          "rfs_year": null,
+          "owners": [
+            "Cable & Wireless"
+          ],
+          "source": "osm-cables"
+        }
+      ],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 4,
+      "to_ttl": 5,
+      "kind": "sea",
+      "geodesic_km": 5570.444571708346,
+      "delta_ms": 66.91600000000001,
+      "skipped_hops": 0,
+      "cables": [
+        {
+          "id": "tata-atlantic-south",
+          "name": "Tata Atlantic South",
+          "compatibility": 0.59,
+          "band": "medium",
+          "landings": [
+            "Unnamed landing",
+            "New York area"
+          ],
+          "length_km": 5513,
+          "rfs_year": null,
+          "owners": [
+            "Tata Telecoms"
+          ],
+          "source": "osm-cables"
+        },
+        {
+          "id": "tata-atlantic-north",
+          "name": "Tata Atlantic North",
+          "compatibility": 0.568,
+          "band": "medium",
+          "landings": [
+            "Unnamed landing",
+            "New York area"
+          ],
+          "length_km": 5733,
+          "rfs_year": null,
+          "owners": [
+            "Tata Telecoms"
+          ],
+          "source": "osm-cables"
+        },
+        {
+          "id": "tat13",
+          "name": "TAT13",
+          "compatibility": 0.566,
+          "band": "medium",
+          "landings": [
+            "Unnamed landing",
+            "Unnamed landing"
+          ],
+          "length_km": 11023,
+          "rfs_year": null,
+          "owners": [
+            "BT"
+          ],
+          "source": "osm-cables"
+        },
+        {
+          "id": "atlantic-crossing-1-ac1-seg-c",
+          "name": "Atlantic Crossing 1 (AC1)Seg.C",
+          "compatibility": 0.564,
+          "band": "medium",
+          "landings": [
+            "Unnamed landing",
+            "New York area"
+          ],
+          "length_km": 8852,
+          "rfs_year": null,
+          "owners": [
+            "Global Crossing"
+          ],
+          "source": "osm-cables"
+        },
+        {
+          "id": "yellow",
+          "name": "Yellow",
+          "compatibility": 0.559,
+          "band": "medium",
+          "landings": [
+            "Unnamed landing",
+            "New York area"
+          ],
+          "length_km": 5404,
+          "rfs_year": null,
+          "owners": [
+            "Level 3 Global Submarine"
+          ],
+          "source": "osm-cables"
+        }
+      ],
+      "other_cables": 2,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 5,
+      "to_ttl": 6,
+      "kind": "undetermined",
+      "geodesic_km": 350.2043581966433,
+      "delta_ms": 4.418999999999997,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    }
+  ],
+  "summary": {
+    "distance_km_min": 6924.6508598228165,
+    "rtt_ms": 85.653,
+    "light_floor_ms": 65.24777224209159,
+    "inflation": 1.3127344744001073,
+    "countries": [
+      "FR",
+      "GB",
+      "US"
+    ],
+    "networks": 4,
+    "ixps": 1,
+    "detours": [],
+    "rejected_by_light": 3,
+    "gaps": 1
+  },
+  "story": [
+    {
+      "kind": "stop",
+      "ttl": 1,
+      "certainty": "inferred",
+      "en": "Stop 1 — Marseille, FR (solid). Network: AS64496 (Example Access). 0.8 ms after departure.",
+      "fr": "Étape 1 — Marseille, FR (solide). Réseau : AS64496 (Example Access). 0,8 ms après le départ."
+    },
+    {
+      "kind": "crossing",
+      "ttl": null,
+      "certainty": "assumed",
+      "en": "Crossing — Overland or undersea: cannot tell. At least 661 km as the crow flies, 7.5 ms later. No cable in the dataset is compatible with this crossing; the crossing itself is certain, the medium is not.",
+      "fr": "Traversée — terrestre ou maritime, impossible de trancher. Au moins 661 km à vol d'oiseau, 7,5 ms plus tard. Aucun câble du jeu de données n’est compatible avec cette traversée ; la traversée est certaine, le support ne l’est pas."
+    },
+    {
+      "kind": "stop",
+      "ttl": 2,
+      "certainty": "inferred",
+      "en": "Stop 2 — Paris, FR (solid). Network: AS64500 (Example ISP). 8.3 ms after departure.",
+      "fr": "Étape 2 — Paris, FR (solide). Réseau : AS64500 (Example ISP). 8,3 ms après le départ."
+    },
+    {
+      "kind": "stop",
+      "ttl": 3,
+      "certainty": "inferred",
+      "en": "Stop 3 — Paris, FR (solid). Network: AS64501 (Example Transit). 8.3 ms after departure.",
+      "fr": "Étape 3 — Paris, FR (solide). Réseau : AS64501 (Example Transit). 8,3 ms après le départ."
+    },
+    {
+      "kind": "rejected",
+      "ttl": 3,
+      "certainty": "measured",
+      "en": "Ashburn, US — rejected by light: 8.3 ms allows at most 1,299 km; at least 6,655 km would be needed.",
+      "fr": "Ashburn, US — rejetée par la lumière : 8.3 ms permet au plus 1 299 km ; il en faudrait au moins 6 655 km."
+    },
+    {
+      "kind": "crossing",
+      "ttl": null,
+      "certainty": "assumed",
+      "en": "Crossing — Sea crossing. At least 343 km as the crow flies, 4.3 ms later. 1 compatible cable(s) for this crossing: UK-France 3. Nothing in the measurement says which one carried your packet.",
+      "fr": "Traversée — maritime. Au moins 343 km à vol d'oiseau, 4,3 ms plus tard. 1 câble(s) compatible(s) avec cette traversée : UK-France 3. Rien dans la mesure ne dit lequel a porté votre paquet."
+    },
+    {
+      "kind": "stop",
+      "ttl": 4,
+      "certainty": "inferred",
+      "en": "Stop 4 — London, GB (solid). Network: AS64501 (Example Transit). 12.6 ms after departure.",
+      "fr": "Étape 4 — London, GB (solide). Réseau : AS64501 (Example Transit). 12,6 ms après le départ."
+    },
+    {
+      "kind": "rejected",
+      "ttl": 4,
+      "certainty": "measured",
+      "en": "Tokyo, JP — rejected by light: 12.6 ms allows at most 1,945 km; at least 10,090 km would be needed.",
+      "fr": "Tokyo, JP — rejetée par la lumière : 12.6 ms permet au plus 1 945 km ; il en faudrait au moins 10 090 km."
+    },
+    {
+      "kind": "crossing",
+      "ttl": null,
+      "certainty": "assumed",
+      "en": "Crossing — Sea crossing. At least 5,570 km as the crow flies, 66.9 ms later. 5 compatible cable(s) for this crossing: Tata Atlantic South, Tata Atlantic North, TAT13, Atlantic Crossing 1 (AC1)Seg.C, Yellow (2 other compatible cables). Nothing in the measurement says which one carried your packet.",
+      "fr": "Traversée — maritime. Au moins 5 570 km à vol d'oiseau, 66,9 ms plus tard. 5 câble(s) compatible(s) avec cette traversée : Tata Atlantic South, Tata Atlantic North, TAT13, Atlantic Crossing 1 (AC1)Seg.C, Yellow (2 autres compatibles). Rien dans la mesure ne dit lequel a porté votre paquet."
+    },
+    {
+      "kind": "stop",
+      "ttl": 5,
+      "certainty": "inferred",
+      "en": "Stop 5 — New York, US (solid). Network: AS64501 (Example Transit). 79.6 ms after departure.",
+      "fr": "Étape 5 — New York, US (solide). Réseau : AS64501 (Example Transit). 79,6 ms après le départ."
+    },
+    {
+      "kind": "rejected",
+      "ttl": 5,
+      "certainty": "measured",
+      "en": "Sydney, AU — rejected by light: 79.6 ms allows at most 11,975 km; at least 16,892 km would be needed.",
+      "fr": "Sydney, AU — rejetée par la lumière : 79.6 ms permet au plus 11 975 km ; il en faudrait au moins 16 892 km."
+    },
+    {
+      "kind": "crossing",
+      "ttl": null,
+      "certainty": "assumed",
+      "en": "Crossing — Overland or undersea: cannot tell. At least 350 km as the crow flies, 4.4 ms later. No cable in the dataset is compatible with this crossing; the crossing itself is certain, the medium is not.",
+      "fr": "Traversée — terrestre ou maritime, impossible de trancher. Au moins 350 km à vol d'oiseau, 4,4 ms plus tard. Aucun câble du jeu de données n’est compatible avec cette traversée ; la traversée est certaine, le support ne l’est pas."
+    },
+    {
+      "kind": "stop",
+      "ttl": 6,
+      "certainty": "inferred",
+      "en": "Stop 6 — Ashburn, US (solid). Network: AS64512 (Example Host). 84 ms after departure.",
+      "fr": "Étape 6 — Ashburn, US (solide). Réseau : AS64512 (Example Host). 84 ms après le départ."
+    },
+    {
+      "kind": "arrival",
+      "ttl": null,
+      "certainty": "inferred",
+      "en": "Arrival — www.example.org. At least 6,925 km · 85.7 ms measured · light alone: 65.2 ms · inflation 1.31.",
+      "fr": "Arrivée — www.example.org. Au moins 6 925 km · 85.7 ms mesurées · la lumière seule : 65.2 ms · inflation 1.31."
+    }
+  ],
+  "credits": [
+    "© OpenStreetMap contributors",
+    "Fixed links: hand-curated by Packet Voyage contributors (CC0); facts not copyrightable, coordinates approximate",
+    "Hints table: hand-curated by Packet Voyage contributors (CC0); facts not copyrightable, coordinates rounded to 0.01°",
+    "Made with Natural Earth"
+  ],
+  "redaction": {
+    "level": "country",
+    "applied": true
+  }
+}

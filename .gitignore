@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+
+# Node / pnpm workspace
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.vite/
+apps/web/dist/
+apps/cli/dist/
+
+# Data extraction caches (raw API responses are not versioned)
+scripts/data/cache/
+.var/

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "packet-voyage": {
+      "command": "npx",
+      "args": ["packet-voyage", "mcp"]
+    }
+  }
+}

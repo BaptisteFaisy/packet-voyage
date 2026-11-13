@@ -1,0 +1,104 @@
+# 10. Grand public, makers et curiosité — 100 cas d'usage
+
+Des gens très ordinaires — un·e livreur, une grand-mère, un·e coiffeuse, un·e syndic de copropriété — croisent un routeur sans savoir ce que c'est. Ici, on part d'un simple traceroute collé depuis un terminal, et on en fait un carnet de voyage lisible : par où ça passe, avec quelle certitude, et à quel point le trajet traîne par rapport à la lumière. Les cas ci-dessous sont écrits du point de vue de ces personnes, pas de celui des réseaux.
+
+- **UC-gp-01** · Curieuse du web — Maëlys tient un forum cuisine et se demande pourquoi un site de recettes reste bloqué depuis sa cuisine, un mardi soir. Elle lance un traceroute depuis son propre portable et suit le carnet de voyage : chaque étape affiche sa certitude et sa source, donc elle voit où l'inconnu commence.
+- **UC-gp-02** · Passionnée de réseau — Yasmine bidouille des antennes et veut mesurer l'inflation d'un trajet vers un DNS anycast qu'elle teste depuis son balcon. Le délai mesuré divisé par le plancher de lumière lui dit si le détour est normal ou absurde.
+- **UC-gp-03** · Maker — Joël construit un routeur de voyage pour son van et veut savoir si sa box nomade atteint bien son serveur de cartographie. Il trace depuis le van, à l'arrêt du Loading, et compare le plancher de lumière à la latence réelle.
+- **UC-gp-04** · Enseignante — Mme Ferrand veut montrer à ses élèves de 4e ce qu'est un aller-retour vers un site de maths. Elle colle un traceroute dans le carnet de voyage et affiche l'étape dont la certitude n'est que supposée.
+- **UC-gp-05** · Étudiant·e en informatique — Enzo doit comprendre pourquoi son backend à Francfort répond lentement quand il rend la main depuis Lyon. Il compare deux voyages, avant et après un changement de fournisseur, et regarde l'inflation de chacun.
+- **UC-gp-06** · Journaliste — Thomas prépare un papier sur les câbles sous-marins et veut savoir quelles traversées maritimes apparaissent sur sa route. La liste de câbles compatibles est annexée à son dossier, sans jamais dire quel câble a porté le paquet.
+- **UC-gp-07** · Collectionneur·se de cartes réseau — Marc dessine à la main ses relevés de routeurs et veut y superposer le chemin vers un service qu'il héberge. Il exporte en GeoJSON, puis colorie sa carte à la main.
+- **UC-gp-08** · Freelanc·e — Sofia doit justifier auprès de la DSI de son client pourquoi sa visio décroche depuis un train. Elle envoie un lien de partage caviardé au niveau pays, sans aucune donnée client dedans.
+- **UC-gp-09** · Autrice de vulgarisation — Inès prépare un chapitre « la lumière est trop lente » et veut un chiffre vérifiable : au moins 47 millisecondes entre Paris et New York. Le plancher de lumière lui donne l'argument.
+- **UC-gp-10** · Gamer — Kevin joue en ligne chez un ami et trouve la partie plus molle que chez lui. Il trace depuis l'ordinateur de son ami, compare les deux voyages et découvre que le second fait un détour par un point d'échange.
+- **UC-gp-11** · Voyageuse — Claire descend du train à Madrid et veut savoir si sa connexion de route a suivi un chemin cohérent. Elle relit le traceroute copié depuis son portable dans son carnet de voyage.
+- **UC-gp-12** · Instagrameuse — Emma veut vérifier que son compte est servi depuis l'Europe et pas depuis un serveur de reconditionnement d'images à l'autre bout du monde. Elle ouvre l'export GeoJSON sur son téléphone.
+- **UC-gp-13** · Grand-mère — Mamie Andrée reçoit une facture d'hébergement qu'elle ne reconnaît pas. Sans terminal, elle fait lire à son petit-fils le lien de partage du carnet de voyage, et il lui explique les tampons.
+- **UC-gp-14** · Livreur — Karim livre à vélo dans le centre-ville et veut savoir si sa 4G pendant la tournée fait un détour par l'étranger. Il compare le délai mesuré au plancher de lumière.
+- **UC-gp-15** · Syndic de copropriété — Bernard gère le WI-FI de l'immeuble et doit montrer aux copropriétaires que les connexions débordent hors de France. Il sort un rapport d'incident Markdown, caviardé au niveau pays.
+- **UC-gp-16** · Vendeuse au marché — Fatou utilise le partage de connexion de son téléphone pour son terminal de paiement, au marché du samedi. Elle veut vérifier que le TPE se connecte à un serveur proche, pas à l'autre bout du monde.
+- **UC-gp-17** · Coiffeuse — Nadia se plaint que la tablette de son salon de coiffure perd le réseau quand une cliente lance une vidéo. Elle trace depuis le salon et repère l'étape douteuse.
+- **UC-gp-18** · Chauffeur de bus — Pascal veut vérifier que la borne de paiement de son bus appelle bien le terminal de son dépôt. Il lit le carnet de voyage le midi, au dépôt.
+- **UC-gp-19** · Libraire — Hélène veut savoir si le site des éditeurs répond bien depuis sa librairie, un jeudi matin. Elle trace depuis le portable de la caisse et lit le rapport.
+- **UC-gp-20** · Infirmière — Sylvie veut vérifier que le logiciel de dossier patient de son service dialogue avec le bon hébergeur, après une panne réseau. Elle exporte un rapport d'incident.
+- **UC-gp-21** · Plombier — Jo veut poser une caméra de chantier chez un client et vérifier que les images arrivent bien chez lui. Il utilise `enrich`, après consentement explicite, pour nommer les bondes du chemin.
+- **UC-gp-22** · Serveuse — Ana, serveuse en brasserie, se demande pourquoi le TPE de la table 4 met parfois huit secondes à valider. Elle trace depuis le téléphone de la caisse et lit la certitude de chaque étape.
+- **UC-gp-23** · Agent de sécurité — Yanis veut auditer l'accès distant de sa centrale d'alarme, branchée chez un particulier. Il lit le carnet de voyage et repère le point d'échange où le chemin quitte son opérateur.
+- **UC-gp-24** · Assistante maternelle — Corinne veut vérifier que l'application de suivi des enfants de la crèche reste en France, pour rassurer les parents. Elle exporte la carte en GeoJSON et la montre au conseil de crèche.
+- **UC-gp-25** · Boulanger — Rachid veut vérifier que le TPE de sa boulangerie et le logiciel de son comptable ne se mélangent pas. Il compare deux voyages vers deux services différents.
+- **UC-gp-26** · Traductrice — Malik traduit vers le japonais et veut mesurer la latence réelle vers sa cliente à Osaka. Le plancher de lumière lui dit si la lenteur vient du réseau ou de son fournisseur.
+- **UC-gp-27** · Photographe — Chloé veut envoyer un album de 300 photos depuis un reportage à Lisbonne, en partage de connexion. Elle lit la carte du trajet pour savoir dans quel ordre les fichiers partiront.
+- **UC-gp-28** · Documentaliste — Anne veut vérifier que les archives numérisées de sa mairie sont accessibles à distance, un vendredi de fermeture. Elle trace depuis le poste de l'accueil et lit la certitude de chaque étape.
+- **UC-gp-29** · Prof de gym — Sabrina veut que la musique de sa salle reste fluide pendant les cours du soir. Elle teste le chemin vers le service de streaming, sans prétendre savoir quel câble est passé.
+- **UC-gp-30** · Pharmacienne — Élodie veut vérifier que la télétransmission de ses ordonnances arrive vite à la plateforme de l'Ordre. Elle compare le délai mesuré au plancher de lumière.
+- **UC-gp-31** · Fermier — Yves veut surveiller ses caméras de grange la nuit et vérifier que le flux ne transite pas par l'Asie. Il lit l'export GeoJSON et repère les points d'échange traversés.
+- **UC-gp-32** · Électricien — Bruno installe une maison connectée chez un particulier et veut vérifier que les capteurs remontent bien chez le fabricant. Il enrichit les noms de routeurs, avec consentement, pour renommer les étapes.
+- **UC-gp-33** · Orthophoniste — Marion veut vérifier que sa plateforme de téléorthophonie reste joignable pendant ses séances. Elle lit le carnet de voyage entre deux patients.
+- **UC-gp-34** · Avocat — Étienne conteste une clause de routage d'un hébergeur et a besoin de la trace, pas de la théorie. Il extrait le rapport d'incident Markdown, caviardé au niveau pays.
+- **UC-gp-35** · Agent immobilier — Delphine veut savoir si les visites virtuelles qu'elle envoie à ses clients tiennent la route depuis l'étranger. Elle partage un lien caviardé, sans données personnelles.
+- **UC-gp-36** · Webdesigner — Gaëlle veut comprendre pourquoi son portfolio charge lentement chez un client à Séoul. Elle trace depuis chez elle et compare avec un trace fait au bureau, le même jour.
+- **UC-gp-37** · Développeur — William veut comprendre pourquoi son API répond en 400 ms depuis Paris mais en 2 s depuis l'appartement de son colocataire. Il compare les deux voyages à la même heure.
+- **UC-gp-38** · Community manager — Yara veut vérifier que le compte professionnel de sa marque reste accessible hors Europe. Elle projette le lien de partage en QR code pendant sa réunion d'équipe.
+- **UC-gp-39** · Aquarelliste — Doriane vend en ligne et veut savoir si le paiement sécurisé de sa boutique répond quand elle envoie ses fichiers depuis la gare. Elle trace depuis la gare et lit la carte du trajet.
+- **UC-gp-40** · Mécanicien — Farid veut vérifier que le logiciel de son garage, relié à un fournisseur de pièces, n'est pas hors de portée. Il lit le rapport d'incident caviardé avant de leur écrire.
+- **UC-gp-41** · Sage-femme — Léna veut savoir si l'application de suivi des grossesses de sa clinique reste en hébergement français. Elle regarde la carte du voyage exportée en GeoJSON.
+- **UC-gp-42** · Voyageur — Christophe veut vérifier que son abonnement eSIM route correctement depuis Tokyo, avant de payer le forfait du mois suivant. Il compare ses voyages depuis deux hôtels.
+- **UC-gp-43** · Étudiant·e en arts — Théo veut comprendre ce que veut dire « 80 ms de latence » dans un quiz en ligne de sa fac. Il lit l'explication du plancher de lumière, ligne par ligne.
+- **UC-gp-44** · Agent de poste — Urbain veut vérifier que le réseau de son bureau de poste ne sort pas du pays pour authentifier les retraits d'argent. Il trace depuis le comptoir, au moment de l'appel du client.
+- **UC-gp-45** · Blogueuse voyage — Victoria veut expliquer dans son article pourquoi son site est plus rapide depuis le train que depuis chez elle. Elle utilise l'image PNG du carnet de voyage comme illustration.
+- **UC-gp-46** · Journaliste sportif — Xavier veut savoir si la lenteur pendant un match en direct vient du diffuseur ou de sa box. Il compare deux voyages faits au coup d'envoi.
+- **UC-gp-47** · Technicien — Florent diagnostique des caméras qui perdent des images la nuit chez un client. Il lit le carnet de voyage et repère l'étape où la certitude tombe à « supposée ».
+- **UC-gp-48** · Assistante de direction — Géraldine veut vérifier que la visio de son comité de 8 h ne part pas par un détour à l'étranger. Elle trace la veille au soir, depuis le bureau.
+- **UC-gp-49** · Apiculteur — Hugues veut que les mesures de ses ruches connectées remontent chez lui, dans le Cantal. Il enrichit les noms de routeurs, avec son accord, pour comprendre le chemin.
+- **UC-gp-50** · Chercheuse retraitée — Irène a fait de la physique toute sa vie et veut vérifier l'affirmation d'un article sur la latence transatlantique. Elle compare la mesure au plancher de lumière.
+- **UC-gp-51** · Éducatrice spécialisée — Fatima veut vérifier que le logiciel de suivi des jeunes de son foyer n'est pas hébergé hors d'Europe. Elle trace depuis le poste de l'accueil et lit la carte.
+- **UC-gp-52** · Conducteur de tramway — Patrick veut vérifier que le terminal de paiement de sa rame dialogue avec le bon serveur avant la mise en service du matin. Il trace depuis la station de dépôt.
+- **UC-gp-53** · Jardinier — Marcel a fait poser une irrigation connectée chez lui et veut savoir si les ordres arrivent au relais sans détour. Il compare le délai mesuré au plancher de lumière.
+- **UC-gp-54** · Prof de yoga — Sophie veut que la musique de ses cours en ligne ne décroche pas quand ses élèves sont sur des box différentes. Elle compare plusieurs voyages du même soir.
+- **UC-gp-55** · Chanteuse d'opéra — Aurélie veut vérifier la latence quand elle répète avec un chef d'orchestre à l'autre bout du pays. Elle lit le carnet de voyage avant la répétition.
+- **UC-gp-56** · Étudiant en droit — Lucas veut vérifier que la base de jurisprudence de sa fac est bien servie depuis l'hexagone. Il lit l'export GeoJSON pour son mémoire de fin d'études.
+- **UC-gp-57** · Cuisinière — Céline vient d'acheter un four connecté et veut vérifier qu'il ne dialogue qu'avec le fabricant. Elle lit la carte du voyage, une étape par étape.
+- **UC-gp-58** · Agent d'accueil de mairie — Yvette veut vérifier que le portail de sa mairie reste joignable pendant la journée de déclarations. Elle trace depuis le guichet, en plein pic.
+- **UC-gp-59** · Pêcheur — Gustave veut vérifier que son traceur de poisson ne sort pas du pays et ne perd pas le signal. Il lit la certitude de chaque étape au port.
+- **UC-gp-60** · Restaurateur — Sami veut que le TPE de son restaurant ne sature pas au service du midi. Il compare deux voyages vers sa banque, un mardi calme et un samedi plein.
+- **UC-gp-61** · Journaliste économie — Amélie enquête sur la facture d'un hébergeur et veut étayer son papier par des mesures, pas des rumeurs. Elle sort un lien de partage caviardé, sans nom de client.
+- **UC-gp-62** · Chef de chœur amateur — Bertrand veut savoir pourquoi le rehearsal en ligne du samedi décroche toujours chez les choristes les plus jeunes. Il compare les voyages des trois foyers.
+- **UC-gp-63** · Bibliothécaire — Gérard veut vérifier que le catalogue en ligne de sa médiathèque reste rapide le soir, quand tout le monde cherche une publication. Il trace depuis le bureau.
+- **UC-gp-64** · Professeur de maths — Hubert prépare son cours sur les fonctions de délai en.showing des valeurs réelles du plancher de lumière, tirées d'un voyage mesuré devant ses élèves.
+- **UC-gp-65** · Retraité — Guy veut vérifier que sa box ne dérive pas vers un serveur à l'étranger après la panne du fournisseur. Il lit le carnet de voyage imprimé sur papier.
+- **UC-gp-66** · Graphiste — Sandrine veut vérifier que son service d'envoi de fichiers lourds ne bride pas sa connexion. Elle compare le chemin d'un petit et d'un gros envoi.
+- **UC-gp-67** · Puéricultrice — Jessica veut vérifier que l'application de suivi des nouveau-nés de sa crèche est bien hébergée en France. Elle exporte la carte en GeoJSON pour la réunion de l'équipe.
+- **UC-gp-68** · Gardien d'immeuble — Joëlle veut vérifier que le Digicode de sa résidence ne déborde pas vers un hébergeur étranger. Elle trace depuis la loge, le matin.
+- **UC-gp-69** · Cavalier — Alain veut que les caméras GPS de son centre équestre remontent les données chez lui. Il lit le rapport d'incident après une semaine de trous.
+- **UC-gp-70** · Développeuse front — Lætitia veut vérifier que le CDN qui sert son site ne renvoie pas vers un point d'échange à l'autre bout du monde. Elle exporte en GeoJSON et regarde les sauts.
+- **UC-gp-71** · Vigneronne — Solange veut que les capteurs de sa cave envoient leurs mesures chez son labo. Elle compare deux voyages : le Direct et celui du fournisseur.
+- **UC-gp-72** · Médecin de garde — Henri veut vérifier que le dossier de son patient, stocké hors de sa clinique, reste joignable depuis le téléphone de l'hôpital. Il trace depuis le service.
+- **UC-gp-73** · Coach de salle de sport — Yann veut savoir si les montres connectées de ses clients perdent le rythme quand la salle est bondée. Il trace depuis le local des tapis.
+- **UC-gp-74** · Surfeuse — Alma veut vérifier que la connexion de son surf hut à Biarritz atteint bien son serveur de tableaux de marée. Elle compare un soir de houle et un jour creux.
+- **UC-gp-75** · Professeur de sciences — Régis veut montrer en classe que « près » et « au moins » ne sont pas la même chose. Il projette le lien de partage du carnet de voyage.
+- **UC-gp-76** · Peintre — Chantale vend ses tableaux en ligne et veut que ses clients belges voient la page aussi vite que les français. Elle compare deux voyages, un de chaque côté de la frontière.
+- **UC-gp-77** · Livreuse — Marcelle livre des courses en.Vector à l'heure du déjeuner et veut que le suivi de sa tournée reste lisible. Elle trace depuis le scooter, entre deux tournées.
+- **UC-gp-78** · Charpentier — Joakim veut vérifier que la caméra de chantier de son atelier de menuiserie se connecte bien au disque chez lui. Il lit le rapport d'incident après des coupures répétées.
+- **UC-gp-79** · Professeure de danse — Laure veut vérifier que le streaming de ses cours ne décroche pas quand les familles sont sur des box différentes. Elle compare les voyages de six élèves.
+- **UC-gp-80** · Conseiller bancaire — André veut vérifier que la connexion de son agence ne sort pas du pays pendant les opérations de clôture du mois. Il trace depuis le guichet, le soir des bilans.
+- **UC-gp-81** · Geek — Vincent collectionne les accès aux réseaux effacés et veut voir ce que donne le chemin d'un routeur=iPhone. Il trace depuis un musée de la télécommunication.
+- **UC-gp-82** · Interprète — Malika veut mesurer la latence quand elle traduit en direct pour une conférence à Genève. Elle compare le plancher de lumière au délai mesuré, micro ouvert.
+- **UC-gp-83** · Cuisinier — Paulo veut vérifier que son four connecté appelle bien le service du fabricant et pas un revendeur douteux. Il lit la carte du voyage avant de le brancher.
+- **UC-gp-84** · Consultante — Nicole veut vérifier que les diaries partagées de son équipe ne passent pas par des serveurs hors Europe. Elle exporte la carte en GeoJSON avant le comité de sécurité.
+- **UC-gp-85** · Éducateur canin — Serge veut que le collier GPS de ses chiens remonte chez lui et pas chez un tiers. Il trace depuis le chenil et compare deux trajets.
+- **UC-gp-86** · Étudiante en journalisme — Maëva veut documenter une coupure internet dans un village de montagne. Elle conserve le lien de partage, qui fonctionne hors ligne dans le fragment.
+- **UC-gp-87** · Retraitée — Carmen veut vérifier que le serveur vocal de sa banque est bien joignable depuis sa maison, et que l'appel ne part pas à l'étranger. Elle lit le carnet de voyage sur l'écran de son téléphone.
+- **UC-gp-88** · Père — Ludovic veut vérifier que l'application de localisation de son fils à l'école fonctionne hors du réseau de l'école. Il trace depuis chez lui et compare avec un trace fait sur place.
+- **UC-gp-89** · Reporter — Nour veut comprendre pourquoi son lieu de reportage est difficile à joindre, et le montrer aux lecteurs. Elle publie l'image PNG du carnet de voyage, sans donnée personnelle.
+- **UC-gp-90** · Éducatrice Montessori — Charlotte veut vérifier que le matériel pédagogique de sa classe reste sur un hébergeur français. Elle lit la carte exportée avant la réunion des parents.
+- **UC-gp-91** · Responsable d'exploitation — Madeleine veut vérifier que ses trois sites de production sont bien reliés au même point d'échange. Elle compare les trois voyages du même moment.
+- **UC-gp-92** · Marin — Corentin veut vérifier que le terminal de son bateau ne dérive pas hors de la portée du port. Il lit le carnet de voyage depuis la passerelle.
+- **UC-gp-93** · Chef de projet — Yan veut vérifier que le service d'hébergement qu'il propose à son client ne déborde pas hors Europe. Il lit le rapport d'incident caviardé avant la revue de contrat.
+- **UC-gp-94** · Céramiste — Jeanne veut vérifier que la boutique en ligne de son atelier reste rapide pour ses clients belges et suisses. Elle compare ses clients par pays.
+- **UC-gp-95** · Luthier — Gaspard héberge les enregistrements de ses clients dans son atelier et veut vérifier que son serveur est bien stable et joignable. Il trace depuis l'atelier, entre deux poses.
+- **UC-gp-96** · Commerçant — Babacar veut comparer le trajet de sa boutique en ligne le jour de ses promos et un jour normal. Il lit l'inflation des deux voyages.
+- **UC-gp-97** · Bénévole associatif — Hanane veut vérifier que le site de son association n'héberge pas les données de ses bénévoles dans un pays hors de l'Union européenne. Elle exporte la carte et la présente au conseil d'administration.
+- **UC-gp-98** · Pharmacien hospitalier — Sébastien veut vérifier que le logiciel de pharmacie de son service dialogue bien avec le serveur du CHU. Il lit le rapport d'incident après une coupure de nuit.
+- **UC-gp-99** · Lycéen — Ilan veut comprendre d'où vient le temps d'attente quand il lance une recherche, en classe de sciences et techniques. Il trace depuis le réseau du lycée et lit l'explication.
+- **UC-gp-100** · Grand-père — Jean-Pierre veut vérifier que le service de visio qu'il utilise avec sa famille ne transite pas par un pays lointain, par souci de vie privée. Il demande à son petit-fils de lui lire la carte.

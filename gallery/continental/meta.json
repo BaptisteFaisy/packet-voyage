@@ -1,0 +1,31 @@
+{
+  "slug": "continental",
+  "title": {
+    "en": "Paris to Frankfurt, overland",
+    "fr": "Paris — Francfort, par la terre"
+  },
+  "blurb": {
+    "en": "Four hops inside one continent: the tool cannot tell land from a channel cable, and says so.",
+    "fr": "Quatre étapes sur un même continent : l’outil ne peut pas trancher entre terre et câble, et le dit."
+  },
+  "feature": "undetermined-segments-no-cable-claim",
+  "family": 4,
+  "declared_departure": true,
+  "traced_at": "2026-11-12T10:02:11Z",
+  "summary": {
+    "distance_km_min": 793.4721447708778,
+    "rtt_ms": 6.149,
+    "light_floor_ms": 4.683807514629532,
+    "inflation": 1.3128208152862915,
+    "countries": [
+      "FR",
+      "NL",
+      "DE"
+    ],
+    "networks": 4,
+    "ixps": 2,
+    "detours": [],
+    "rejected_by_light": 0,
+    "gaps": 1
+  }
+}

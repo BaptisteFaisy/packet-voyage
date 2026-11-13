@@ -1,0 +1,15 @@
+{
+  "name": "@packet-voyage/mcp",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": {
+    "@packet-voyage/core": "workspace:*",
+    "@packet-voyage/enrich": "workspace:*",
+    "@packet-voyage/schema": "workspace:*"
+  }
+}

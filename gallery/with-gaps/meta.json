@@ -1,0 +1,31 @@
+{
+  "slug": "with-gaps",
+  "title": {
+    "en": "A route with holes",
+    "fr": "Une route pleine de trous"
+  },
+  "blurb": {
+    "en": "Silent routers and unlocated hops: the tool counts the holes instead of filling them.",
+    "fr": "Routeurs muets et étapes non localisées : l’outil compte les trous au lieu de les boucher."
+  },
+  "feature": "silent-and-unlocated-hops-counted",
+  "family": 4,
+  "declared_departure": false,
+  "traced_at": "2026-11-12T14:12:55Z",
+  "summary": {
+    "distance_km_min": 7238.799223532263,
+    "rtt_ms": 74.218,
+    "light_floor_ms": 59.96654465255244,
+    "inflation": 1.2376567706213661,
+    "countries": [
+      "ES",
+      "FR",
+      "US"
+    ],
+    "networks": 4,
+    "ixps": 0,
+    "detours": [],
+    "rejected_by_light": 0,
+    "gaps": 4
+  }
+}

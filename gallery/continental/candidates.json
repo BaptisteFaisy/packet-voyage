@@ -1,0 +1,91 @@
+[
+  [],
+  [
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "ixp-prefix",
+      "weight": 0.8
+    },
+    {
+      "city": "Paris",
+      "country": "FR",
+      "lat": 48.86,
+      "lon": 2.35,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ],
+  [
+    {
+      "city": "Amsterdam",
+      "country": "NL",
+      "lat": 52.37,
+      "lon": 4.9,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "Amsterdam",
+      "country": "NL",
+      "lat": 52.37,
+      "lon": 4.9,
+      "source": "ixp-prefix",
+      "weight": 0.8
+    },
+    {
+      "city": "Amsterdam",
+      "country": "NL",
+      "lat": 52.37,
+      "lon": 4.9,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ],
+  [
+    {
+      "city": "Frankfurt",
+      "country": "DE",
+      "lat": 50.11,
+      "lon": 8.68,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "Frankfurt",
+      "country": "DE",
+      "lat": 50.11,
+      "lon": 8.68,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ],
+  [
+    {
+      "city": "Frankfurt",
+      "country": "DE",
+      "lat": 50.11,
+      "lon": 8.68,
+      "source": "name-hint",
+      "weight": 0.6
+    },
+    {
+      "city": "Frankfurt",
+      "country": "DE",
+      "lat": 50.11,
+      "lon": 8.68,
+      "source": "ipmap-latency",
+      "weight": 0.85
+    }
+  ]
+]

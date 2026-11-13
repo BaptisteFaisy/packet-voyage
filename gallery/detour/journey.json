@@ -1,0 +1,467 @@
+{
+  "version": 1,
+  "traced_at": "2026-11-12T11:20:45Z",
+  "tool": "traceroute",
+  "protocol": "udp",
+  "family": 4,
+  "source": null,
+  "target": {
+    "host": "api.example.eu",
+    "ip": "203.0.113.80"
+  },
+  "hops": [
+    {
+      "ttl": 1,
+      "replies": [
+        {
+          "ip": "198.51.100.1",
+          "name": "sgt.core-ix1.example.asia",
+          "rtt_ms": [
+            0.8,
+            0.792,
+            0.808
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64500,
+      "as_name": "Example ISP",
+      "ixp": "Example-IX Singapore",
+      "envelope_ms": 0.792,
+      "location": {
+        "lat": 1.35,
+        "lon": 103.82,
+        "city": "Singapore",
+        "country": "SG",
+        "confidence": 0.988,
+        "level": "solid",
+        "sources": [
+          "ipmap-latency",
+          "ixp-prefix",
+          "name-hint"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 2,
+      "replies": [
+        {
+          "ip": "198.51.100.2",
+          "name": "sg1.dc2-ix7.example.asia",
+          "rtt_ms": [
+            0.8,
+            0.792,
+            0.808
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64501,
+      "as_name": "Example Transit",
+      "ixp": null,
+      "envelope_ms": 0.792,
+      "location": {
+        "lat": 1.35,
+        "lon": 103.82,
+        "city": "Singapore",
+        "country": "SG",
+        "confidence": 0.94,
+        "level": "solid",
+        "sources": [
+          "ipmap-latency",
+          "name-hint"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 3,
+      "replies": [
+        {
+          "ip": "198.51.100.3",
+          "name": "nrt1.edge9-tyo.example.asia",
+          "rtt_ms": [
+            73.734,
+            72.996,
+            74.471
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64501,
+      "as_name": "Example Transit",
+      "ixp": null,
+      "envelope_ms": 72.996,
+      "location": {
+        "lat": 35.68,
+        "lon": 139.69,
+        "city": "Tokyo",
+        "country": "JP",
+        "confidence": 0.94,
+        "level": "solid",
+        "sources": [
+          "ipmap-latency",
+          "name-hint"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 4,
+      "replies": [
+        {
+          "ip": "198.51.100.4",
+          "name": "hkg3.dc4-hk.example.asia",
+          "rtt_ms": [
+            73.734,
+            72.996,
+            74.471
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64501,
+      "as_name": "Example Transit",
+      "ixp": null,
+      "envelope_ms": 72.996,
+      "location": {
+        "lat": 22.32,
+        "lon": 114.17,
+        "city": "Hong Kong",
+        "country": "HK",
+        "confidence": 0.611,
+        "level": "probable",
+        "sources": [
+          "ipmap-latency",
+          "name-hint"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 5,
+      "replies": [
+        {
+          "ip": "198.51.100.5",
+          "name": "lon9.xe6-core11.example.de",
+          "rtt_ms": [
+            146.261,
+            144.798,
+            147.723
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64501,
+      "as_name": "Example Transit",
+      "ixp": null,
+      "envelope_ms": 144.798,
+      "location": {
+        "lat": 51.51,
+        "lon": -0.13,
+        "city": "London",
+        "country": "GB",
+        "confidence": 0.611,
+        "level": "probable",
+        "sources": [
+          "ipmap-latency",
+          "name-hint"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 6,
+      "replies": [
+        {
+          "ip": "198.51.100.6",
+          "name": "fra.host.example.eu",
+          "rtt_ms": [
+            146.261,
+            144.798,
+            147.723
+          ]
+        }
+      ],
+      "class": "documentation",
+      "asn": 64512,
+      "as_name": "Example Host",
+      "ixp": null,
+      "envelope_ms": 144.798,
+      "location": {
+        "lat": 50.11,
+        "lon": 8.68,
+        "city": "Frankfurt",
+        "country": "DE",
+        "confidence": 0.611,
+        "level": "probable",
+        "sources": [
+          "ipmap-latency",
+          "name-hint"
+        ],
+        "rejected": []
+      }
+    },
+    {
+      "ttl": 7,
+      "replies": [
+        {
+          "ip": "203.0.113.80",
+          "name": "api.example.eu",
+          "rtt_ms": [
+            149.186,
+            147.694,
+            150.678
+          ]
+        }
+      ],
+      "class": "documentation",
+      "envelope_ms": 147.694,
+      "location": null
+    }
+  ],
+  "segments": [
+    {
+      "from_ttl": 1,
+      "to_ttl": 2,
+      "kind": "local",
+      "geodesic_km": 0,
+      "delta_ms": 0,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 2,
+      "to_ttl": 3,
+      "kind": "sea",
+      "geodesic_km": 5314.482320041688,
+      "delta_ms": 72.204,
+      "skipped_hops": 0,
+      "cables": [
+        {
+          "id": "southeast-asia-japan-cable",
+          "name": "Southeast Asia-Japan Cable",
+          "compatibility": 0.738,
+          "band": "high",
+          "landings": [
+            "Singapore area",
+            "Tokyo area"
+          ],
+          "length_km": 8815,
+          "rfs_year": null,
+          "source": "osm-cables"
+        },
+        {
+          "id": "s1-4",
+          "name": "S1.4",
+          "compatibility": 0.634,
+          "band": "high",
+          "landings": [
+            "Unnamed landing",
+            "Unnamed landing"
+          ],
+          "length_km": 608,
+          "rfs_year": null,
+          "source": "osm-cables"
+        },
+        {
+          "id": "s5a",
+          "name": "S5A",
+          "compatibility": 0.611,
+          "band": "high",
+          "landings": [
+            "Unnamed landing",
+            "Unnamed landing"
+          ],
+          "length_km": 213,
+          "rfs_year": null,
+          "source": "osm-cables"
+        },
+        {
+          "id": "s5",
+          "name": "S5",
+          "compatibility": 0.609,
+          "band": "high",
+          "landings": [
+            "Taipei area",
+            "Unnamed landing"
+          ],
+          "length_km": 245,
+          "rfs_year": null,
+          "source": "osm-cables"
+        },
+        {
+          "id": "unnamed",
+          "name": "臺金二號海纜",
+          "compatibility": 0.458,
+          "band": "medium",
+          "landings": [
+            "Unnamed landing",
+            "Unnamed landing"
+          ],
+          "length_km": 47,
+          "rfs_year": null,
+          "owners": [
+            "中華電信"
+          ],
+          "source": "osm-cables"
+        }
+      ],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 3,
+      "to_ttl": 4,
+      "kind": "sea",
+      "geodesic_km": 2878.9783565401503,
+      "delta_ms": 0,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 4,
+      "to_ttl": 5,
+      "kind": "sea",
+      "geodesic_km": 9622.940938562759,
+      "delta_ms": 71.802,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 5,
+      "to_ttl": 6,
+      "kind": "sea",
+      "geodesic_km": 637.8572105721769,
+      "delta_ms": 0,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    }
+  ],
+  "summary": {
+    "distance_km_min": 18454.258825716774,
+    "rtt_ms": 147.694,
+    "light_floor_ms": 100.57241423295078,
+    "inflation": 1.4685339029239557,
+    "countries": [
+      "SG",
+      "JP",
+      "HK",
+      "GB",
+      "DE"
+    ],
+    "networks": 3,
+    "ixps": 1,
+    "detours": [
+      {
+        "kind": "zigzag",
+        "ttls": [
+          2,
+          3,
+          4
+        ],
+        "detail": "Hop 3 adds at least 5607 km to the straight path 2 → 4."
+      }
+    ],
+    "rejected_by_light": 0,
+    "gaps": 1
+  },
+  "story": [
+    {
+      "kind": "stop",
+      "ttl": 1,
+      "certainty": "inferred",
+      "en": "Stop 1 — Singapore, SG (solid). Network: AS64500 (Example ISP). 0.8 ms after departure.",
+      "fr": "Étape 1 — Singapore, SG (solide). Réseau : AS64500 (Example ISP). 0,8 ms après le départ."
+    },
+    {
+      "kind": "stop",
+      "ttl": 2,
+      "certainty": "inferred",
+      "en": "Stop 2 — Singapore, SG (solid). Network: AS64501 (Example Transit). 0.8 ms after departure.",
+      "fr": "Étape 2 — Singapore, SG (solide). Réseau : AS64501 (Example Transit). 0,8 ms après le départ."
+    },
+    {
+      "kind": "crossing",
+      "ttl": null,
+      "certainty": "assumed",
+      "en": "Crossing — Sea crossing. At least 5,314 km as the crow flies, 72.2 ms later. 5 compatible cable(s) for this crossing: Southeast Asia-Japan Cable, S1.4, S5A, S5, 臺金二號海纜. Nothing in the measurement says which one carried your packet.",
+      "fr": "Traversée — maritime. Au moins 5 314 km à vol d'oiseau, 72,2 ms plus tard. 5 câble(s) compatible(s) avec cette traversée : Southeast Asia-Japan Cable, S1.4, S5A, S5, 臺金二號海纜. Rien dans la mesure ne dit lequel a porté votre paquet."
+    },
+    {
+      "kind": "stop",
+      "ttl": 3,
+      "certainty": "inferred",
+      "en": "Stop 3 — Tokyo, JP (solid). Network: AS64501 (Example Transit). 73 ms after departure.",
+      "fr": "Étape 3 — Tokyo, JP (solide). Réseau : AS64501 (Example Transit). 73 ms après le départ."
+    },
+    {
+      "kind": "crossing",
+      "ttl": null,
+      "certainty": "assumed",
+      "en": "Crossing — Sea crossing. At least 2,879 km as the crow flies, 0 ms later. No cable in the dataset is compatible with this crossing; the crossing itself is certain, the medium is not.",
+      "fr": "Traversée — maritime. Au moins 2 879 km à vol d'oiseau, 0 ms plus tard. Aucun câble du jeu de données n’est compatible avec cette traversée ; la traversée est certaine, le support ne l’est pas."
+    },
+    {
+      "kind": "stop",
+      "ttl": 4,
+      "certainty": "inferred",
+      "en": "Stop 4 — Hong Kong, HK (likely). Network: AS64501 (Example Transit). 73 ms after departure.",
+      "fr": "Étape 4 — Hong Kong, HK (probable). Réseau : AS64501 (Example Transit). 73 ms après le départ."
+    },
+    {
+      "kind": "crossing",
+      "ttl": null,
+      "certainty": "assumed",
+      "en": "Crossing — Sea crossing. At least 9,623 km as the crow flies, 71.8 ms later. No cable in the dataset is compatible with this crossing; the crossing itself is certain, the medium is not.",
+      "fr": "Traversée — maritime. Au moins 9 623 km à vol d'oiseau, 71,8 ms plus tard. Aucun câble du jeu de données n’est compatible avec cette traversée ; la traversée est certaine, le support ne l’est pas."
+    },
+    {
+      "kind": "stop",
+      "ttl": 5,
+      "certainty": "inferred",
+      "en": "Stop 5 — London, GB (likely). Network: AS64501 (Example Transit). 144.8 ms after departure.",
+      "fr": "Étape 5 — London, GB (probable). Réseau : AS64501 (Example Transit). 144,8 ms après le départ."
+    },
+    {
+      "kind": "crossing",
+      "ttl": null,
+      "certainty": "assumed",
+      "en": "Crossing — Sea crossing. At least 638 km as the crow flies, 0 ms later. No cable in the dataset is compatible with this crossing; the crossing itself is certain, the medium is not.",
+      "fr": "Traversée — maritime. Au moins 638 km à vol d'oiseau, 0 ms plus tard. Aucun câble du jeu de données n’est compatible avec cette traversée ; la traversée est certaine, le support ne l’est pas."
+    },
+    {
+      "kind": "stop",
+      "ttl": 6,
+      "certainty": "inferred",
+      "en": "Stop 6 — Frankfurt, DE (likely). Network: AS64512 (Example Host). 144.8 ms after departure.",
+      "fr": "Étape 6 — Frankfurt, DE (probable). Réseau : AS64512 (Example Host). 144,8 ms après le départ."
+    },
+    {
+      "kind": "arrival",
+      "ttl": null,
+      "certainty": "inferred",
+      "en": "Arrival — api.example.eu. At least 18,454 km · 147.7 ms measured · light alone: 100.6 ms · inflation 1.47.",
+      "fr": "Arrivée — api.example.eu. Au moins 18 454 km · 147.7 ms mesurées · la lumière seule : 100.6 ms · inflation 1.47."
+    }
+  ],
+  "credits": [
+    "© OpenStreetMap contributors",
+    "Fixed links: hand-curated by Packet Voyage contributors (CC0); facts not copyrightable, coordinates approximate",
+    "Hints table: hand-curated by Packet Voyage contributors (CC0); facts not copyrightable, coordinates rounded to 0.01°",
+    "Made with Natural Earth"
+  ],
+  "redaction": {
+    "level": "country",
+    "applied": true
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "@packet-voyage/gallery",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "The six sample journeys of the site: scenarios, generated files and their locked reference numbers.",
+  "dependencies": {
+    "@packet-voyage/core": "workspace:*",
+    "@packet-voyage/data": "workspace:*",
+    "@packet-voyage/schema": "workspace:*"
+  }
+}

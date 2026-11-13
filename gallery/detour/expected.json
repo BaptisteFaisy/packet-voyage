@@ -1,0 +1,29 @@
+{
+  "slug": "detour",
+  "feature": "zigzag-detour-detected",
+  "summary": {
+    "distance_km_min": 18454.3,
+    "rtt_ms": 147.7,
+    "light_floor_ms": 100.6,
+    "inflation": 1.47,
+    "countries": [
+      "SG",
+      "JP",
+      "HK",
+      "GB",
+      "DE"
+    ],
+    "networks": 3,
+    "ixps": 1,
+    "detours": 1,
+    "rejected_by_light": 0,
+    "gaps": 1
+  },
+  "hops": 7,
+  "located_hops": 6,
+  "rejected_candidates": 0,
+  "anycast_hops": 0,
+  "compatible_cables": 5,
+  "sea_segments": 4,
+  "segments": 5
+}

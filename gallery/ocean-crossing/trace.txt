@@ -1,0 +1,11 @@
+traceroute to www.example.org (203.0.113.80), 30 hops max, 60 byte packets
+ 1  gw.home.example (198.51.100.1)  0.800 ms  0.792 ms  0.808 ms
+ 2  bras-lyon.access.example.net (198.51.100.2)  0.800 ms  0.792 ms  0.808 ms
+ 3  be10.par2.isp.example (198.51.100.3)  5.002 ms  4.952 ms  5.052 ms
+ 4  ix-paris.transit.example.net (198.51.100.4)  5.002 ms  4.952 ms  5.052 ms
+ 5  ae3.lon1.transit.example.net (198.51.100.5)  9.379 ms  9.286 ms  9.473 ms
+ 6  ae7.lon4.transit.example.net (198.51.100.6)  9.379 ms  9.286 ms  9.473 ms
+ 7  be2.nyc2.transit.example.net (198.51.100.7)  78.345 ms  77.561 ms  79.128 ms
+ 8  be5.nyc5.transit.example.net (198.51.100.8)  78.345 ms  77.561 ms  79.128 ms
+ 9  xe0.iad3.host.example.com (198.51.100.9)  82.803 ms  81.975 ms  83.631 ms
+ 10  www.example.org (203.0.113.80)  84.459 ms  83.615 ms  85.304 ms

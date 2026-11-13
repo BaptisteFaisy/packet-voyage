@@ -1,0 +1,27 @@
+{
+  "slug": "with-gaps",
+  "feature": "silent-and-unlocated-hops-counted",
+  "summary": {
+    "distance_km_min": 7238.8,
+    "rtt_ms": 74.2,
+    "light_floor_ms": 60,
+    "inflation": 1.24,
+    "countries": [
+      "ES",
+      "FR",
+      "US"
+    ],
+    "networks": 4,
+    "ixps": 0,
+    "detours": 0,
+    "rejected_by_light": 0,
+    "gaps": 4
+  },
+  "hops": 7,
+  "located_hops": 3,
+  "rejected_candidates": 0,
+  "anycast_hops": 0,
+  "compatible_cables": 0,
+  "sea_segments": 1,
+  "segments": 2
+}

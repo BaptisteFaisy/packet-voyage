@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "data-licence-guard",
+      "description": "On every agent save under packages/data/**, refuses a dataset without its provenance sheet (packages/data/provenance/<id>.json with recomputed features and sha256) or with a licence outside the permitted set (ODbL-1.0, CC0, public domain, CC BY 4.0 with credit) — data-licences.md, VOY-N-05, spec §6.1. TeleGeography and PeeringDB data must never appear here at all. Same logic as scripts/guards/data-licence.guard.mjs in CI.",
+      "trigger": "PostFileSave",
+      "matcher": "^packages/data/.*",
+      "action": {
+        "type": "command",
+        "command": "node scripts/hooks/data-licence-guard.mjs"
+      },
+      "timeout": 120,
+      "enabled": true
+    }
+  ]
+}
