@@ -10,11 +10,11 @@ import { CliCommands } from '../CliCommands.tsx';
 import { Section } from './Section.tsx';
 
 const CLI_COMMANDS = [
-  { label: 'Trace one host', command: 'npx packet-voyage trace example.org' },
-  { label: 'Read a trace you already have', command: 'npx packet-voyage read trace.txt' },
-  { label: 'Explain the journey', command: 'npx packet-voyage explain journey.json --year 1987' },
-  { label: 'Export for a ticket or a GIS', command: 'npx packet-voyage export journey.json --format geojson' },
-  { label: 'Serve the four tools to an agent', command: 'npx packet-voyage mcp' },
+  { label: 'Trace one host', command: 'pnpm voyage trace example.org' },
+  { label: 'Read a trace you already have', command: 'pnpm voyage read trace.txt' },
+  { label: 'Explain the journey', command: 'pnpm voyage explain journey.json --year 1987' },
+  { label: 'Export for a ticket or a GIS', command: 'pnpm voyage export journey.json --format geojson' },
+  { label: 'Serve the four tools to an agent', command: 'pnpm voyage mcp' },
 ];
 
 const LIMIT_KEYS = [
@@ -47,7 +47,7 @@ export function CatalogueBlocks() {
       </Section>
 
       <Section id="cli" title={t('features.cli.title')} text={t('features.cli.text')}>
-        <CliCommands commands={CLI_COMMANDS} note={t('paste.cliHint')} />
+        <CliCommands commands={CLI_COMMANDS} note={t('features.cli.note')} />
       </Section>
 
       <Section id="limits" title={t('features.limits.title')} text={t('features.limits.text')}>

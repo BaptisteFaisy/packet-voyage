@@ -5,8 +5,8 @@ import { renderWithProviders } from '../test-utils.tsx';
 import { CliCommands } from './CliCommands.tsx';
 
 const COMMANDS = [
-  { label: 'Trace a host', command: 'npx packet-voyage trace example.org' },
-  { label: 'Serve the map', command: 'npx packet-voyage serve --port 5173' },
+  { label: 'Trace a host', command: 'pnpm voyage trace example.org' },
+  { label: 'Read a trace you already have', command: 'pnpm voyage read trace.txt' },
 ];
 
 /** Install a clipboard whose writeText resolves. */
@@ -33,12 +33,12 @@ describe('CliCommands — rendering', () => {
     const first = screen.getByTestId('cli-command-0');
     expect(first.textContent).toContain('Trace a host');
     const code = first.querySelector('code');
-    expect(code?.textContent).toBe('npx packet-voyage trace example.org');
+    expect(code?.textContent).toBe('pnpm voyage trace example.org');
     expect(code?.className).toContain('mono');
 
     const second = screen.getByTestId('cli-command-1');
-    expect(second.textContent).toContain('Serve the map');
-    expect(second.querySelector('code')?.textContent).toBe('npx packet-voyage serve --port 5173');
+    expect(second.textContent).toContain('Read a trace you already have');
+    expect(second.querySelector('code')?.textContent).toBe('pnpm voyage read trace.txt');
   });
 
   it('renders a command as text, never as markup', () => {
@@ -72,7 +72,7 @@ describe('CliCommands — copy and notes', () => {
       fireEvent.click(screen.getByTestId('cli-command-1-copy'));
     });
     expect(writeText).toHaveBeenCalledTimes(1);
-    expect(writeText).toHaveBeenCalledWith('npx packet-voyage serve --port 5173');
+    expect(writeText).toHaveBeenCalledWith('pnpm voyage read trace.txt');
     expect(screen.getByTestId('cli-command-1-copy').textContent).toBe('Copied');
     expect(screen.getByTestId('cli-command-0-copy').textContent).toBe('Copy');
   });

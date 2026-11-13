@@ -88,7 +88,7 @@ export const FR_KEYS: Record<I18nKey, string> = {
   'paste.errorTitle': 'Trace non reconnue',
   'paste.firstUnknown': 'Première ligne non comprise :',
   'paste.acceptedFormats': 'Formats acceptés : traceroute, tracert, rapport texte mtr, mtr JSON, RIPE Atlas JSON.',
-  'paste.cliHint': 'Ou exécutez localement dans votre terminal : npx packet-voyage trace example.org',
+  'paste.cliHint': 'Ou exécutez localement dans votre terminal : pnpm voyage trace example.org',
   'paste.noSourceNotice': "Aucun point de départ déclaré : seules les bornes relatives s'appliquent. Déclarez votre ville pour resserrer la borne de la lumière.",
   'paste.pastedJourney': 'Trace collée',
 
@@ -308,6 +308,7 @@ export const FR_KEYS: Record<I18nKey, string> = {
   'features.paste.text': 'Le lecteur nettoie ce qu’il doit (un BOM, des tabulations) et le dit, puis calcule le trajet localement à partir des noms de routeurs.',
   'features.cli.title': 'Tracez votre propre route depuis un terminal',
   'features.cli.text': 'Le site hébergé ne sonde jamais Internet — c’est la règle, pas une limite. Pour tracer votre propre route, un hôte à la fois, passez par la ligne de commande :',
+  'features.cli.note': 'Le paquet npm packet-voyage n’est pas encore publié : npx packet-voyage ne fonctionne pas (il répond 404). Lancez-le depuis les sources : git clone https://github.com/Tradoooo/packet-voyage, puis pnpm install && pnpm build — ensuite, les commandes ci-dessous fonctionnent telles quelles.',
   'features.open': 'Ouvrir cette vue',
   'features.copy': 'Copier',
   'features.copied': 'Copié',

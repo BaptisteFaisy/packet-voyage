@@ -42,7 +42,7 @@ afterEach(() => {
 describe('CopyButton — markup', () => {
   it('renders a real button carrying an explicit accessible name', () => {
     renderWithProviders(
-      <CopyButton text="npx packet-voyage trace example.org" label="Copy the command" copiedLabel="Copied" />,
+      <CopyButton text="pnpm voyage trace example.org" label="Copy the command" copiedLabel="Copied" />,
     );
     const button = screen.getByTestId('copy-button');
     expect(button.tagName).toBe('BUTTON');
@@ -65,12 +65,12 @@ describe('CopyButton — markup', () => {
 describe('CopyButton — clipboard', () => {
   it('copies the text through the clipboard API', async () => {
     const writeText = stubClipboard(async () => {});
-    renderWithProviders(<CopyButton text="npx packet-voyage serve" label="Copy" copiedLabel="Copied" />);
+    renderWithProviders(<CopyButton text="pnpm voyage mcp" label="Copy" copiedLabel="Copied" />);
     await act(async () => {
       fireEvent.click(screen.getByTestId('copy-button'));
     });
     expect(writeText).toHaveBeenCalledTimes(1);
-    expect(writeText).toHaveBeenCalledWith('npx packet-voyage serve');
+    expect(writeText).toHaveBeenCalledWith('pnpm voyage mcp');
   });
 
   it('announces the state in a polite live region', async () => {
@@ -117,7 +117,7 @@ describe('CopyButton — no copy path left', () => {
   it('falls back to the legacy selection when the clipboard API is missing', async () => {
     removeClipboard();
     const execCommand = stubExecCommand(true);
-    renderWithProviders(<CopyButton text="npx packet-voyage" label="Copy" copiedLabel="Copied" />);
+    renderWithProviders(<CopyButton text="pnpm voyage" label="Copy" copiedLabel="Copied" />);
     await act(async () => {
       fireEvent.click(screen.getByTestId('copy-button'));
     });
