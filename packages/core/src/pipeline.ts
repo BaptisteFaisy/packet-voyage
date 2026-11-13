@@ -39,7 +39,7 @@ export interface ComputeJourneyInput {
   parsed?: ParsedTrace;
   /** Explicit format, when detection should not decide. */
   format?: TraceFormat;
-  /** Candidates per hop, index-aligned with `hops`; when absent, name hints are used. */
+  /** Candidates per hop, index-aligned with `hops`; the router-name hints are added to them. */
   candidates?: Candidate[][];
   /** Declared or deduced departure. */
   source?: SourcePosition | null;
@@ -58,10 +58,13 @@ export interface ComputeJourneyInput {
 
 /** Candidates deduced from the router names only: no network, no database. */
 export function hintCandidates(hops: Hop[], table: HintCity[]): Candidate[][] {
-  return hops.map((hop) =>
-    hop.replies.flatMap((reply) =>
-      reply.name ? findHints(reply.name, table).map(toCandidate) : [],
-    ),
+  return hops.map((hop) => hintCandidatesFor(hop, table));
+}
+
+/** The candidates one hop's router names yield, and nothing else. */
+function hintCandidatesFor(hop: Hop, table: HintCity[]): Candidate[] {
+  return hop.replies.flatMap((reply) =>
+    reply.name ? findHints(reply.name, table).map(toCandidate) : [],
   );
 }
 
@@ -120,13 +123,19 @@ function attachCables(
   });
 }
 
+/** The candidates of every hop: the router names (§7.5) plus the enrichment's. */
+function candidatesFor(hops: Hop[], provided: Candidate[][] | undefined, table: HintCity[]): Candidate[][] {
+  if (!provided) return hintCandidates(hops, table);
+  return hops.map((hop, index) => [...hintCandidatesFor(hop, table), ...(provided[index] ?? [])]);
+}
+
 /** Compute a whole journey from a trace (or an already parsed trace). */
 export function computeJourney(input: ComputeJourneyInput): Journey {
   const settings = input.settings ? withSettings(input.settings) : DEFAULT_SETTINGS;
   const parsed = input.parsed ?? parseTrace(input.text ?? '', { format: input.format });
   const hops = withClasses(parsed.hops);
   const envelopes = computeEnvelopes(hops);
-  const candidates = input.candidates ?? hintCandidates(hops, input.hints ?? []);
+  const candidates = candidatesFor(hops, input.candidates, input.hints ?? []);
 
   const locatedResult: ReturnType<typeof locate> = locate({
     hops,

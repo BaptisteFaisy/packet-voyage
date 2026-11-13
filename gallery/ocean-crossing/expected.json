@@ -15,13 +15,13 @@
     "ixps": 1,
     "detours": 0,
     "rejected_by_light": 1,
-    "gaps": 2
+    "gaps": 1
   },
   "hops": 10,
-  "located_hops": 8,
+  "located_hops": 9,
   "rejected_candidates": 1,
   "anycast_hops": 0,
   "compatible_cables": 8,
   "sea_segments": 2,
-  "segments": 8
+  "segments": 9
 }

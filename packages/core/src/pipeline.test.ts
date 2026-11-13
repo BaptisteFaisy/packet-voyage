@@ -104,3 +104,56 @@ describe('the shape of the computed journey (§7.1)', () => {
     expect(junk.summary.distance_km_min).toBe(0);
   });
 });
+
+describe('the router names stay candidates when the enrichment brings its own', () => {
+  // The command line enriches a trace before computing it: IPmap, IXP prefixes
+  // and the geo database bring their candidates. Those candidates know a
+  // handful of networks; the router names know the city. Dropping the names
+  // would leave every real trace unlocated — and would make the command line
+  // disagree with the site, which computes the same journey without them.
+  function withEmptyEnrichment() {
+    const parsed = parseTrace(EXAMPLE_TRACE);
+    return computeJourney({
+      parsed: { ...parsed, hops: applyExampleNetworks(parsed.hops) },
+      candidates: parsed.hops.map(() => []),
+      source: EXAMPLE_SOURCE,
+      tracedAt: EXAMPLE_TRACED_AT,
+      masses,
+      cables,
+      links,
+      hints,
+    });
+  }
+
+  it('places a hop from its name alone, when the enrichment found nothing', () => {
+    const journey = withEmptyEnrichment();
+    const hop4 = journey.hops.find((hop) => hop.ttl === 4);
+    expect(hop4?.replies[0]?.name).toBe('ix-paris.transit.example.net');
+    expect(hop4?.location?.city).toBe('Paris');
+  });
+
+  it('still measures a distance and a light floor', () => {
+    const journey = withEmptyEnrichment();
+    expect(journey.summary.distance_km_min).toBeGreaterThan(0);
+    expect(journey.summary.light_floor_ms).toBeGreaterThan(0);
+  });
+
+  it('keeps the enriched candidates as well, it does not replace them', () => {
+    const parsed = parseTrace(EXAMPLE_TRACE);
+    const enriched = computeJourney({
+      parsed: { ...parsed, hops: applyExampleNetworks(parsed.hops) },
+      candidates: EXAMPLE_CANDIDATES,
+      source: EXAMPLE_SOURCE,
+      tracedAt: EXAMPLE_TRACED_AT,
+      masses,
+      cables,
+      links,
+      hints,
+    });
+    const hop9 = enriched.hops.find((hop) => hop.ttl === 9);
+    // The example's candidates say Ashburn for this hop; the name says iad
+    // (Washington). Both are offered to the locator, which keeps the one the
+    // light allows — the same result as before the names were added back.
+    expect(hop9?.location?.city).toBe(exampleJourney().hops.find((hop) => hop.ttl === 9)?.location?.city);
+  });
+});

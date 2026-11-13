@@ -65,7 +65,18 @@
       "as_name": "Example Access",
       "ixp": null,
       "envelope_ms": 0.792,
-      "location": null
+      "location": {
+        "lat": 45.76,
+        "lon": 4.84,
+        "city": "Lyon",
+        "country": "FR",
+        "confidence": 0.6,
+        "level": "probable",
+        "sources": [
+          "name-hint"
+        ],
+        "rejected": []
+      }
     },
     {
       "ttl": 3,
@@ -333,11 +344,22 @@
     },
     {
       "from_ttl": 1,
+      "to_ttl": 2,
+      "kind": "local",
+      "geodesic_km": 0,
+      "delta_ms": 0,
+      "skipped_hops": 0,
+      "cables": [],
+      "other_cables": 0,
+      "fixed_link": null
+    },
+    {
+      "from_ttl": 2,
       "to_ttl": 3,
       "kind": "undetermined",
       "geodesic_km": 392.45604596393827,
       "delta_ms": 4.16,
-      "skipped_hops": 1,
+      "skipped_hops": 0,
       "cables": [],
       "other_cables": 0,
       "fixed_link": null
@@ -521,7 +543,7 @@
     "ixps": 1,
     "detours": [],
     "rejected_by_light": 1,
-    "gaps": 2
+    "gaps": 1
   },
   "story": [
     {
@@ -530,6 +552,13 @@
       "certainty": "inferred",
       "en": "Stop 1 — Lyon, FR (solid). Network: AS64496 (Example Access). 0.8 ms after departure.",
       "fr": "Étape 1 — Lyon, FR (solide). Réseau : AS64496 (Example Access). 0,8 ms après le départ."
+    },
+    {
+      "kind": "stop",
+      "ttl": 2,
+      "certainty": "inferred",
+      "en": "Stop 2 — Lyon, FR (likely). Network: AS64496 (Example Access). 0.8 ms after departure.",
+      "fr": "Étape 2 — Lyon, FR (probable). Réseau : AS64496 (Example Access). 0,8 ms après le départ."
     },
     {
       "kind": "crossing",
