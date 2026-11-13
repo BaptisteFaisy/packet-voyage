@@ -4,6 +4,7 @@
  *
  *   pnpm demo                      → serve the built site, walk it, write the proof
  *   pnpm demo -- --trace <file>    → the same, on your own trace (real addresses)
+ *   pnpm demo -- --journey <file>  → the same, on a journey.json you already have
  *   pnpm demo --stop               → stop the environment
  *
  * The server is started detached, so it outlives the command and the URL never
@@ -24,12 +25,13 @@ const PIDFILE = join(homedir(), '.cache', 'packet-voyage', 'demo.pid');
 const DEFAULT_PORT = 4180;
 
 function parseArgs(argv) {
-  const options = { stop: false, serve: false, port: DEFAULT_PORT, trace: null };
+  const options = { stop: false, serve: false, port: DEFAULT_PORT, trace: null, journey: null };
   for (let i = 0; i < argv.length; i += 1) {
     if (argv[i] === '--stop') options.stop = true;
     else if (argv[i] === '--serve') options.serve = true;
     else if (argv[i] === '--port') options.port = Number(argv[i + 1]);
     else if (argv[i] === '--trace') options.trace = argv[++i];
+    else if (argv[i] === '--journey') options.journey = argv[++i];
   }
   return options;
 }
@@ -87,9 +89,10 @@ function buildSite() {
 }
 
 /** The bench, run against the local server: it writes the proof itself. */
-function runBench(origin, trace) {
+function runBench(origin, trace, journey) {
   const args = [join(root, 'scripts', 'verify-user-data.mjs')];
   if (trace) args.push('--trace', resolve(trace));
+  if (journey) args.push('--journey', resolve(journey));
   const run = spawnSync(process.execPath, args, {
     cwd: root,
     encoding: 'utf8',
@@ -151,7 +154,7 @@ async function main() {
   buildSite();
   const origin = await startDemo(options.port);
   console.log(`demo: serveur sur ${origin} (pid ${readFileSync(PIDFILE, 'utf8').trim()})`);
-  const status = runBench(origin, options.trace);
+  const status = runBench(origin, options.trace, options.journey);
   const date = new Date().toISOString().slice(0, 10);
   const evidence = join(root, 'docs', 'evidence', `demo-${date}.json`);
   if (existsSync(evidence)) writeDemoPage(origin, evidence);

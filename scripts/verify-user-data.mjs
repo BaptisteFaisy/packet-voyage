@@ -88,10 +88,15 @@ function oracleFromTrace(tracePath) {
 
 /** A share link for that journey, produced by the CLI, redacted at country level. */
 function shareLinkFor(journeyFile) {
-  const out = runCli(['share', journeyFile, '--level', 'country', '--yes', '--base-url', `${LIVE}`]);
-  const line = out.split('\n').map((l) => l.trim()).find((l) => l.startsWith('http'));
-  if (!line) throw new Error('the CLI produced no share link');
-  return line;
+  const out = runCli(['share', journeyFile, '--level', 'country', '--yes', '--base-url', `${LIVE}`, '--json']);
+  const data = JSON.parse(out);
+  if (!data.link) throw new Error('the CLI produced no share link');
+  // The redacted journey comes back with the command: the visitor opens THAT,
+  // so the oracle for this step must be the redacted numbers, not the ones of
+  // the journey before it was redacted. The redaction drops the departure's
+  // coordinates, so a country that only the departure carried is legitimately
+  // gone from the shared journey.
+  return { link: data.link, journey: data.journey };
 }
 
 function numbersOf(text) {
@@ -300,11 +305,11 @@ async function runDoors(page, traceText, oracle) {
   steps.push(buildStep('import', 'Step 2 — the visitor opens the journey.json the command line wrote',
     '`voyage read --offline --json` wrote it; the site reads it with the File API',
     compareBanner(await stepImport(page, oracle.file), oracle.journey)));
-  const link = shareLinkFor(oracle.file);
+  const share = shareLinkFor(oracle.file);
   steps.push(buildStep('share', 'Step 3 — the visitor opens a share link',
     'the journey rides in the fragment; no server stores it',
-    compareBanner(await stepShare(page, link), oracle.journey)));
-  return steps;
+    compareBanner(await stepShare(page, share.link), share.journey)));
+  return { steps, shared: share.journey };
 }
 
 async function main() {
@@ -323,9 +328,9 @@ async function main() {
     : { journey: JSON.parse(readFileSync(journeyPath, 'utf8')), file: journeyPath };
 
   const { browser, page, requests, errors } = await openBrowser(executablePath);
-  const steps = await runDoors(page, traceText, oracle);
+  const { steps, shared } = await runDoors(page, traceText, oracle);
   const catalogue = await stepCatalogue(page);
-  const chainChecks = await stepChain(page, oracle.journey);
+  const chainChecks = await stepChain(page, shared);
   await browser.close();
 
   steps.push(buildStep('catalogue', 'Step 4 — the catalogue demonstrates that journey',
