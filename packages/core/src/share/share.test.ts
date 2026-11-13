@@ -12,7 +12,7 @@ import {
 
 /** Seeds recorded so a counter-example can be replayed (§13). */
 const SEED = 20261117;
-const BASE = 'https://baptistefaisy.github.io/packet-voyage/';
+const BASE = 'https://tradoooo.github.io/packet-voyage/';
 
 const inflate = (bytes: Uint8Array) => new TextDecoder().decode(bytes);
 
