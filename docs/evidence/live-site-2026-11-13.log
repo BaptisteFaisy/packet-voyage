@@ -1,0 +1,29 @@
+# Live site check — 2026-11-13
+
+URL: https://tradoooo.github.io/packet-voyage/
+Browser: headless Chromium, no credentials, no local build.
+
+## Screens
+- gallery (/): rendered
+- journey (#/journey/ocean-crossing): rendered
+- insights panel (#/journey/ocean-crossing): rendered
+- export panel (#/journey/ocean-crossing): rendered
+- features catalogue (#/features): rendered
+- use cases (10 cards) (#/use-cases): rendered
+- journey log (#/story): rendered
+- compare (#/compare): rendered
+- classroom (#/classroom): rendered
+- sources (#/sources): rendered
+- settings (#/settings): rendered
+
+## Interactions
+- opened the ocean crossing: "Total distance:at least 6,657 kmMeasured round-trip delay:83.6 msFibre light floor:63.7 msRoute inflation:×1.31Countries"
+- light cone toggle clicked: aria-pressed=true (discs drawn)
+- use case « op-03 » clicked: url=#/features (block in view)
+
+## Network
+- requests: 12
+- requests outside https://tradoooo.github.io: 0
+- errors: 0
+
+VERDICT: the public site renders every screen, opens a journey, draws the light cone, lands a use case on its block, and calls nobody.
