@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { MAX_QR_TEXT, qrMatrix, qrSvg, QrTooLongError } from './qr.ts';
 
-const TEXT = 'https://baptistefaisy.github.io/packet-voyage/#j=eyJ2ZXJzaW9uIjox';
+const TEXT = 'https://tradoooo.github.io/packet-voyage/#j=eyJ2ZXJzaW9uIjox';
 
 describe('QR code, generated locally (§ idea 10)', () => {
   it('produces a square matrix with the three finder patterns', () => {

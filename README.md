@@ -9,7 +9,7 @@ the output of a `traceroute`, puts every hop on a world map, lists the submarine
 cables **compatible** with each crossing, and says honestly what is measured,
 what is inferred and what is assumed.
 
-[![CI](https://github.com/BaptisteFaisy/packet-voyage/actions/workflows/ci.yml/badge.svg)](https://github.com/BaptisteFaisy/packet-voyage/actions/workflows/ci.yml)
+[![CI](https://github.com/Tradoooo/packet-voyage/actions/workflows/ci.yml/badge.svg)](https://github.com/Tradoooo/packet-voyage/actions/workflows/ci.yml)
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](./LICENSE)
 
 Live site (no install, no account, no request): <https://tradoooo.github.io/packet-voyage/>
@@ -30,7 +30,7 @@ Live site (no install, no account, no request): <https://tradoooo.github.io/pack
 4. Or trace your own route with the command line:
 
 ```bash
-git clone https://github.com/BaptisteFaisy/packet-voyage && cd packet-voyage
+git clone https://github.com/Tradoooo/packet-voyage && cd packet-voyage
 pnpm install && pnpm build
 node apps/cli/bin/voyage.mjs trace example.org       # one host, never a range
 node apps/cli/bin/voyage.mjs read trace.txt           # a trace you already have
